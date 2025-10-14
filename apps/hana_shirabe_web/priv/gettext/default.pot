@@ -16,18 +16,18 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:98
-#: lib/hana_shirabe_web/components/layouts.ex:110
+#: lib/hana_shirabe_web/components/layouts.ex:95
+#: lib/hana_shirabe_web/components/layouts.ex:107
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:105
+#: lib/hana_shirabe_web/components/layouts.ex:102
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:93
+#: lib/hana_shirabe_web/components/layouts.ex:90
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr ""
