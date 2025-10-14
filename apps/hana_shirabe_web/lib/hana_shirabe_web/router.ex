@@ -1,7 +1,7 @@
 defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
-  import HanaShirabeWeb.MemberAuth
+  # import HanaShirabeWeb.MemberAuth
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -10,7 +10,7 @@ defmodule HanaShirabeWeb.Router do
     plug :put_root_layout, html: {HanaShirabeWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_scope_for_member
+    # plug :fetch_current_scope_for_member
   end
 
   pipeline :api do

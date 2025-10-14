@@ -18,37 +18,37 @@ defmodule HanaShirabe.Umbrella.MixProject do
     ]
   end
 
-  # Dependencies can be Hex packages:
+  # 依赖项可以是 Hexpm 上的包：
   #
   #   {:mydep, "~> 0.3.0"}
   #
-  # Or git/path repositories:
+  # 也可以是 Git 仓库或本地地址：
   #
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
-  # Type "mix help deps" for more examples and options.
+  # 输入 "mix help deps" 可获得更多范例与选项。
   #
-  # Dependencies listed here are available only for this project
-  # and cannot be accessed from applications inside the apps/ folder.
+  # 此处列出的依赖项仅适用于项目的根目录，无法从 apps/ 文件夹内的应用程序访问。
+  # 结合里边的注释，就是说在这里的依赖项是针对整个应用而非里边的某个应用的，
+  # 也就是说，如果里边的某个应用有用到的话，那么需要在里边的 `mix.exs` 再导入一遍。
   defp deps do
     [
-      # Required to run "mix format" on ~H/.heex files from the umbrella root
+      # 需要运行 "mix format" 来针对位于伞项目根目录其他的 ~H 或 .heex 文件进行格式化
       {:phoenix_live_view, ">= 0.0.0"}
     ]
   end
 
-  # Aliases are shortcuts or tasks specific to the current project.
-  # For example, to install project dependencies and perform other setup tasks, run:
+  # 别名（Alias）是专门用于当前项目的快捷方式或任务。
+  # 比方说，安装项目的依赖以及运行其他的安装步骤，可以运行：
   #
   #     $ mix setup
   #
-  # See the documentation for `Mix` for more info on aliases.
+  # 有关别名的更多信息，请参阅 `Mix` 的文档。
   #
-  # Aliases listed here are available only for this project
-  # and cannot be accessed from applications inside the apps/ folder.
+  # 此处列出的别名仅适用于项目的根目录，无法从 apps/ 文件夹内的应用程序访问。
   defp aliases do
     [
-      # run `mix setup` in all child apps
+      # 在所有的子应用中运行 `mix setup`
       setup: ["cmd mix setup"],
       precommit: ["compile --warning-as-errors", "deps.unlock --unused", "format", "test"]
     ]

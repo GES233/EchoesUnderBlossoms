@@ -1,5 +1,5 @@
-# See https://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
-#
-# To ban all spiders from the entire site uncomment the next two lines:
-# User-agent: *
-# Disallow: /
+# 参见 https://www.robotstxt.org/robotstxt.html 去了解如何使用该文件
+# 需要确定的是，这个是君子协定，防君子不防小人，所以最好后面做一个接口出来供人爬取
+
+User-agent: *
+Disallow: /

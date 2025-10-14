@@ -1,4 +1,4 @@
-/* See the Tailwind configuration guide for advanced usage
+/* 请参阅 Tailwind 配置指南以了解高级用法
    https://tailwindcss.com/docs/configuration */
 
 @import "tailwindcss" source(none);
@@ -6,21 +6,21 @@
 @source "../js";
 @source "../../lib/hana_shirabe_web";
 
-/* A Tailwind plugin that makes "hero-#{ICON}" classes available.
-   The heroicons installation itself is managed by your mix.exs */
+/* 用于启用 "hero-#{ICON}" 类的一个 Tailwind 插件。
+   heroicons 的安装本身由你的 mix.exs 管理。 */
 @plugin "../vendor/heroicons";
 
-/* daisyUI Tailwind Plugin. You can update this file by fetching the latest version with:
-   curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js
-   Make sure to look at the daisyUI changelog: https://daisyui.com/docs/changelog/ */
+/* daisyUI Tailwind 插件。您可以通过以下方式获取最新版本来更新此文件：
+    curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js 
+   请务必查看 daisyUI 更新日志：https://daisyui.com/docs/changelog/ */
 @plugin "../vendor/daisyui" {
   themes: false;
 }
 
-/* daisyUI theme plugin. You can update this file by fetching the latest version with:
-  curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js
-  We ship with two themes, a light one inspired on Phoenix colors and a dark one inspired
-  on Elixir colors. Build your own at: https://daisyui.com/theme-generator/ */
+/* daisyUI 主题插件。您可以通过以下方式获取最新版本来更新此文件：
+    curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js 
+    我们提供了两个主题：一个浅色主题，灵感源自 Phoenix 配色；另一个深色主题，灵感源自
+   Elixir 配色。您可以访问 https://daisyui.com/theme-generator/ 构建自己的主题。 */
 @plugin "../vendor/daisyui-theme" {
   name: "dark";
   default: false;
@@ -91,15 +91,15 @@
   --noise: 0;
 }
 
-/* Add variants based on LiveView classes */
+/* 根据 LiveView 类添加变体 */
 @custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);
 @custom-variant phx-submit-loading (.phx-submit-loading&, .phx-submit-loading &);
 @custom-variant phx-change-loading (.phx-change-loading&, .phx-change-loading &);
 
-/* Use the data attribute for dark mode  */
+/* 使用数据属性实现 dark mode  */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-/* Make LiveView wrapper divs transparent for layout */
+/* 使 LiveView 包装器 div 在布局中透明 */
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
-/* This file is for your main application CSS */
+/* 此文件用于主应用的 CSS */

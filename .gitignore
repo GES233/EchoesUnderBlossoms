@@ -19,11 +19,11 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
-# Temporary files, for example, from tests.
+# 临时文件，比方说测试用的。
 /tmp/
 
 
-# Database files
+# 数据库的文件（因为目前使用的是 SQLite）
 *.db
 *.db-*
 

@@ -1,12 +1,8 @@
-// This file is needed on most editors to enable the intelligent autocompletion
-// of LiveView's JavaScript API methods. You can safely delete it if you don't need it.
+// 大多数编辑器都需要此文件来启用 LiveView JavaScript API 方法的智能自动补全功能。如果您不需要它，可以放心地删除它。
 //
-// Note: This file assumes a basic esbuild setup without node_modules.
-// We include a generic paths alias to deps to mimic how esbuild resolves
-// the Phoenix and LiveView JavaScript assets.
-// If you have a package.json in your project, you should remove the
-// paths configuration and instead add the phoenix dependencies to the
-// dependencies section of your package.json:
+// 注意：此文件假设使用不包含 node_modules 的基本 esbuild 设置。
+// 我们包含一个指向 deps 的通用路径别名，以模拟 esbuild 解析 Phoenix 和 LiveView JavaScript 资源的方式。
+// 如果您的项目中有一个 package.json 文件，则应删除路径配置，并将 phoenix 依赖项添加到 package.json 的依赖项部分：
 //
 // {
 //   ...
@@ -18,7 +14,7 @@
 //   }
 // }
 //
-// Feel free to adjust this configuration however you need.
+// 按照需求随便改吧
 {
   "compilerOptions": {
     // "baseUrl": ".",

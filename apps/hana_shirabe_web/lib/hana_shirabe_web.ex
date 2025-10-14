@@ -1,20 +1,15 @@
 defmodule HanaShirabeWeb do
   @moduledoc """
-  The entrypoint for defining your web interface, such
-  as controllers, components, channels, and so on.
+  定义网络界面（如控制器、组件、通道等）的入口点。
 
-  This can be used in your application as:
+  可在应用程序中通过以下方式被调用：
 
       use HanaShirabeWeb, :controller
       use HanaShirabeWeb, :html
 
-  The definitions below will be executed for every controller,
-  component, etc, so keep them short and clean, focused
-  on imports, uses and aliases.
+  下面的定义将在每个控制器、组件等中执行，因此要简洁明了，重点放在 import 、 use 以及 alias 上。
 
-  Do NOT define functions inside the quoted expressions
-  below. Instead, define additional modules and import
-  those modules here.
+  【请不要】在下面的 quote 表达式内定义函数。相反，请定义附加模块并在此处导入这些模块。
   """
 
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)

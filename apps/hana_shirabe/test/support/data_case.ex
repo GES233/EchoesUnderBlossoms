@@ -1,17 +1,14 @@
 defmodule HanaShirabe.DataCase do
   @moduledoc """
-  This module defines the setup for tests requiring
-  access to the application's data layer.
+  这个模块定义了需要访问应用程序数据层的测试的设置。
 
-  You may define functions here to be used as helpers in
-  your tests.
+  你可以在这里定义函数，以便在测试中使用。
 
-  Finally, if the test case interacts with the database,
-  we enable the SQL sandbox, so changes done to the database
-  are reverted at the end of every test. If you are using
-  PostgreSQL, you can even run database tests asynchronously
-  by setting `use HanaShirabe.DataCase, async: true`, although
-  this option is not recommended for other databases.
+  最后，如果测试用例与数据库交互，我们启用 SQL 沙箱，
+  因此对数据库的更改会在每个测试结束时被还原。
+  如果你使用的是 PostgreSQL，你甚至可以通过设置
+  `use HanaShirabe.DataCase, async: true` 来异步运行数据库测试，
+  尽管这个选项不推荐用于其他数据库。
   """
 
   use ExUnit.CaseTemplate
@@ -33,7 +30,7 @@ defmodule HanaShirabe.DataCase do
   end
 
   @doc """
-  Sets up the sandbox based on the test tags.
+  基于测试标签设置沙箱。
   """
   def setup_sandbox(tags) do
     pid = Ecto.Adapters.SQL.Sandbox.start_owner!(HanaShirabe.Repo, shared: not tags[:async])
@@ -41,7 +38,7 @@ defmodule HanaShirabe.DataCase do
   end
 
   @doc """
-  A helper that transforms changeset errors into a map of messages.
+  转换 changeset 错误为消息映射的辅助函数。
 
       assert {:error, changeset} = Accounts.create_user(%{password: "short"})
       assert "password is too short" in errors_on(changeset).password

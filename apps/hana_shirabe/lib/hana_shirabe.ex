@@ -1,9 +1,7 @@
 defmodule HanaShirabe do
   @moduledoc """
-  HanaShirabe keeps the contexts that define your domain
-  and business logic.
+  此模块保存定义你的领域模型与业务逻辑的内容。
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
+  同时也负责管理你的数据，哪怕它来自于数据库、外部 API 或其他。
   """
 end
