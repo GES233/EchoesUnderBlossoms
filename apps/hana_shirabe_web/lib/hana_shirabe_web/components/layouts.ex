@@ -12,11 +12,10 @@ defmodule HanaShirabeWeb.Layouts do
   embed_templates "layouts/*"
 
   @doc """
-  Renders your app layout.
+  渲染应用的整体布局。
 
-  This function is typically invoked from every template,
-  and it often contains your application menu, sidebar,
-  or similar.
+  此函数通常由每个模板调用，它通常包含应用程序的 menu 或 sidebar
+  或巴拉巴拉。
 
   ## Examples
 
@@ -73,7 +72,7 @@ defmodule HanaShirabeWeb.Layouts do
   end
 
   @doc """
-  Shows the flash group with standard titles and content.
+  用于统一 flash 组内标题和内容的显示。
 
   ## Examples
 
@@ -116,9 +115,9 @@ defmodule HanaShirabeWeb.Layouts do
   end
 
   @doc """
-  Provides dark vs light theme toggle based on themes defined in app.css.
+  根据 app.css 中定义的主题，提供深色/浅色主题切换。
 
-  See <head> in root.html.heex which applies the theme before page load.
+  请参阅 root.html.heex 中的 `<head>` 部分，该部分会在页面加载前应用主题。
   """
   def theme_toggle(assigns) do
     ~H"""

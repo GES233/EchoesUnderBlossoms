@@ -32,7 +32,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   alias Phoenix.LiveView.JS
 
   @doc """
-  Renders flash notices.
+  显示 flash 的提醒（闪现一下）。
 
   ## Examples
 
@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders a button with navigation support.
+  呈现具有导航支持的按钮。
 
   ## Examples
 
@@ -117,25 +117,24 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders an input with label and error messages.
+  渲染带有标签和错误消息的输入框。
 
-  A `Phoenix.HTML.FormField` may be passed as argument,
-  which is used to retrieve the input name, id, and values.
-  Otherwise all attributes may be passed explicitly.
+  可以传递 `Phoenix.HTML.FormField` 作为参数，用于检索输入框的名称、ID
+  和值。要么，都要通过显式传递所有属性。
 
   ## Types
 
-  This function accepts all HTML input types, considering that:
+  此函数接受所有 HTML 输入类型，请留意：
 
-    * You may also set `type="select"` to render a `<select>` tag
+  * 您也可以设置 `type="select"` 来渲染 `<select>` 标签
 
-    * `type="checkbox"` is used exclusively to render boolean values
+  * `type="checkbox"` 仅用于渲染 boolean
 
-    * For live file uploads, see `Phoenix.Component.live_file_input/1`
+  * 有关实时文件上传，参见阅 `Phoenix.Component.live_file_input/1`
 
-  See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input
-  for more information. Unsupported types, such as hidden and radio,
-  are best written directly in your templates.
+  请查看 https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input
+  以获得更多信息。对于像是 hidden 以及 audio 的不支持的类型，
+  最好直接写进你的模板里。
 
   ## Examples
 
@@ -246,7 +245,7 @@ defmodule HanaShirabeWeb.CoreComponents do
     """
   end
 
-  # All other inputs text, datetime-local, url, password, etc. are handled here...
+  # 所有其他输入文本、datetime-local、url、密码等都在这里处理……
   def input(assigns) do
     ~H"""
     <div class="fieldset mb-2">
@@ -269,7 +268,7 @@ defmodule HanaShirabeWeb.CoreComponents do
     """
   end
 
-  # Helper used by inputs to generate form errors
+  # 输入用来生成表单错误的 helper
   defp error(assigns) do
     ~H"""
     <p class="mt-1.5 flex gap-2 items-center text-sm text-error">
@@ -280,7 +279,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders a header with title.
+  展示具有标题的标头。
   """
   slot :inner_block, required: true
   slot :subtitle
@@ -303,7 +302,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders a table with generic styling.
+  显示一般外观的表格。
 
   ## Examples
 
@@ -366,7 +365,9 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders a data list.
+  以列表形式显示某数据。
+
+  参见 https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/dl 。
 
   ## Examples
 
@@ -393,17 +394,16 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Renders a [Heroicon](https://heroicons.com).
+  渲染一个 [Heroicon](https://heroicons.com) 图标。
 
-  Heroicons come in three styles – outline, solid, and mini.
-  By default, the outline style is used, but solid and mini may
-  be applied by using the `-solid` and `-mini` suffix.
+  Heroicon 的图标一般存在三种风格——轮廓（outline）、实心（solid）
+  以及迷你（mini）。默认的风格是轮廓，对于实心以及小号的，可能需要
+  `-solid` 以及 `-mini` 后缀。
 
-  You can customize the size and colors of the icons by setting
-  width, height, and background color classes.
+  你可以通过设置宽高以及背景颜色来定制化图标的大小和颜色。
 
-  Icons are extracted from the `deps/heroicons` directory and bundled within
-  your compiled app.css by the plugin in `assets/vendor/heroicons.js`.
+  图标从 `deps/heroicons` 目录提取，并由插件在 `assets/vendor/heroicons.js`
+  中捆绑到编译好的 app.css 中。
 
   ## Examples
 
@@ -443,19 +443,17 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Translates an error message using gettext.
+  通过 gettext 翻译某条错误。
   """
   def translate_error({msg, opts}) do
-    # When using gettext, we typically pass the strings we want
-    # to translate as a static argument:
+    # 当使用 gettext 时，我们一般吧那些我们想要翻译的字符串当成静态参数传递过去：
     #
-    #     # Translate the number of files with plural rules
+    #     # 翻译复数（是 plural 而非 conplex num.）形式的文件
     #     dngettext("errors", "1 file", "%{count} files", count)
     #
-    # However the error messages in our forms and APIs are generated
-    # dynamically, so we need to translate them by calling Gettext
-    # with our gettext backend as first argument. Translations are
-    # available in the errors.po file (as we use the "errors" domain).
+    # 然而来自于我们的表单以及 API 的错误信息是动态生成的，因此我们需要
+    # 通过调用有着我们的 gettext 后端作为 Gettext 的第一个参数来翻译它们。
+    # 在 errors.po 文件翻译依旧可行（我们再次使用 "errors" 领域）。
     if count = opts[:count] do
       Gettext.dngettext(HanaShirabeWeb.Gettext, "errors", msg, msg, count, opts)
     else
@@ -464,7 +462,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   end
 
   @doc """
-  Translates the errors for a field from a keyword list of errors.
+  从一堆错误里翻译某个字段的错误。
   """
   def translate_errors(errors, field) when is_list(errors) do
     for {^field, {msg, opts}} <- errors, do: translate_error({msg, opts})
