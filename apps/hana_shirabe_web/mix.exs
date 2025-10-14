@@ -76,6 +76,11 @@ defmodule HanaShirabeWeb.MixProject do
         "tailwind hana_shirabe_web --minify",
         "esbuild hana_shirabe_web --minify",
         "phx.digest"
+      ],
+      "gettext.update": [
+        "gettext.extract",
+        "gettext.merge priv/gettext --locale ja",
+        "gettext.merge priv/gettext --locale zh_Hans"
       ]
     ]
   end

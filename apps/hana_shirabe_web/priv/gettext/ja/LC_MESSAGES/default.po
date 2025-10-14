@@ -1,0 +1,38 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lib/hana_shirabe_web/components/core_components.ex:341
+#, elixir-autogen, elixir-format
+msgid "Actions"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/layouts.ex:98
+#: lib/hana_shirabe_web/components/layouts.ex:110
+#, elixir-autogen, elixir-format
+msgid "Attempting to reconnect"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/layouts.ex:105
+#, elixir-autogen, elixir-format
+msgid "Something went wrong!"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/layouts.ex:93
+#, elixir-autogen, elixir-format
+msgid "We can't find the internet"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/core_components.ex:74
+#, elixir-autogen, elixir-format
+msgid "close"
+msgstr ""
