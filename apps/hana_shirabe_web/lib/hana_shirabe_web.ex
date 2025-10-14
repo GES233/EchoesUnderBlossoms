@@ -18,7 +18,7 @@ defmodule HanaShirabeWeb do
     quote do
       use Phoenix.Router, helpers: false
 
-      # Import common connection and controller functions to use in pipelines
+      # 导入管线中共同的 Conn 以及 controller 的函数
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
@@ -74,7 +74,7 @@ defmodule HanaShirabeWeb do
 
   defp html_helpers do
     quote do
-      # Translation
+      # 翻译
       use Gettext, backend: HanaShirabeWeb.Gettext
 
       # HTML escaping functionality
@@ -82,11 +82,11 @@ defmodule HanaShirabeWeb do
       # Core UI components
       import HanaShirabeWeb.CoreComponents
 
-      # Common modules used in templates
+      # 模板用的通用模块
       alias Phoenix.LiveView.JS
       alias HanaShirabeWeb.Layouts
 
-      # Routes generation with the ~p sigil
+      # 路由需要用的 ~p 魔符
       unquote(verified_routes())
     end
   end
@@ -101,7 +101,7 @@ defmodule HanaShirabeWeb do
   end
 
   @doc """
-  When used, dispatch to the appropriate controller/view/etc.
+  用啥功能调啥名
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])

@@ -1,14 +1,11 @@
 defmodule HanaShirabeWeb.Layouts do
   @moduledoc """
-  This module holds layouts and related functionality
-  used by your application.
+  该模块包含应用的布局和相关功能。
   """
   use HanaShirabeWeb, :html
 
-  # Embed all files in layouts/* within this module.
-  # The default root.html.heex file contains the HTML
-  # skeleton of your application, namely HTML headers
-  # and other static content.
+  # 将 layouts/* 中的所有文件嵌入此模块。
+  # 默认的 root.html.heex 文件包含应用程序的 HTML 框架，即 HTML 标头和其他静态内容
   embed_templates "layouts/*"
 
   @doc """
@@ -148,6 +145,27 @@ defmodule HanaShirabeWeb.Layouts do
         <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
+    """
+  end
+
+  @doc"""
+  客制化的页面标题。
+
+  本站的标题，一般分为两种情况：
+
+  - 内容为主（比方说网页主要是某歌曲或提案）
+    - 其格式为 `{page_title} - SiteName`
+  - 功能为主（注册、登录、首页等等）
+    - 其格式为 `SiteName :: {page_role}`
+
+  当然还有另一种情况，没有其他信息。那么就是
+  `SiteName - Description` 。
+  """
+  slot :inner_block, required: true, doc: "Content rendered inside the `title` tag."
+
+  def naive_title(assigns) do
+    ~H"""
+    <title>render_slot(@inner_block)</title>
     """
   end
 end
