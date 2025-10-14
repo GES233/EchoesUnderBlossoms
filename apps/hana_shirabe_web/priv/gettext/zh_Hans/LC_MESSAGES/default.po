@@ -20,19 +20,19 @@ msgstr ""
 #: lib/hana_shirabe_web/components/layouts.ex:110
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
-msgstr ""
+msgstr "试图重新连接"
 
 #: lib/hana_shirabe_web/components/layouts.ex:105
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
-msgstr ""
+msgstr "有东西出问题了！"
 
 #: lib/hana_shirabe_web/components/layouts.ex:93
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
-msgstr ""
+msgstr "连不上蓝牙了"
 
 #: lib/hana_shirabe_web/components/core_components.ex:74
 #, elixir-autogen, elixir-format
 msgid "close"
-msgstr ""
+msgstr "关系"
