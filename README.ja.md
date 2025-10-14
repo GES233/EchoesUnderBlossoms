@@ -2,9 +2,8 @@
 
 [简体中文](./README.zh_Hans.md) [英语](/README.md)
 
-> **Warning**
->
-> This file translated by LLM, if there has any mixtake or error, please tell me.
+[!WARNING] 
+> This file was translated by LLM, if there has any mistake or error, please tell me.
 
 HanaShirabe は日本語の「花隠れの調べ (Hanakakure no Shirabe)」のローマ字略称で、ウェブアプリケーションを表すために使用します。英語ユーザー向けには **Echoes Under Blossoms** と呼びます。
 
