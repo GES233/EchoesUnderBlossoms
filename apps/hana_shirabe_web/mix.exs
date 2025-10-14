@@ -19,7 +19,7 @@ defmodule HanaShirabeWeb.MixProject do
     ]
   end
 
-  # Configuration for the OTP application.
+  # 配置 OTP 应用。
   #
   # Type `mix help compile.app` for more information.
   def application do
@@ -59,7 +59,8 @@ defmodule HanaShirabeWeb.MixProject do
       {:gettext, "~> 1.0"},
       {:hana_shirabe, in_umbrella: true},
       {:jason, "~> 1.2"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
     ]
   end
 

@@ -8,7 +8,39 @@ defmodule HanaShirabe.Umbrella.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
-      listeners: [Phoenix.CodeReloader]
+      listeners: [Phoenix.CodeReloader],
+      dialyzer: [
+        # 禁用 Dialyzer 的内联类型检查
+        # 要不然 HanaShirabeWeb.Gettext 老是报警告
+        #
+        # The call 'Elixir.Gettext.Plural':plural
+        #    ({<<122,104,95,72,97,110,115>>,
+        #      #{'__struct__' => 'Elixir.Expo.PluralForms',
+        #        nplurals => 1,
+        #        plural => 0}},
+        #     _@1 :: any()) does not have a term of type
+        #     binary() |
+        #     {_,
+        #      integer() |
+        #      #{'__struct__' := 'Elixir.Expo.PluralForms',
+        #        'nplurals' := pos_integer(),
+        #        'plural' := 'Elixir.Expo.PluralForms':plural_ast()}} (with opaque subterms) as 1st argument
+        #
+        # 有没有一种可能：`0` 就在 'Elixir.Expo.PluralForms':plural_ast() 里边？不信看源代码
+        #
+        # 参见： https://github.com/elixir-lang/elixir/issues/14576 以及
+        # https://github.com/erlang/otp/issues/9140
+        flags: [:no_opaque, :no_contracts],
+        # 如果 dialyzer 还是报错（比方说在新环境开发的时候）的话
+        # 解除注释下面这行，在根目录创建对应的文件
+        # ignore_warnings: "dialyzer.ignore"
+        # 再输入
+        # [{~c"./apps/hana_shirabe_weblib/hana_shirabe_web/gettext.ex", call_without_opaque}]
+        #
+        # 要是 ElixirLS 报错的话
+        # 以 .vscode/settings.json 为例
+        # {"elixirLS.dialyzerWarnOpts": ["no_opaque"]}
+      ]
     ]
   end
 
