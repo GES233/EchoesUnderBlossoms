@@ -1,4 +1,4 @@
-defmodule HsContent.MarkdownRenderTest do
+defmodule HSContent.MarkdownRenderTest do
   use ExUnit.Case
 
   describe "markdown <-> markdown" do
@@ -18,11 +18,13 @@ defmodule HsContent.MarkdownRenderTest do
       你是我的，我是，你的，谁。
       """
 
-      [plain_md: markdown_content]
+      mdex_content = markdown_content |> MDEx.document!()
+
+      {:ok, [plain_md: markdown_content, mdex_doc: mdex_content]}
     end
 
-    test "markdown -> hs_content" do
-      # ...
+    test "markdown -> hs_content", context do
+      assert context[:plain_md] |> HSContent.from_markdown() |> is_struct(HSContent)
     end
   end
 end
