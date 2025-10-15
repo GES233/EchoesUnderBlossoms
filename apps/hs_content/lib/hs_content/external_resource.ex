@@ -3,7 +3,8 @@ defmodule HSContent.ExternalResource do
   需要外部函数进行操作的外部资源。
   """
   @type t :: %__MODULE__{
-    mod: module()
+    mod: module(),
+    values: struct() | map(),
   }
-  defstruct [:mod]
+  defstruct [:mod, :values]
 end

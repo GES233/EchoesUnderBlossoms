@@ -29,3 +29,6 @@
     - Acfun, Niconico, Tieba, Bilibili, VNDB etc.
   - [ ] Bibliography
     - 可能需要实现 CSL 【工作量巨大】，可选
+- [ ] 在网页端使用 Quill Delta
+  - 与应用本体以及插件无缝衔接
+  - 参见 < https://elixirforum.com/t/how-to-connect-quill-with-phoenix/46004 >
