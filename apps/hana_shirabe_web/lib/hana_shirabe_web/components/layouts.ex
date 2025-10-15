@@ -171,7 +171,7 @@ defmodule HanaShirabeWeb.Layouts do
   def naive_title(assigns) do
     ~H"""
     <%= cond do %>
-      <% is_atom(@title_or_role) -> %> <!-- Role -->
+      <% is_atom(@title_or_role) and !is_nil(@title_or_role) -> %> <!-- Role -->
         <.live_title prefix={gettext("Echoes Under Blossoms") <> " :: "}>
           {@title_or_role |> Atom.to_string()}
         </.live_title>
