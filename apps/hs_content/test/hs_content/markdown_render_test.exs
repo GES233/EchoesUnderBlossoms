@@ -24,7 +24,7 @@ defmodule HSContent.MarkdownRenderTest do
     end
 
     test "markdown -> hs_content", context do
-      assert context[:plain_md] |> HSContent.from_markdown() |> is_struct(HSContent)
+      assert context[:plain_md] |> HSContent.Container.from_markdown() |> is_struct(HSContent.Container)
     end
   end
 end
