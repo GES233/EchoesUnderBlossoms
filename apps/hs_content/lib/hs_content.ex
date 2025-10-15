@@ -9,9 +9,13 @@ defmodule HsContent do
   @type t :: %__MODULE__{
     title: binary() | nil,
     content: binary() | MDEx.Document.t(),
-    external_resource: %{atom() => %{term() => any()}}
+    external_resource: %{atom() => %{term() => any()}} | nil
   }
-  defstruct [:title, :content, :external_resource]
+  defstruct [
+    :title,
+    content: "",
+    external_resource: nil
+  ]
 
   ## 结构体与文本的互换
 
