@@ -160,12 +160,29 @@ defmodule HanaShirabeWeb.Layouts do
 
   当然还有另一种情况，没有其他信息。那么就是
   `SiteName - Description` 。
+
+  ## Examples
+
+      <.naive_title title_or_role={fn -> gettext("SignUp") end} />
+      <.naive_title title_or_role={assigns[:page_title]} />
   """
-  slot :inner_block, required: true, doc: "Content rendered inside the `title` tag."
+  attr :title_or_role, :any, required: true, doc: "Content rendered inside the `title` tag."
 
   def naive_title(assigns) do
     ~H"""
-    <title>render_slot(@inner_block)</title>
+    <%= cond do %>
+      <% is_function(@title_or_role, 0) -> %> <!-- Role -->
+        <.live_title prefix={gettext("Echoes Under Blossoms") <> " :: "}>
+          {@title_or_role.()}
+        </.live_title>
+      <% is_binary(@title_or_role) -> %> <!-- Title -->
+        <.live_title suffix={" - " <> gettext("Echoes Under Blossoms")}>
+          {@title_or_role}
+        </.live_title>
+      <% true -> %> <!-- Other situation -->
+        <.live_title default={gettext("Echoes Under Blossoms")}>
+        </.live_title>
+    <% end %>
     """
   end
 end
