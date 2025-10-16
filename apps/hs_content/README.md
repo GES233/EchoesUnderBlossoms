@@ -22,11 +22,11 @@
     - 解决方案：只考虑标准 Markdown
 - [ ] 添加插件
   - `:mdex_gfm`
-- [ ] 添加自定义 MDEx 插件
+- [x] ~~添加自定义 MDEx 插件~~ 操作普通的渲染流
   - 需要自己调用（e.g. `mdex = [markdown: markdown] |> MDEx.new() |> MDExMermaid.attach()`）
   - [ ] 站内资源
     - 同时涉及到了 `hana_shirabe` 以及 `hana_shirabe_web` 两个应用，一个负责与领域模型对接，一个负责界面渲染相关（当前的解决方向，本应用定义 callback ，具体的对接业务在那两个应用实现）
-  - [ ] 网站链接
+  - [x] 网站链接
     - Acfun, Niconico, Tieba, Bilibili, VNDB etc.
   - [ ] Bibliography
     - 可能需要实现 CSL 【工作量巨大】，可选
