@@ -61,6 +61,7 @@ defmodule HanaShirabeWeb.MixProject do
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:mdex, "~> 0.8"}
     ]
   end
 

@@ -1,4 +1,4 @@
-defmodule HsContent.MixProject do
+defmodule HSContent.MixProject do
   use Mix.Project
 
   def project do

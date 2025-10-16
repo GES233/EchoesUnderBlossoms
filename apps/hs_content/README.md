@@ -15,10 +15,11 @@
 
 ## 路线图
 
-- [ ] 实现标准 Markdown 的处理以及渲染
+- [x] 实现标准 Markdown 的处理以及渲染
   - 使之可以通过一个函数来实现
   - 要求：「互换两次后的操作」为幂等
     - 需要来源： 数据库内的形式为 Markdown-like with assets annotation
+    - 解决方案：只考虑标准 Markdown
 - [ ] 添加插件
   - `:mdex_gfm`
 - [ ] 添加自定义 MDEx 插件
@@ -29,6 +30,7 @@
     - Acfun, Niconico, Tieba, Bilibili, VNDB etc.
   - [ ] Bibliography
     - 可能需要实现 CSL 【工作量巨大】，可选
-- [ ] 在网页端使用 Quill Delta
+- 【暂时无法实现】在网页端使用 Quill Delta
   - 与应用本体以及插件无缝衔接
   - 参见 < https://elixirforum.com/t/how-to-connect-quill-with-phoenix/46004 >
+  - 因目前还不支持 Quill Delta 向 `%MDEx.Document{}` 的处理，转用 EasyMDE

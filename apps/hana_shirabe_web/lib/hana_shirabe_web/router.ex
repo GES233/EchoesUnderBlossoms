@@ -21,6 +21,8 @@ defmodule HanaShirabeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    live "/playground", ContentLiveRender
   end
 
   # 其他 scope 可使用自定义的堆栈。
