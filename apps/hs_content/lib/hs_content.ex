@@ -79,7 +79,7 @@ defmodule HSContent do
   @spec to_repository_markdown(t(), any()) :: binary()
   def to_repository_markdown(%__MODULE__{document: doc, derive: derive, plugins: plugins}, _opts \\ []) do
     doc
-    |> apply_plugins(derive, :repository, plugins)
+    |> apply_plugins(derive, :domain, plugins)
     |> MDEx.to_markdown!()
   end
 

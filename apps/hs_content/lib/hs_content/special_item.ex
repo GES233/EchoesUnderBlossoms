@@ -1,4 +1,4 @@
-defmodule HSContent.HSDomainModel do
+defmodule HSContent.SpecialItem do
   @moduledoc """
   定义了一个内容转换插件的行为。
 
@@ -6,12 +6,14 @@ defmodule HSContent.HSDomainModel do
   插件的核心是一个 `transform/2` 函数，它接收一个 `MDEx.Document` 和一个
   目标环境，然后返回转换后的 `MDEx.Document`。
 
+  此外还包含一个 `normalize/1` 函数，负责构建领域模型。
+
   ## Examples
 
       defmodule UserPlugin do
-        @behaviour HSContent.HSDomainModel
+        @behaviour HSContent.SpecialItem
 
-        @impl HSContent.HSDomainModel
+        @impl true
         def transform(doc, env) do
           MDEx.traverse_and_update(document, fn
             %MDEx.Text{literal: text} = node when "@user:" in text ->
@@ -22,10 +24,10 @@ defmodule HSContent.HSDomainModel do
           end)
         end
 
-        @impl HSContent.HSDomainModel
+        @impl true
         def normalize(doc) do
           MDEx.traverse_and_update(document, fn
-            %MDEx.Link{destination: dest, title: _title} = node ->
+            %MDEx.Link{url: dest, title: _title} = node ->
               case Regex.run(~r|^/user/(\\d+)|, dest) do
                 [_, id] ->
                   %MDEx.Text{literal: "[[@user:\#{id}]]"}
