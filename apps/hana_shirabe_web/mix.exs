@@ -38,6 +38,7 @@ defmodule HanaShirabeWeb.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      ## Phoenix 网络应用
       {:phoenix, "~> 1.8.1"},
       {:phoenix_ecto, "~> 4.5"},
       {:phoenix_html, "~> 4.1"},
@@ -57,11 +58,18 @@ defmodule HanaShirabeWeb.MixProject do
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 1.0"},
-      {:hana_shirabe, in_umbrella: true},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
+
+      ## 承载业务逻辑的应用本体
+      {:hana_shirabe, in_umbrella: true},
+
+      ## 分析代码质量
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
-      {:mdex, "~> 0.8"}
+
+      ## 内容服务
+      {:mdex, "~> 0.8"},
+      {:hs_content, in_umbrella: true}
     ]
   end
 
@@ -72,6 +80,7 @@ defmodule HanaShirabeWeb.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      # 前端相关
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["compile", "tailwind hana_shirabe_web", "esbuild hana_shirabe_web"],
       "assets.deploy": [
@@ -79,6 +88,7 @@ defmodule HanaShirabeWeb.MixProject do
         "esbuild hana_shirabe_web --minify",
         "phx.digest"
       ],
+      # 更新要翻译的内容
       "gettext.update": [
         "gettext.extract",
         "gettext.merge priv/gettext --locale ja",
