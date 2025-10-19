@@ -16,7 +16,11 @@ Inspired by the work of [Mai Mai Mai Mai Miao](https://space.bilibili.com/349435
 They are dedicated to unearthing buried obscure music, especially lost works from Japanese VN/Galgame.
 Videos often focus on tracks where the author has disappeared and the source is hard to trace.
 
-In addition to Mai Mai Mai Mai Miao, [HachimiWorld](https://github.com/HachimiWorld)[^hachimi] as a meme-driven community is also a source of inspiration. We thus create a systematic, community-based platform, allowing more users to participate in excavation and re-creation, rather than limited to individual sharing.
+In addition to Mai Mai Mai Mai Miao, [HachimiWorld](https://github.com/HachimiWorld)[^hachimi] as a meme-driven community is also a source of inspiration, which is a community-driven Hachimi music player.
+Hachimi music is a subculture phenomenon popular on the Chinese internet. It originated around 2023 during a dispute over the definition of "Hachiimi" and subsequently evolved into a unique form of secondary creation, creating captivating remixes/MADs by deconstructing and reassembling specific audio and visual elements.
+This music, often featuring catchy melodies and comedic elements, has quickly spread among young users.
+
+Therefore, we plan to create a systematic, community-based platform to allow more users to participate in discovery and re-creation, rather than just individual sharing.
 
 [^hachimi]: This organization focuses on developing a community-driven open-source meme culture music community.
 
@@ -37,6 +41,20 @@ In addition to Mai Mai Mai Mai Miao, [HachimiWorld](https://github.com/HachimiWo
   - Re-creation and interpretation of audio resources involve the audio resource itself
 
 Regarding authors and vendors, since many are lost and hard to retrieve, they will not be considered as **primary** business objects [this point needs discussion].
+### Investigation Process
+
+- Proposal Submission and Verification
+  - The initiator(s) submit evidence proving the media may exist.
+  - Platform review or senior community members conduct an investigation to ensure it is unique and valid, and then publicly available on the site.
+- Proposal Investigation
+  - A proposal has two content tracks: the "Discussion Pool" and the "Investigation Tree." Valuable content in the "Discussion Pool" will be posted to the "Investigation Tree."
+  - The goal of the "Investigation Tree" is to organize a complete and mutually verifiable chain of evidence regarding the subject of the proposal's investigation.
+- Investigation, Narrative and Archiving Cycle
+  - When the nodes in the investigation tree reach a certain level, the lead author creates a timeline depicting the development of the incident.
+  - The nodes in the timeline correspond to the nodes in the evidence (i.e., the chain of evidence and the content in the timeline are mutually convertible and have a clear topology). This ensures that any subsequent reversals are feasible.
+  - When the investigation is stable and the timeline is complete, the lead author can create a "stable snapshot" for archiving. The latest snapshot will be publicly displayed.
+  - The archive is not frozen; the emergence of subversive evidence will result in a reopened investigation (which will also affect the corresponding content in the timeline).
+  - Proposals that lack sufficient evidence but are valuable will be subject to a "snapshot"
 
 ### Copyright
 
