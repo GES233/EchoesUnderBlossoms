@@ -1,6 +1,14 @@
 defmodule HanaShirabe.AuditLog do
   @moduledoc """
   类似于「岁月史书」的功能。
+
+  ### 格式说明
+
+  用户 `user` 或系统在 `insert_at` 时执行了有关 `scope` 领域的
+  `verb` 行动，其上下文为 `context` 。
+
+  上下文主要是被操作的对象（比方说管理员动用权限删除推文或封禁用户）
+  的类别以及 ID 或者是相关的数据，在操作时需要被检查或验证。
   """
   use Ecto.Schema
 
@@ -8,7 +16,13 @@ defmodule HanaShirabe.AuditLog do
   alias HanaShirabe.Repo
 
   schema "audit_log" do
-    field :scope, Ecto.Enum, values: [:account, :member, :spectator, :moderator, :proposal]
+    # 解释下这里的 scope 分别是什么
+    # account   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
+    # member    => 普通成员相关
+    # spectator => 普通内容管理
+    # moderator => 普通成员管理
+    # proposal  => 提案相关
+    field :scope, Ecto.Enum, values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
     field :verb, :string
     field :user_agent, :string
     field :ip_addr, HanaShirabe.EctoIP

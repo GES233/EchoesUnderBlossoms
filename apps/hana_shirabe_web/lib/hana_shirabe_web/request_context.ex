@@ -21,6 +21,7 @@ defmodule HanaShirabeWeb.RequestContext do
         |> Plug.Conn.assign(@request_context_key, fetch_audit_log(conn_or_socket, opts))
 
       %Phoenix.LiveView.Socket{} ->
+        # 主要在 MountHelpers 使用
         conn_or_socket
         |> Phoenix.Component.assign(%{@request_context_key => fetch_audit_log(conn_or_socket, opts)})
     end
