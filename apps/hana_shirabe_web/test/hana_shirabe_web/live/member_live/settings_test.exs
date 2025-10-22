@@ -20,7 +20,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert {:error, redirect} = live(conn, ~p"/members/settings")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/members/log-in"
+      assert path == ~p"/login"
       assert %{"error" => "You must log in to access this page."} = flash
     end
 
@@ -31,7 +31,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
           token_authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -11, :minute)
         )
         |> live(~p"/members/settings")
-        |> follow_redirect(conn, ~p"/members/log-in")
+        |> follow_redirect(conn, ~p"/login")
 
       assert conn.resp_body =~ "You must re-authenticate to access this page."
     end
@@ -204,7 +204,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       conn = build_conn()
       {:error, redirect} = live(conn, ~p"/members/settings/confirm-email/#{token}")
       assert {:redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/members/log-in"
+      assert path == ~p"/login"
       assert %{"error" => message} = flash
       assert message == "You must log in to access this page."
     end

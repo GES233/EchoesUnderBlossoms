@@ -1,7 +1,7 @@
 defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
-  # import HanaShirabeWeb.MemberAuth
+  import HanaShirabeWeb.MemberAuth
   import HanaShirabeWeb.RequestContext, only: [put_audit_context: 2]
 
   pipeline :browser do
@@ -47,7 +47,7 @@ defmodule HanaShirabeWeb.Router do
     end
   end
 
-  ## Authentication routes
+  ## 认证路由
 
   scope "/", HanaShirabeWeb do
     pipe_through [:browser, :require_authenticated_member]
@@ -67,11 +67,11 @@ defmodule HanaShirabeWeb.Router do
     live_session :current_member,
       on_mount: [{HanaShirabeWeb.MemberAuth, :mount_current_scope}] do
       live "/members/register", MemberLive.Registration, :new
-      live "/members/log-in", MemberLive.Login, :new
-      live "/members/log-in/:token", MemberLive.Confirmation, :new
+      live "/login", MemberLive.Login, :new
+      live "/login/:token", MemberLive.Confirmation, :new
     end
 
-    post "/members/log-in", MemberSessionController, :create
-    delete "/members/log-out", MemberSessionController, :delete
+    post "/login", MemberSessionController, :create
+    delete "/logout", MemberSessionController, :delete
   end
 end

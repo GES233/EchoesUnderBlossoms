@@ -8,12 +8,12 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
     %{unconfirmed_member: unconfirmed_member_fixture(), member: member_fixture()}
   end
 
-  describe "POST /members/log-in - email and password" do
+  describe "POST /login - email and password" do
     test "logs the member in", %{conn: conn, member: member} do
       member = set_password(member)
 
       conn =
-        post(conn, ~p"/members/log-in", %{
+        post(conn, ~p"/login", %{
           "member" => %{"email" => member.email, "password" => valid_member_password()}
         })
 
@@ -25,14 +25,14 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ member.email
       assert response =~ ~p"/members/settings"
-      assert response =~ ~p"/members/log-out"
+      assert response =~ ~p"/logout"
     end
 
     test "logs the member in with remember me", %{conn: conn, member: member} do
       member = set_password(member)
 
       conn =
-        post(conn, ~p"/members/log-in", %{
+        post(conn, ~p"/login", %{
           "member" => %{
             "email" => member.email,
             "password" => valid_member_password(),
@@ -50,7 +50,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       conn =
         conn
         |> init_test_session(member_return_to: "/foo/bar")
-        |> post(~p"/members/log-in", %{
+        |> post(~p"/login", %{
           "member" => %{
             "email" => member.email,
             "password" => valid_member_password()
@@ -63,21 +63,21 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
 
     test "redirects to login page with invalid credentials", %{conn: conn, member: member} do
       conn =
-        post(conn, ~p"/members/log-in?mode=password", %{
+        post(conn, ~p"/login?mode=password", %{
           "member" => %{"email" => member.email, "password" => "invalid_password"}
         })
 
       assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
-      assert redirected_to(conn) == ~p"/members/log-in"
+      assert redirected_to(conn) == ~p"/login"
     end
   end
 
-  describe "POST /members/log-in - magic link" do
+  describe "POST /login - magic link" do
     test "logs the member in", %{conn: conn, member: member} do
       {token, _hashed_token} = generate_member_magic_link_token(member)
 
       conn =
-        post(conn, ~p"/members/log-in", %{
+        post(conn, ~p"/login", %{
           "member" => %{"token" => token}
         })
 
@@ -89,7 +89,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ member.email
       assert response =~ ~p"/members/settings"
-      assert response =~ ~p"/members/log-out"
+      assert response =~ ~p"/logout"
     end
 
     test "confirms unconfirmed member", %{conn: conn, unconfirmed_member: member} do
@@ -97,7 +97,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       refute member.confirmed_at
 
       conn =
-        post(conn, ~p"/members/log-in", %{
+        post(conn, ~p"/login", %{
           "member" => %{"token" => token},
           "_action" => "confirmed"
         })
@@ -113,32 +113,32 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       response = html_response(conn, 200)
       assert response =~ member.email
       assert response =~ ~p"/members/settings"
-      assert response =~ ~p"/members/log-out"
+      assert response =~ ~p"/logout"
     end
 
     test "redirects to login page when magic link is invalid", %{conn: conn} do
       conn =
-        post(conn, ~p"/members/log-in", %{
+        post(conn, ~p"/login", %{
           "member" => %{"token" => "invalid"}
         })
 
       assert Phoenix.Flash.get(conn.assigns.flash, :error) ==
                "The link is invalid or it has expired."
 
-      assert redirected_to(conn) == ~p"/members/log-in"
+      assert redirected_to(conn) == ~p"/login"
     end
   end
 
-  describe "DELETE /members/log-out" do
+  describe "DELETE /logout" do
     test "logs the member out", %{conn: conn, member: member} do
-      conn = conn |> log_in_member(member) |> delete(~p"/members/log-out")
+      conn = conn |> log_in_member(member) |> delete(~p"/logout")
       assert redirected_to(conn) == ~p"/"
       refute get_session(conn, :member_token)
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Logged out successfully"
     end
 
     test "succeeds even if the member is not logged in", %{conn: conn} do
-      conn = delete(conn, ~p"/members/log-out")
+      conn = delete(conn, ~p"/logout")
       assert redirected_to(conn) == ~p"/"
       refute get_session(conn, :member_token)
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Logged out successfully"

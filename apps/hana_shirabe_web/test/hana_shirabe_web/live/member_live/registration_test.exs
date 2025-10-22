@@ -44,7 +44,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
 
       {:ok, _lv, html} =
         render_submit(form)
-        |> follow_redirect(conn, ~p"/members/log-in")
+        |> follow_redirect(conn, ~p"/login")
 
       assert html =~
                ~r/An email was sent to .*, please access it to confirm your account/
@@ -74,7 +74,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
         lv
         |> element("main a", "Log in")
         |> render_click()
-        |> follow_redirect(conn, ~p"/members/log-in")
+        |> follow_redirect(conn, ~p"/login")
 
       assert login_html =~ "Log in"
     end

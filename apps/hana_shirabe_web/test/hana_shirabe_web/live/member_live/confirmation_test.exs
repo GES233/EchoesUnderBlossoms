@@ -17,7 +17,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
           Accounts.deliver_login_instructions(member, url)
         end)
 
-      {:ok, _lv, html} = live(conn, ~p"/members/log-in/#{token}")
+      {:ok, _lv, html} = live(conn, ~p"/login/#{token}")
       assert html =~ "Confirm and stay logged in"
     end
 
@@ -27,7 +27,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
           Accounts.deliver_login_instructions(member, url)
         end)
 
-      {:ok, _lv, html} = live(conn, ~p"/members/log-in/#{token}")
+      {:ok, _lv, html} = live(conn, ~p"/login/#{token}")
       refute html =~ "Confirm my account"
       assert html =~ "Log in"
     end
@@ -38,7 +38,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
           Accounts.deliver_login_instructions(member, url)
         end)
 
-      {:ok, lv, _html} = live(conn, ~p"/members/log-in/#{token}")
+      {:ok, lv, _html} = live(conn, ~p"/login/#{token}")
 
       form = form(lv, "#confirmation_form", %{"member" => %{"token" => token}})
       render_submit(form)
@@ -57,8 +57,8 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       conn = build_conn()
 
       {:ok, _lv, html} =
-        live(conn, ~p"/members/log-in/#{token}")
-        |> follow_redirect(conn, ~p"/members/log-in")
+        live(conn, ~p"/login/#{token}")
+        |> follow_redirect(conn, ~p"/login")
 
       assert html =~ "Magic link is invalid or it has expired"
     end
@@ -72,7 +72,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
           Accounts.deliver_login_instructions(member, url)
         end)
 
-      {:ok, lv, _html} = live(conn, ~p"/members/log-in/#{token}")
+      {:ok, lv, _html} = live(conn, ~p"/login/#{token}")
 
       form = form(lv, "#login_form", %{"member" => %{"token" => token}})
       render_submit(form)
@@ -88,16 +88,16 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       conn = build_conn()
 
       {:ok, _lv, html} =
-        live(conn, ~p"/members/log-in/#{token}")
-        |> follow_redirect(conn, ~p"/members/log-in")
+        live(conn, ~p"/login/#{token}")
+        |> follow_redirect(conn, ~p"/login")
 
       assert html =~ "Magic link is invalid or it has expired"
     end
 
     test "raises error for invalid token", %{conn: conn} do
       {:ok, _lv, html} =
-        live(conn, ~p"/members/log-in/invalid-token")
-        |> follow_redirect(conn, ~p"/members/log-in")
+        live(conn, ~p"/login/invalid-token")
+        |> follow_redirect(conn, ~p"/login")
 
       assert html =~ "Magic link is invalid or it has expired"
     end

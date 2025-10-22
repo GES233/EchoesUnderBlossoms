@@ -14,7 +14,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             Register for an account
             <:subtitle>
               Already registered?
-              <.link navigate={~p"/members/log-in"} class="font-semibold text-brand hover:underline">
+              <.link navigate={~p"/login"} class="font-semibold text-brand hover:underline">
                 Log in
               </.link>
               to your account now.
@@ -60,7 +60,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
         {:ok, _} =
           Accounts.deliver_login_instructions(
             member,
-            &url(~p"/members/log-in/#{&1}")
+            &url(~p"/login/#{&1}")
           )
 
         {:noreply,
@@ -69,7 +69,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
            :info,
            "An email was sent to #{member.email}, please access it to confirm your account."
          )
-         |> push_navigate(to: ~p"/members/log-in")}
+         |> push_navigate(to: ~p"/login")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

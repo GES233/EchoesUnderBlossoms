@@ -27,7 +27,7 @@ defmodule HanaShirabe.AuditLog do
     field :user_agent, :string
     field :ip_addr, HanaShirabe.EctoIP
     field :context, :map, default: %{}
-    # TODO: belongs to user.
+    belongs_to :members, HanaShirabe.Accounts.Member
 
     timestamps(updated_at: false)
   end

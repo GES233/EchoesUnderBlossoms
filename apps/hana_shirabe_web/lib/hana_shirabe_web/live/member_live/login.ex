@@ -39,7 +39,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
           :let={f}
           for={@form}
           id="login_form_magic"
-          action={~p"/members/log-in"}
+          action={~p"/login"}
           phx-submit="submit_magic"
         >
           <.input
@@ -62,7 +62,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
           :let={f}
           for={@form}
           id="login_form_password"
-          action={~p"/members/log-in"}
+          action={~p"/login"}
           phx-submit="submit_password"
           phx-trigger-action={@trigger_submit}
         >
@@ -112,7 +112,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
     if member = Accounts.get_member_by_email(email) do
       Accounts.deliver_login_instructions(
         member,
-        &url(~p"/members/log-in/#{&1}")
+        &url(~p"/login/#{&1}")
       )
     end
 
@@ -122,7 +122,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
     {:noreply,
      socket
      |> put_flash(:info, info)
-     |> push_navigate(to: ~p"/members/log-in")}
+     |> push_navigate(to: ~p"/login")}
   end
 
   defp local_mail_adapter? do

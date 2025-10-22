@@ -7,8 +7,7 @@ defmodule HanaShirabeWeb.MemberAuth do
   alias HanaShirabe.Accounts
   alias HanaShirabe.Accounts.Scope
 
-  # Make the remember me cookie valid for 14 days. This should match
-  # the session validity setting in MemberToken.
+  # 使“记住我”的 cookie 有效期为 14 天。这应该与 MemberToken 中的会话有效期设置相匹配。
   @max_cookie_age_in_days 14
   @remember_me_cookie "_hana_shirabe_web_member_remember_me"
   @remember_me_options [
@@ -17,17 +16,14 @@ defmodule HanaShirabeWeb.MemberAuth do
     same_site: "Lax"
   ]
 
-  # How old the session token should be before a new one is issued. When a request is made
-  # with a session token older than this value, then a new session token will be created
-  # and the session and remember-me cookies (if set) will be updated with the new token.
-  # Lowering this value will result in more tokens being created by active users. Increasing
-  # it will result in less time before a session token expires for a user to get issued a new
-  # token. This can be set to a value greater than `@max_cookie_age_in_days` to disable
-  # the reissuing of tokens completely.
+  # 会话令牌的有效期为多长后才会发放新的令牌。当使用超过此值的会话令牌发出请求时，
+  # 将会创建一个新的会话令牌，并且会话 cookie 和“记住我”cookie（如果设置）将使用新令牌进行更新。
+  # 降低此值将导致活跃用户创建更多令牌，增加此值将缩短会话令牌过期前用户获得新令牌的时间。
+  # 可以将此值设置为大于 `@max_cookie_age_in_days` 的值，以完全禁用重新发放令牌。
   @session_reissue_age_in_days 7
 
   @doc """
-  Logs the member in.
+  登录。
 
   Redirects to the session's `:member_return_to` path
   or falls back to the `signed_in_path/1`.
@@ -224,7 +220,7 @@ defmodule HanaShirabeWeb.MemberAuth do
       socket =
         socket
         |> Phoenix.LiveView.put_flash(:error, "You must log in to access this page.")
-        |> Phoenix.LiveView.redirect(to: ~p"/members/log-in")
+        |> Phoenix.LiveView.redirect(to: ~p"/login")
 
       {:halt, socket}
     end
@@ -239,7 +235,7 @@ defmodule HanaShirabeWeb.MemberAuth do
       socket =
         socket
         |> Phoenix.LiveView.put_flash(:error, "You must re-authenticate to access this page.")
-        |> Phoenix.LiveView.redirect(to: ~p"/members/log-in")
+        |> Phoenix.LiveView.redirect(to: ~p"/login")
 
       {:halt, socket}
     end
@@ -274,7 +270,7 @@ defmodule HanaShirabeWeb.MemberAuth do
       conn
       |> put_flash(:error, "You must log in to access this page.")
       |> maybe_store_return_to()
-      |> redirect(to: ~p"/members/log-in")
+      |> redirect(to: ~p"/login")
       |> halt()
     end
   end

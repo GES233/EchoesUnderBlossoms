@@ -24,5 +24,18 @@ defmodule HanaShirabe.Repo.Migrations.CreateMembersAuthTables do
 
     create index(:members_tokens, [:member_id])
     create unique_index(:members_tokens, [:context, :token])
+
+    create table(:audit_logs) do
+      add :scope, :string
+      add :verb, :string
+      add :ip_addr, :string
+      add :user_agent, :string
+      add :context, :map
+      add :member_id, references(:users, on_delete: :nothing, type: :binary_id)
+
+      timestamps(updated_at: false)
+    end
+
+    create index(:audit_logs, [:member_id])
   end
 end
