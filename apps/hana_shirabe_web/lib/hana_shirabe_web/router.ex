@@ -2,6 +2,7 @@ defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
   # import HanaShirabeWeb.MemberAuth
+  import HanaShirabeWeb.RequestContext, only: [put_audit_context: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -11,6 +12,7 @@ defmodule HanaShirabeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     # plug :fetch_current_scope_for_member
+    plug :put_audit_context, []
   end
 
   pipeline :api do

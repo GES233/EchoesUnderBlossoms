@@ -106,7 +106,7 @@ defmodule HanaShirabeWeb.ContentLiveRender do
   end
 
   def handle_event("content_updated", %{"markdown" => markdown}, socket) do
-    IO.inspect(markdown)
+    # IO.inspect(markdown)
     # 流程: Delta -> Markdown -> HTML
     #
     # html = MDEx.to_html!(markdown, extension: [strikethrough: true, table: true, tasklist: true], syntax_highlight: [formatter: {:html_inline, theme: "github_dark"}])
