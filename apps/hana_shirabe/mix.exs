@@ -42,7 +42,8 @@ defmodule HanaShirabe.MixProject do
       {:ecto_sqlite3, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.16"},
-      {:req, "~> 0.5"}
+      {:req, "~> 0.5"},
+      {:argon2_elixir, "~> 4.0"}
     ]
   end
 

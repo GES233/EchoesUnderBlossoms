@@ -6,6 +6,19 @@
 # 这些应用程序移出保护伞。
 import Config
 
+config :hana_shirabe, :scopes,
+  member: [
+    default: true,
+    module: HanaShirabe.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:member, :id],
+    schema_key: :member_id,
+    schema_type: :id,
+    schema_table: :members,
+    test_data_fixture: HanaShirabe.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_member
+  ]
+
 # 配置 Mix 任务以及生成器
 config :hana_shirabe,
   ecto_repos: [HanaShirabe.Repo]

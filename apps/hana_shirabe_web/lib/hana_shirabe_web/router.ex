@@ -46,4 +46,32 @@ defmodule HanaShirabeWeb.Router do
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
   end
+
+  ## Authentication routes
+
+  scope "/", HanaShirabeWeb do
+    pipe_through [:browser, :require_authenticated_member]
+
+    live_session :require_authenticated_member,
+      on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
+      live "/members/settings", MemberLive.Settings, :edit
+      live "/members/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
+    end
+
+    post "/members/update-password", MemberSessionController, :update_password
+  end
+
+  scope "/", HanaShirabeWeb do
+    pipe_through [:browser]
+
+    live_session :current_member,
+      on_mount: [{HanaShirabeWeb.MemberAuth, :mount_current_scope}] do
+      live "/members/register", MemberLive.Registration, :new
+      live "/members/log-in", MemberLive.Login, :new
+      live "/members/log-in/:token", MemberLive.Confirmation, :new
+    end
+
+    post "/members/log-in", MemberSessionController, :create
+    delete "/members/log-out", MemberSessionController, :delete
+  end
 end
