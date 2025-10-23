@@ -31,7 +31,7 @@ defmodule HanaShirabe.Repo.Migrations.CreateMembersAuthTables do
       add :ip_addr, :string
       add :user_agent, :string
       add :context, :map
-      add :member_id, references(:users, on_delete: :nothing, type: :binary_id)
+      add :member_id, references(:members, on_delete: :nothing, type: :binary_id)
 
       timestamps(updated_at: false)
     end

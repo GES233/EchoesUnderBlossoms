@@ -1,10 +1,18 @@
 defmodule HanaShirabe.Accounts.MemberNotifier do
+  @moduledoc """
+  这里应该把这个 Notifier 的概念讲清楚。
+
+  这本质上就是通过非网站应用的层面通知用户的东西，所以不一定非得通过
+  Email ，通过短信、手机设备甚至是人肉通知也可以。
+  """
+  # TODO: 支持多语言（中日英是标配）。
+
   import Swoosh.Email
 
   alias HanaShirabe.Mailer
   alias HanaShirabe.Accounts.Member
 
-  # Delivers the email using the application mailer.
+  # 通过应用的邮箱发送邮件。
   defp deliver(recipient, subject, body) do
     email =
       new()
@@ -19,7 +27,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   end
 
   @doc """
-  Deliver instructions to update a member email.
+  使成员更新邮件的指示。
   """
   def deliver_update_email_instructions(member, url) do
     deliver(member.email, "Update email instructions", """
@@ -39,7 +47,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   end
 
   @doc """
-  Deliver instructions to log in with a magic link.
+  通过链接登录的指示。
   """
   def deliver_login_instructions(member, url) do
     case member do

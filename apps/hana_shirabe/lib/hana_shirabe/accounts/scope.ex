@@ -15,6 +15,8 @@ defmodule HanaShirabe.Accounts.Scope do
   Feel free to extend the fields on this struct to fit the needs of
   growing application requirements.
   """
+  # 建议参考文档：
+  # https://hexdocs.pm/phoenix/scopes.html
 
   alias HanaShirabe.Accounts.Member
 
@@ -30,4 +32,6 @@ defmodule HanaShirabe.Accounts.Scope do
   end
 
   def for_member(nil), do: nil
+
+  # def for(opts) when is_list(opts) do end
 end

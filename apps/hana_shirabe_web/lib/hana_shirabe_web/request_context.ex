@@ -36,14 +36,19 @@ defmodule HanaShirabeWeb.RequestContext do
       _ -> nil
     end
 
-    construct_audit_log(nil, ip, user_agent)
+    member = conn.assigns[:current_scope].member
+
+    construct_audit_log(member, ip, user_agent)
   end
 
   defp fetch_audit_log(%Phoenix.LiveView.Socket{} = socket, _opts) do
     %{address: ip} = Phoenix.LiveView.get_connect_info(socket, :peer_data)
     user_agent = Phoenix.LiveView.get_connect_info(socket, :user_agent)
 
-    construct_audit_log(nil, ip, user_agent)
+    # Fetch user from scope
+    member = socket.assigns[:current_scope].member
+
+    construct_audit_log(member, ip, user_agent)
   end
 
   defp construct_audit_log(_user, ip, user_agent) do
