@@ -16,7 +16,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
                 You need to reauthenticate to perform sensitive actions on your account.
               <% else %>
                 Don't have an account? <.link
-                  navigate={~p"/members/register"}
+                  navigate={~p"/sign_up"}
                   class="font-semibold text-brand hover:underline"
                   phx-no-format
                 >Sign up</.link> for an account now.

@@ -250,7 +250,7 @@ defmodule HanaShirabe.Accounts do
 
   ## Examples
 
-      iex> deliver_member_update_email_instructions(member, current_email, &url(~p"/members/settings/confirm-email/#{&1}"))
+      iex> deliver_member_update_email_instructions(member, current_email, &url(~p"/me/settings/confirm-email/#{&1}"))
       {:ok, %{to: ..., body: ...}}
 
   """

@@ -24,7 +24,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       assert response =~ member.email
-      assert response =~ ~p"/members/settings"
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 
@@ -88,7 +88,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       assert response =~ member.email
-      assert response =~ ~p"/members/settings"
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 
@@ -112,7 +112,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
       assert response =~ member.email
-      assert response =~ ~p"/members/settings"
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 

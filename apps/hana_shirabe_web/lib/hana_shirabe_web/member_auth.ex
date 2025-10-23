@@ -255,7 +255,7 @@ defmodule HanaShirabeWeb.MemberAuth do
   @doc "Returns the path to redirect to after log in."
   # the member was already logged in, redirect to settings
   def signed_in_path(%Plug.Conn{assigns: %{current_scope: %Scope{member: %Accounts.Member{}}}}) do
-    ~p"/members/settings"
+    ~p"/me/settings"
   end
 
   def signed_in_path(_), do: ~p"/"

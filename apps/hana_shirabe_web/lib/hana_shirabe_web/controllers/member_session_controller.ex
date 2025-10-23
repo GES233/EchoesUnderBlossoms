@@ -55,7 +55,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
     MemberAuth.disconnect_sessions(expired_tokens)
 
     conn
-    |> put_session(:member_return_to, ~p"/members/settings")
+    |> put_session(:member_return_to, ~p"/me/settings")
     |> create(params, "Password updated successfully!")
   end
 

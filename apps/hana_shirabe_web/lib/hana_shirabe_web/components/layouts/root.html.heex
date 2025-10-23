@@ -35,14 +35,14 @@
           {@current_scope.member.email}
         </li>
         <li>
-          <.link href={~p"/members/settings"}>Settings</.link>
+          <.link href={~p"/me/settings"}>Settings</.link>
         </li>
         <li>
           <.link href={~p"/logout"} method="delete">Log out</.link>
         </li>
       <% else %>
         <li>
-          <.link href={~p"/members/register"}>Register</.link>
+          <.link href={~p"/sign_up"}>Register</.link>
         </li>
         <li>
           <.link href={~p"/login"}>Log in</.link>

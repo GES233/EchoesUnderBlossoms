@@ -83,7 +83,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         lv
         |> element("main a", "Sign up")
         |> render_click()
-        |> follow_redirect(conn, ~p"/members/register")
+        |> follow_redirect(conn, ~p"/sign_up")
 
       assert login_html =~ "Register"
     end

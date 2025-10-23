@@ -72,8 +72,8 @@ LiveViews that require login should **always be placed inside the __existing__ `
       live_session :require_authenticated_member,
         on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
         # phx.gen.auth generated routes
-        live "/members/settings", MemberLive.Settings, :edit
-        live "/members/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
+        live "/me/settings", MemberLive.Settings, :edit
+        live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
         # our own routes that require logged in member
         live "/", MyLiveThatRequiresAuth, :index
       end

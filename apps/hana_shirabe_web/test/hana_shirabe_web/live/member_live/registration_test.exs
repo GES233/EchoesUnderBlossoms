@@ -6,7 +6,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
 
   describe "Registration page" do
     test "renders registration page", %{conn: conn} do
-      {:ok, _lv, html} = live(conn, ~p"/members/register")
+      {:ok, _lv, html} = live(conn, ~p"/sign_up")
 
       assert html =~ "Register"
       assert html =~ "Log in"
@@ -16,14 +16,14 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       result =
         conn
         |> log_in_member(member_fixture())
-        |> live(~p"/members/register")
+        |> live(~p"/sign_up")
         |> follow_redirect(conn, ~p"/")
 
       assert {:ok, _conn} = result
     end
 
     test "renders errors for invalid data", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/register")
+      {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       result =
         lv
@@ -37,7 +37,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
 
   describe "register member" do
     test "creates account but does not log in", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/register")
+      {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       email = unique_member_email()
       form = form(lv, "#registration_form", member: valid_member_attributes(email: email))
@@ -51,7 +51,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
     end
 
     test "renders errors for duplicated email", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/register")
+      {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       member = member_fixture(%{email: "test@email.com"})
 
@@ -68,7 +68,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
 
   describe "registration navigation" do
     test "redirects to login page when the Log in button is clicked", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/register")
+      {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       {:ok, _login_live, login_html} =
         lv

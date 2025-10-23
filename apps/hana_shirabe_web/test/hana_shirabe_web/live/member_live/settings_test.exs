@@ -10,14 +10,14 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       {:ok, _lv, html} =
         conn
         |> log_in_member(member_fixture())
-        |> live(~p"/members/settings")
+        |> live(~p"/me/settings")
 
       assert html =~ "Change Email"
       assert html =~ "Save Password"
     end
 
     test "redirects if member is not logged in", %{conn: conn} do
-      assert {:error, redirect} = live(conn, ~p"/members/settings")
+      assert {:error, redirect} = live(conn, ~p"/me/settings")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
@@ -30,7 +30,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> log_in_member(member_fixture(),
           token_authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -11, :minute)
         )
-        |> live(~p"/members/settings")
+        |> live(~p"/me/settings")
         |> follow_redirect(conn, ~p"/login")
 
       assert conn.resp_body =~ "You must re-authenticate to access this page."
@@ -46,7 +46,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     test "updates the member email", %{conn: conn, member: member} do
       new_email = unique_member_email()
 
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
         lv
@@ -60,7 +60,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "renders errors with invalid data (phx-change)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
         lv
@@ -75,7 +75,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn, member: member} do
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
         lv
@@ -98,7 +98,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     test "updates the member password", %{conn: conn, member: member} do
       new_password = valid_member_password()
 
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       form =
         form(lv, "#password_form", %{
@@ -113,7 +113,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
       new_password_conn = follow_trigger_action(form, conn)
 
-      assert redirected_to(new_password_conn) == ~p"/members/settings"
+      assert redirected_to(new_password_conn) == ~p"/me/settings"
 
       assert get_session(new_password_conn, :member_token) != get_session(conn, :member_token)
 
@@ -124,7 +124,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "renders errors with invalid data (phx-change)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
         lv
@@ -142,7 +142,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/members/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
         lv
@@ -174,27 +174,27 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "updates the member email once", %{conn: conn, member: member, token: token, email: email} do
-      {:error, redirect} = live(conn, ~p"/members/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
 
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/members/settings"
+      assert path == ~p"/me/settings"
       assert %{"info" => message} = flash
       assert message == "Email changed successfully."
       refute Accounts.get_member_by_email(member.email)
       assert Accounts.get_member_by_email(email)
 
       # use confirm token again
-      {:error, redirect} = live(conn, ~p"/members/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/members/settings"
+      assert path == ~p"/me/settings"
       assert %{"error" => message} = flash
       assert message == "Email change link is invalid or it has expired."
     end
 
     test "does not update email with invalid token", %{conn: conn, member: member} do
-      {:error, redirect} = live(conn, ~p"/members/settings/confirm-email/oops")
+      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/oops")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/members/settings"
+      assert path == ~p"/me/settings"
       assert %{"error" => message} = flash
       assert message == "Email change link is invalid or it has expired."
       assert Accounts.get_member_by_email(member.email)
@@ -202,7 +202,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
     test "redirects if member is not logged in", %{token: token} do
       conn = build_conn()
-      {:error, redirect} = live(conn, ~p"/members/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
       assert %{"error" => message} = flash

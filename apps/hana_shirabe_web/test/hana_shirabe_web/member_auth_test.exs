@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         |> assign(:current_scope, Scope.for_member(member))
         |> MemberAuth.log_in_member(member)
 
-      assert redirected_to(conn) == ~p"/members/settings"
+      assert redirected_to(conn) == ~p"/me/settings"
     end
 
     test "writes a cookie if remember_me was set in previous session", %{conn: conn, member: member} do

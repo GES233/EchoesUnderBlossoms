@@ -77,7 +77,7 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           put_flash(socket, :error, "Email change link is invalid or it has expired.")
       end
 
-    {:ok, push_navigate(socket, to: ~p"/members/settings")}
+    {:ok, push_navigate(socket, to: ~p"/me/settings")}
   end
 
   def mount(_params, _session, socket) do
@@ -118,7 +118,7 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
         Accounts.deliver_member_update_email_instructions(
           Ecto.Changeset.apply_action!(changeset, :insert),
           member.email,
-          &url(~p"/members/settings/confirm-email/#{&1}")
+          &url(~p"/me/settings/confirm-email/#{&1}")
         )
 
         info = "A link to confirm your email change has been sent to the new address."
