@@ -5,9 +5,10 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   这本质上就是通过非网站应用的层面通知用户的东西，所以不一定非得通过
   Email ，通过短信、手机设备甚至是人肉通知也可以。
   """
-  # TODO: 支持多语言（中日英是标配）。
 
   import Swoosh.Email
+
+  use Gettext, backend: HanaShirabe.Gettext
 
   alias HanaShirabe.Mailer
   alias HanaShirabe.Accounts.Member
@@ -30,20 +31,29 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   使成员更新邮件的指示。
   """
   def deliver_update_email_instructions(member, url) do
-    deliver(member.email, "Update email instructions", """
+    deliver(
+      member.email,
+      "Update email instructions",
+      dgettext(
+        "deliver",
+        """
 
-    ==============================
+        ==============================
 
-    Hi #{member.email},
+        Hi %{member_email},
 
-    You can change your email by visiting the URL below:
+        You can change your email by visiting the URL below:
 
-    #{url}
+        %{url}
 
-    If you didn't request this change, please ignore this.
+        If you didn't request this change, please ignore this.
 
-    ==============================
-    """)
+        ==============================
+        """,
+        member_email: member.email,
+        url: url
+      )
+    )
   end
 
   @doc """
@@ -57,36 +67,54 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   end
 
   defp deliver_magic_link_instructions(member, url) do
-    deliver(member.email, "Log in instructions", """
+    deliver(
+      member.email,
+      "Log in instructions",
+      dgettext(
+        "deliver",
+        """
 
-    ==============================
+        ==============================
 
-    Hi #{member.email},
+        Hi %{member_email},
 
-    You can log into your account by visiting the URL below:
+        You can log into your account by visiting the URL below:
 
-    #{url}
+        %{url}
 
-    If you didn't request this email, please ignore this.
+        If you didn't request this email, please ignore this.
 
-    ==============================
-    """)
+        ==============================
+        """,
+        member_email: member.email,
+        url: url
+      )
+    )
   end
 
   defp deliver_confirmation_instructions(member, url) do
-    deliver(member.email, "Confirmation instructions", """
+    deliver(
+      member.email,
+      "Confirmation instructions",
+      dgettext(
+        "deliver",
+        """
 
-    ==============================
+        ==============================
 
-    Hi #{member.email},
+        Hi %{member_email},
 
-    You can confirm your account by visiting the URL below:
+        You can confirm your account by visiting the URL below:
 
-    #{url}
+        %{url}
 
-    If you didn't create an account with us, please ignore this.
+        If you didn't create an account with us, please ignore this.
 
-    ==============================
-    """)
+        ==============================
+        """,
+        member_email: member.email,
+        url: url
+      )
+    )
   end
 end
