@@ -36,7 +36,10 @@ defmodule HanaShirabeWeb.RequestContext do
       _ -> nil
     end
 
-    member = conn.assigns[:current_scope].member
+    member = case conn.assigns[:current_scope] do
+      nil -> nil
+      %{member: member} -> member
+    end
 
     construct_audit_log(member, ip, user_agent)
   end
@@ -46,7 +49,10 @@ defmodule HanaShirabeWeb.RequestContext do
     user_agent = Phoenix.LiveView.get_connect_info(socket, :user_agent)
 
     # Fetch user from scope
-    member = socket.assigns[:current_scope].member
+    member = case socket.assigns[:current_scope] do
+      nil -> nil
+      %{member: member} -> member
+    end
 
     construct_audit_log(member, ip, user_agent)
   end
