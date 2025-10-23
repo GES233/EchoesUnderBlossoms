@@ -4,7 +4,7 @@ defmodule HanaShirabe.AuditLog do
 
   ### 格式说明
 
-  用户 `user` 或系统在 `insert_at` 时执行了有关 `scope` 领域的
+  主体（用户或系统）在 `insert_at` 时执行了有关 `scope` 领域的
   `verb` 行动，其上下文为 `context` 。
 
   上下文主要是被操作的对象（比方说管理员动用权限删除推文或封禁用户）
@@ -16,12 +16,15 @@ defmodule HanaShirabe.AuditLog do
   alias HanaShirabe.Repo
 
   schema "audit_log" do
-    # 解释下这里的 scope 分别是什么
+    # 解释下这里的 scope 分别指什么
     # account   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
     # member    => 普通成员相关
     # spectator => 普通内容管理
     # moderator => 普通成员管理
     # proposal  => 提案相关
+    # 这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值
+    # 所以到这里需要按照操作本身以及语境做映射
+    # 不过更具体的区分可能需要根据业务作梳理
     field :scope, Ecto.Enum, values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
     field :verb, :string
     field :user_agent, :string

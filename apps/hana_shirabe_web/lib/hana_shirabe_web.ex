@@ -47,8 +47,6 @@ defmodule HanaShirabeWeb do
     quote do
       use Phoenix.LiveView
 
-      import HanaShirabeWeb.MountHelpers
-
       unquote(html_helpers())
     end
   end
@@ -56,8 +54,6 @@ defmodule HanaShirabeWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
-
-      import HanaShirabeWeb.MountHelpers
 
       unquote(html_helpers())
     end
