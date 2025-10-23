@@ -1,6 +1,6 @@
 defmodule HanaShirabe.Accounts do
   @moduledoc """
-  The Accounts context.
+  账户相关上下文。
   """
 
   import Ecto.Query, warn: false
@@ -8,10 +8,10 @@ defmodule HanaShirabe.Accounts do
 
   alias HanaShirabe.Accounts.{Member, MemberToken, MemberNotifier}
 
-  ## Database getters
+  ## 增删改查的查
 
   @doc """
-  Gets a member by email.
+  通过邮件返回成员。
 
   ## Examples
 
@@ -27,7 +27,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Gets a member by email and password.
+  通过邮件以及密码返回成员。
 
   ## Examples
 
@@ -45,7 +45,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Gets a single member.
+  通过 ID 返回成员。
 
   Raises `Ecto.NoResultsError` if the Member does not exist.
 
@@ -60,10 +60,11 @@ defmodule HanaShirabe.Accounts do
   """
   def get_member!(id), do: Repo.get!(Member, id)
 
-  ## Member registration
+  ## 成员注册
 
+  # 早晚有天改成邀请制度。
   @doc """
-  Registers a member.
+  注册一个新成员。
 
   ## Examples
 
@@ -80,7 +81,7 @@ defmodule HanaShirabe.Accounts do
     |> Repo.insert()
   end
 
-  ## Settings
+  ## 设置
 
   @doc """
   Checks whether the member is in sudo mode.
@@ -167,10 +168,10 @@ defmodule HanaShirabe.Accounts do
     |> update_member_and_delete_all_tokens()
   end
 
-  ## Session
+  ## 会话
 
   @doc """
-  Generates a session token.
+  生成会话的令牌。
   """
   def generate_member_session_token(member) do
     {token, member_token} = MemberToken.build_session_token(member)
@@ -179,7 +180,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Gets the member with the given signed token.
+  通过被认证的令牌返回成员。
 
   If the token is valid `{member, token_inserted_at}` is returned, otherwise `nil` is returned.
   """
@@ -281,7 +282,7 @@ defmodule HanaShirabe.Accounts do
     :ok
   end
 
-  ## Token helper
+  ## 令牌 helper
 
   defp update_member_and_delete_all_tokens(changeset) do
     Repo.transact(fn ->
