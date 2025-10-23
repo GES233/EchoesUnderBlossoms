@@ -7,6 +7,10 @@
 import Config
 
 config :hana_shirabe, :scopes,
+  # 列举所有 Scope 。
+  #
+  # 这是 Phoenix 1.8+ 中引入的新功能。
+  # 怎么用还不清楚。
   member: [
     default: true,
     module: HanaShirabe.Accounts.Scope,

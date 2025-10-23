@@ -6,8 +6,8 @@ defmodule HanaShirabe.Accounts.MemberToken do
   @hash_algorithm :sha256
   @rand_size 32
 
-  # It is very important to keep the magic link token expiry short,
-  # since someone with access to the email may take over the account.
+  # 令登录链接的令牌快速过期很重要，
+  # 因为其他人有可能看到邮件。
   @magic_link_validity_in_minutes 15
   @change_email_validity_in_days 7
   @session_validity_in_days 14
@@ -23,9 +23,8 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
-  Generates a token that will be stored in a signed place,
-  such as session or cookie. As they are signed, those
-  tokens do not need to be hashed.
+  生成一个将会保存在类似于会话或 cookie 的 signed place 的令牌。
+  当被 signed 时，这些令牌不需要被散列处理。
 
   The reason why we store session tokens in the database, even
   though Phoenix already provides a session cookie, is because
@@ -48,12 +47,11 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  检查令牌是否合法并且通过查询返回。
 
-  The query returns the member found by the token, if any, along with the token's creation time.
+  如果令牌合法，查询将会返回成员，以及令牌的建立时间。
 
-  The token is valid if it matches the value in the database and it has
-  not expired (after @session_validity_in_days).
+  一旦数据库有匹配结果并且令牌没有过期（在 @session_validity_in_days 后），令牌合法。
   """
   def verify_session_token_query(token) do
     query =

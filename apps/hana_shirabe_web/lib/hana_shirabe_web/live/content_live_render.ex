@@ -1,6 +1,8 @@
 defmodule HanaShirabeWeb.ContentLiveRender do
   use HanaShirabeWeb, :live_view
 
+  on_mount {HanaShirabeWeb.MemberAuth, :mount_current_scope}
+
   def render(assigns) do
     ~H"""
     <Layouts.flash_group flash={@flash} />
@@ -101,6 +103,8 @@ defmodule HanaShirabeWeb.ContentLiveRender do
     end
     ```
     """
+
+    IO.inspect socket.assigns
 
     {:ok, assign(socket, :foo, MDEx.new(markdown: default_content))}
   end

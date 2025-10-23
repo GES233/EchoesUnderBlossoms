@@ -47,7 +47,7 @@ defmodule HanaShirabe.Accounts do
   @doc """
   通过 ID 返回成员。
 
-  Raises `Ecto.NoResultsError` if the Member does not exist.
+  如果用户不存在将会抛出 `Ecto.NoResultsError` 错误。
 
   ## Examples
 
@@ -84,7 +84,7 @@ defmodule HanaShirabe.Accounts do
   ## 设置
 
   @doc """
-  Checks whether the member is in sudo mode.
+  检查用户是否在 sudo 模式。
 
   The member is in sudo mode when the last authentication was done no further
   than 20 minutes ago. The limit can be given as second argument in minutes.
@@ -134,9 +134,9 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for changing the member password.
+  返回修改成员密码时的变化表（以 `%Ecto.Changeset{}` 结构体为主）。
 
-  See `HanaShirabe.Accounts.Member.password_changeset/3` for a list of supported options.
+  参见 `HanaShirabe.Accounts.Member.password_changeset/3` 可以查看支持的选项。
 
   ## Examples
 
@@ -149,9 +149,9 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Updates the member password.
+  更新成员的密码。
 
-  Returns a tuple with the updated member, as well as a list of expired tokens.
+  返回一个含有更新的成员以及过期令牌列表的元组。
 
   ## Examples
 
@@ -182,7 +182,7 @@ defmodule HanaShirabe.Accounts do
   @doc """
   通过被认证的令牌返回成员。
 
-  If the token is valid `{member, token_inserted_at}` is returned, otherwise `nil` is returned.
+  一旦令牌合法，将会返回 `{member, token_inserted_at}` ，否则返回 `nil` 。
   """
   def get_member_by_session_token(token) do
     {:ok, query} = MemberToken.verify_session_token_query(token)
@@ -190,7 +190,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Gets the member with the given magic link token.
+  根据 magic link 的令牌返回成员。
   """
   def get_member_by_magic_link_token(token) do
     with {:ok, query} <- MemberToken.verify_magic_link_token_query(token),
@@ -202,22 +202,20 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Logs the member in by magic link.
+  通过 magic link 返回成员，
 
-  There are three cases to consider:
+  需要注意的是三个用例：
 
-  1. The member has already confirmed their email. They are logged in
-     and the magic link is expired.
+  1. 成员已经确认了邮件。他们登录进来并且 magic link 过期。
 
-  2. The member has not confirmed their email and no password is set.
-     In this case, the member gets confirmed, logged in, and all tokens -
-     including session ones - are expired. In theory, no other tokens
-     exist but we delete all of them for best security practices.
+  2. 成员已经确认了他们的邮件但是没有设置密码。
+     早这个案例中，成员确认了、登录了，而且所有的令牌——
+     包括会话——都过期了。在这种情况，没有任何现存令牌，因此我们为最佳安全实践
+     删除了所有这些。
 
-  3. The member has not confirmed their email but a password is set.
-     This cannot happen in the default implementation but may be the
-     source of security pitfalls. See the "Mixing magic link and password registration" section of
-     `mix help phx.gen.auth`.
+  3. 成员没有确认邮件，但是已经设置密码了。
+     这默认情况下不可能发生，但是可能因为安全的 pitfalls 发生。
+     参见 "mix help phx.gen.auth" 中的 "Mixing magic link and password registration"（） 一节。
   """
   def login_member_by_magic_link(token) do
     {:ok, query} = MemberToken.verify_magic_link_token_query(token)
