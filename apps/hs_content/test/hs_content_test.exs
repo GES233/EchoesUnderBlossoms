@@ -1,6 +1,6 @@
-defmodule HsContentTest do
+defmodule HSContentTest do
   use ExUnit.Case
-  # doctest HsContent
+  # doctest HSContent
 
   test "truth" do
     assert 1 + 1 == 2

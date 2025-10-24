@@ -10,13 +10,14 @@
 
 再次基础上，通过修改 `phx mix.gen.auth` 自动生成的代码来处理（也可以魔改此前废弃项目的相关代码，其已经实现了 AuditLog 基于 bytepack）。
 
-- [ ] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
+- [x] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
   - [x] `MemberAuth` 的文档与注释
-  - [ ] `member_live` 里的那些（需要更新 Gettext）
-- [ ] 创建有关 AuditLog 相关的 mount_helpers ，使之可以被挂载到 `on_mount {...}` 中
+- [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.RequestContext, :mount_audit_log}` 被挂载
+  - [x] 测试
 - [ ] 将注册与登录的函数与 `%AuditLog{}` 合并 
 - [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
 - [ ] 优化「注册」与「修改信息」的流程
+  - [ ] 把 `member_live` 里的那些东西搞成多语言
   - 我倒是觉得先激活邮件再填写密码的方式很好
   - [ ] 仅有敏感操作（例如修改密码邮件）需要 sudo
   - [ ] 添加昵称、用户名、个人简介

@@ -10,9 +10,9 @@ defmodule HanaShirabeWeb.RequestContext do
   @request_context_key :audit_log
 
   # TODO: 考虑实现 on_mount 以适配 LiveView
-  # def on_mount(:mount_audit_log, _params, _session, socket) do
-  #   {:cont, put_audit_context(socket, session)}
-  # end
+  def on_mount(:mount_audit_log, _params, _session, socket) do
+    {:cont, put_audit_context(socket, [])}
+  end
 
   # 因为是照抄 https://github.com/dashbitco/bytepack_archive
   # 所以不知道现在 Plug 还能跑
@@ -72,6 +72,7 @@ defmodule HanaShirabeWeb.RequestContext do
     struct!(
       AuditLog,
       %{
+        # 要确定到底挂的是 member_id 还是 member 结构体
         member_id: if(is_struct(member, HanaShirabe.Accounts.Member), do: member.id, else: nil),
         ip_addr: ip,
         user_agent: user_agent

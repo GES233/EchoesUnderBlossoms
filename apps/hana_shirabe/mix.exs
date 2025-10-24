@@ -44,9 +44,10 @@ defmodule HanaShirabe.MixProject do
       {:swoosh, "~> 1.16"},
       {:req, "~> 0.5"},
       {:argon2_elixir, "~> 4.0"},
-      # 在 HanaShirabe.Accounts.MemberNotifier 中被使用
-      # 以支援多语言翻译
-      # （这里就是使用 Umbrella Application 的好处了）
+      # 在 HanaShirabe 中多个模块被使用以支援多语言翻译
+      # （这里就是使用 Umbrella Application 的特点了）
+      # 至于我什么要选择 Umbrella 是因为后续应用的复杂度
+      # 肯定可以用得上（只要社区可以正常运营下去的话）
       {:gettext, "~> 1.0"},
     ]
   end

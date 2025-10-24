@@ -1,20 +1,8 @@
 # 为了解决在 Windows 下需要调用 elixir_make 来进行编译的库报错的情况
-# 如果你喜欢 CMD 可以参考 https://hexdocs.pm/exqlite/windows.html
-# 如果是 Powershell 可以参考
-# "terminal.integrated.defaultProfile.windows": "PowerShellVS",
-#   "terminal.integrated.profiles.windows": {
-#       "PowerShellVS": {
-#           "source": "PowerShell",
-#           "args": [
-#               "-NoExit",
-#               "-Command",
-#               "&{Import-Module \"...\"}"
-#               // 就是你在安装 VS 后从终端的配置文件那一长串（记得转移引号）
-#           ],
-#           "icon": "terminal-powershell",
-#           "env": {}
-#       }
-#   }
+# 可以参考 https://hexdocs.pm/exqlite/windows.html
+# （没错那个 PR 是我提交的）
+# 另外关于 `mix.lock` 不规范的报错…
+# ~~我再想想办法~~ 等到 ElixirLS 重新运行一遍就可以忽略了
 defmodule HanaShirabe.Umbrella.MixProject do
   use Mix.Project
 
@@ -83,7 +71,9 @@ defmodule HanaShirabe.Umbrella.MixProject do
   defp deps do
     [
       # 需要运行 "mix format" 来针对位于伞项目根目录其他的 ~H 或 .heex 文件进行格式化
-      {:phoenix_live_view, ">= 0.0.0"}
+      {:phoenix_live_view, ">= 0.0.0"},
+      # 不需要加上 gettext ，只需要在所用到的应用下面写入
+      # 否则通不过编译
     ]
   end
 
