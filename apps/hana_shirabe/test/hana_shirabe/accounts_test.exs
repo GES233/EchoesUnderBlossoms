@@ -6,28 +6,28 @@ defmodule HanaShirabe.AccountsTest do
   import HanaShirabe.AccountsFixtures
   alias HanaShirabe.Accounts.{Member, MemberToken}
 
-  describe "get_member_by_email/1" do
-    test "does not return the member if the email does not exist" do
+  describe "测试 get_member_by_email/1" do
+    test "如果邮件不存在不要返回用户" do
       refute Accounts.get_member_by_email("unknown@example.com")
     end
 
-    test "returns the member if the email exists" do
+    test "邮件存在返回用户" do
       %{id: id} = member = member_fixture()
       assert %Member{id: ^id} = Accounts.get_member_by_email(member.email)
     end
   end
 
-  describe "get_member_by_email_and_password/2" do
-    test "does not return the member if the email does not exist" do
+  describe "测试 get_member_by_email_and_password/2" do
+    test "邮件不存在不返回用户" do
       refute Accounts.get_member_by_email_and_password("unknown@example.com", "hello world!")
     end
 
-    test "does not return the member if the password is not valid" do
+    test "密码不对不返回用户" do
       member = member_fixture() |> set_password()
       refute Accounts.get_member_by_email_and_password(member.email, "invalid")
     end
 
-    test "returns the member if the email and password are valid" do
+    test "邮件与密码都合法将返回成员" do
       %{id: id} = member = member_fixture() |> set_password()
 
       assert %Member{id: ^id} =
@@ -35,21 +35,22 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "get_member!/1" do
-    test "raises if id is invalid" do
+  describe "测试 get_member!/1" do
+    test "一旦无成员报错" do
       assert_raise Ecto.NoResultsError, fn ->
         Accounts.get_member!(-1)
       end
     end
 
-    test "returns the member with the given id" do
+    test "通过给定 id 返回成员" do
       %{id: id} = member = member_fixture()
       assert %Member{id: ^id} = Accounts.get_member!(member.id)
     end
   end
 
-  describe "register_member/2" do
-    # test "requires email to be set" do
+  describe "测试 register_member/2" do
+    # 整段亟待重构
+    # test "注册需要邮件" do
     #   {:error, changeset} = Accounts.register_member(%{})
     #   %{email: [error_msg]} = errors_on(changeset)
 
@@ -87,10 +88,12 @@ defmodule HanaShirabe.AccountsTest do
     #   assert is_nil(member.confirmed_at)
     #   assert is_nil(member.password)
     # end
+
+    # 需要更新需要事务日志的测试用例
   end
 
-  describe "sudo_mode?/2" do
-    test "validates the authenticated_at time" do
+  describe "测试 sudo_mode?/2" do
+    test "检查成员的认证时间相关" do
       now = NaiveDateTime.utc_now()
 
       assert Accounts.sudo_mode?(%Member{authenticated_at: NaiveDateTime.utc_now()})
@@ -98,29 +101,30 @@ defmodule HanaShirabe.AccountsTest do
       refute Accounts.sudo_mode?(%Member{authenticated_at: NaiveDateTime.add(now, -21, :minute)})
 
       # minute override
+      # 超时了（？）
       refute Accounts.sudo_mode?(
                %Member{authenticated_at: NaiveDateTime.add(now, -11, :minute)},
                -10
              )
 
-      # not authenticated
+      # 未认证
       refute Accounts.sudo_mode?(%Member{})
     end
   end
 
-  describe "change_member_email/3" do
-    test "returns a member changeset" do
+  describe "测试 change_member_email/3" do
+    test "返回成员变更集" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_member_email(%Member{})
       assert changeset.required == [:email]
     end
   end
 
-  describe "deliver_member_update_email_instructions/3" do
+  describe "测试 deliver_member_update_email_instructions/3" do
     setup do
       %{member: member_fixture()}
     end
 
-    test "sends token through notification", %{member: member} do
+    test "通过 notification 发送消息", %{member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_member_update_email_instructions(member, "current@example.com", url)
@@ -134,7 +138,7 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "update_member_email/2" do
+  describe "测试 update_member_email/2" do
     setup do
       member = unconfirmed_member_fixture()
       email = unique_member_email()
@@ -182,8 +186,8 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "change_member_password/3" do
-    test "returns a member changeset" do
+  describe "测试 change_member_password/3" do
+    test "返回成员变更集" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_member_password(%Member{})
       assert changeset.required == [:password]
     end
@@ -204,12 +208,12 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "update_member_password/2" do
+  describe "测试 update_member_password/2" do
     setup do
       %{member: member_fixture()}
     end
 
-    test "validates password", %{member: member} do
+    test "检查密码", %{member: member} do
       {:error, changeset} =
         Accounts.update_member_password(member, %{
           password: "not valid",
@@ -231,7 +235,7 @@ defmodule HanaShirabe.AccountsTest do
       assert "should be at most 72 character(s)" in errors_on(changeset).password
     end
 
-    test "updates the password", %{member: member} do
+    test "更新密码", %{member: member} do
       {:ok, {member, expired_tokens}} =
         Accounts.update_member_password(member, %{
           password: "new valid password"
@@ -242,7 +246,7 @@ defmodule HanaShirabe.AccountsTest do
       assert Accounts.get_member_by_email_and_password(member.email, "new valid password")
     end
 
-    test "deletes all tokens for the given member", %{member: member} do
+    test "删除给定成员的所有令牌", %{member: member} do
       _ = Accounts.generate_member_session_token(member)
 
       {:ok, {_, _}} =
@@ -254,12 +258,12 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "generate_member_session_token/1" do
+  describe "测试 generate_member_session_token/1" do
     setup do
       %{member: member_fixture()}
     end
 
-    test "generates a token", %{member: member} do
+    test "生成令牌", %{member: member} do
       token = Accounts.generate_member_session_token(member)
       assert member_token = Repo.get_by(MemberToken, token: token)
       assert member_token.context == "session"
@@ -284,7 +288,7 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "get_member_by_session_token/1" do
+  describe "测试 get_member_by_session_token/1" do
     setup do
       member = member_fixture()
       token = Accounts.generate_member_session_token(member)
@@ -309,29 +313,29 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "get_member_by_magic_link_token/1" do
+  describe "测试 get_member_by_magic_link_token/1" do
     setup do
       member = member_fixture()
       {encoded_token, _hashed_token} = generate_member_magic_link_token(member)
       %{member: member, token: encoded_token}
     end
 
-    test "returns member by token", %{member: member, token: token} do
+    test "通过令牌返回用户", %{member: member, token: token} do
       assert session_member = Accounts.get_member_by_magic_link_token(token)
       assert session_member.id == member.id
     end
 
-    test "does not return member for invalid token" do
+    test "令牌不合法不返回用户" do
       refute Accounts.get_member_by_magic_link_token("oops")
     end
 
-    test "does not return member for expired token", %{token: token} do
-      {1, nil} = Repo.update_all(MemberToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
+    test "过期令牌不返回用户", %{token: token} do
+      {1, nil} = Repo.update_all(MemberToken, set: [inserted_at: ~N[2000-01-01 00:00:00]])
       refute Accounts.get_member_by_magic_link_token(token)
     end
   end
 
-  describe "login_member_by_magic_link/1" do
+  describe "测试 login_member_by_magic_link/1" do
     test "confirms member and expires tokens" do
       member = unconfirmed_member_fixture()
       refute member.confirmed_at
@@ -363,8 +367,8 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "delete_member_session_token/1" do
-    test "deletes the token" do
+  describe "测试 delete_member_session_token/1" do
+    test "删除令牌" do
       member = member_fixture()
       token = Accounts.generate_member_session_token(member)
       assert Accounts.delete_member_session_token(token) == :ok
@@ -372,7 +376,7 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "deliver_login_instructions/2" do
+  describe "测试 deliver_login_instructions/2" do
     setup do
       %{member: unconfirmed_member_fixture()}
     end
@@ -391,8 +395,9 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "inspect/2 for the Member module" do
-    test "does not include password" do
+  describe "测试用于成员结构体的 inspect/2" do
+    test "不要显示密码" do
+      # 也实现不了，因为 password 是 vitual 字段
       refute inspect(%Member{password: "123456"}) =~ "password: \"123456\""
     end
   end
