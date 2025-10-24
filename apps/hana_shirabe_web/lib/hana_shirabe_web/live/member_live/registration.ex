@@ -1,4 +1,12 @@
 defmodule HanaShirabeWeb.MemberLive.Registration do
+  @moduledoc """
+  注册用户。
+
+  为什么要写这个文档？是因为后续要考虑邀请注册。
+  将要讨论如何整合其到 `mix phx.gen.auth` 生成的代码中。
+
+  作为一种提高准入门槛以确保整体素质下限的手段，邀请注册是一种不错的方式。
+  """
   use HanaShirabeWeb, :live_view
 
   alias HanaShirabe.Accounts
@@ -11,9 +19,10 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
       <div class="mx-auto max-w-sm">
         <div class="text-center">
           <.header>
-            Register for an account
+            {dgettext("account", "Register for an account")}
             <:subtitle>
-              Already registered?
+              {dgettext("account", "Already registered?")}
+              <!-- 这种带元素的怎么处理来着？ -->
               <.link navigate={~p"/login"} class="font-semibold text-brand hover:underline">
                 Log in
               </.link>
@@ -32,8 +41,10 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             phx-mounted={JS.focus()}
           />
 
+          <!-- 放个将要成为邀请码的 .iuput 在这里 -->
+
           <.button phx-disable-with="Creating account..." class="btn btn-primary w-full">
-            Create an account
+            {dgettext("account", "Create an account")}
           </.button>
         </.form>
       </div>
@@ -67,7 +78,11 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
          socket
          |> put_flash(
            :info,
-           "An email was sent to #{member.email}, please access it to confirm your account."
+           dgettext(
+             "account",
+             "An email was sent to %{member_email}, please access it to confirm your account.",
+             member_email: member.email
+           )
          )
          |> push_navigate(to: ~p"/login")}
 

@@ -37,7 +37,7 @@ defmodule HanaShirabe.Accounts.Member do
       changeset
       |> validate_required([:email])
       |> validate_format(:email, ~r/^[^@,;\s]+@[^@,;\s]+$/,
-        message: dgettext("member", "must have the @ sign and no spaces")
+        message: dgettext("account", "must have the @ sign and no spaces")
       )
       |> validate_length(:email, max: 160)
 
@@ -53,7 +53,7 @@ defmodule HanaShirabe.Accounts.Member do
 
   defp validate_email_changed(changeset) do
     if get_field(changeset, :email) && get_change(changeset, :email) == nil do
-      add_error(changeset, :email, dgettext("member", "did not change"))
+      add_error(changeset, :email, dgettext("account", "did not change"))
     else
       changeset
     end
@@ -77,7 +77,7 @@ defmodule HanaShirabe.Accounts.Member do
   def password_changeset(member, attrs, opts \\ []) do
     member
     |> cast(attrs, [:password])
-    |> validate_confirmation(:password, message: dgettext("member", "does not match password"))
+    |> validate_confirmation(:password, message: dgettext("account", "does not match password"))
     |> validate_password(opts)
   end
 

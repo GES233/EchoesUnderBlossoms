@@ -63,11 +63,11 @@ defmodule HanaShirabeWeb do
     quote do
       use Phoenix.Component
 
-      # Import convenience functions from controllers
+      # 从控制器导入便捷函数
       import Phoenix.Controller,
         only: [get_csrf_token: 0, view_module: 1, view_template: 1]
 
-      # Include general helpers for rendering HTML
+      # 导入用于渲染 HTML 的通用助手
       unquote(html_helpers())
     end
   end
@@ -77,9 +77,9 @@ defmodule HanaShirabeWeb do
       # 翻译
       use Gettext, backend: HanaShirabeWeb.Gettext
 
-      # HTML escaping functionality
+      # HTML 防解析相关
       import Phoenix.HTML
-      # Core UI components
+      # 核心 UI 组件
       import HanaShirabeWeb.CoreComponents
 
       # 模板用的通用模块
