@@ -22,6 +22,9 @@ defmodule HanaShirabe.Accounts.MemberToken do
     timestamps(updated_at: false)
   end
 
+  @doc "因为其他模块会用到所以直接写个函数调过去。"
+  def get_session_validity_in_days, do: @session_validity_in_days
+
   @doc """
   生成一个将会保存在类似于会话或 cookie 的 signed place 的令牌。
   当被 signed 时，这些令牌不需要被散列处理。

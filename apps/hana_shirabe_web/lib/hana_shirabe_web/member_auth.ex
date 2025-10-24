@@ -7,8 +7,8 @@ defmodule HanaShirabeWeb.MemberAuth do
   alias HanaShirabe.Accounts
   alias HanaShirabe.Accounts.Scope
 
-  # 使“记住我”的 cookie 有效期为 14 天。这应该与 MemberToken 中的会话有效期设置相匹配。
-  @max_cookie_age_in_days 14
+  # “记住我”的 cookie 有效期为与 MemberToken 中的会话有效期设置相匹配。
+  @max_cookie_age_in_days Accounts.MemberToken.get_session_validity_in_days()
   @remember_me_cookie "_hana_shirabe_web_member_remember_me"
   @remember_me_options [
     sign: true,
@@ -25,8 +25,8 @@ defmodule HanaShirabeWeb.MemberAuth do
   @doc """
   登录。
 
-  Redirects to the session's `:member_return_to` path
-  or falls back to the `signed_in_path/1`.
+  重定向至会话的 `:member_return_to` 路径
+  或回退到 `signed_in_path/1`。
   """
   def log_in_member(conn, member, params \\ %{}) do
     member_return_to = get_session(conn, :member_return_to)
@@ -37,9 +37,9 @@ defmodule HanaShirabeWeb.MemberAuth do
   end
 
   @doc """
-  Logs the member out.
+  登出。
 
-  It clears all session data for safety. See renew_session.
+  清理所有会话数据以确保安全。见 renew_session/2 。
   """
   def log_out_member(conn) do
     member_token = get_session(conn, :member_token)
@@ -56,9 +56,9 @@ defmodule HanaShirabeWeb.MemberAuth do
   end
 
   @doc """
-  Authenticates the member by looking into the session and remember me token.
+  通过 session 和「记住我」令牌进行成员认证。
 
-  Will reissue the session token if it is older than the configured age.
+  将在令牌超过配置的年龄后重新发放会话令牌。
   """
   def fetch_current_scope_for_member(conn, _opts) do
     with {token, conn} <- ensure_member_token(conn),
@@ -85,7 +85,8 @@ defmodule HanaShirabeWeb.MemberAuth do
     end
   end
 
-  # Reissue the session token if it is older than the configured reissue age.
+  # 一旦令牌太久了，就会创建一个新的会话令牌，并且会话 cookie
+  # 和“记住我”cookie（如果设置）将使用新令牌进行更新。
   defp maybe_reissue_member_session_token(conn, member, token_inserted_at) do
     token_age = NaiveDateTime.diff(NaiveDateTime.utc_now(:second), token_inserted_at, :day)
 
@@ -96,14 +97,11 @@ defmodule HanaShirabeWeb.MemberAuth do
     end
   end
 
-  # This function is the one responsible for creating session tokens
-  # and storing them safely in the session and cookies. It may be called
-  # either when logging in, during sudo mode, or to renew a session which
-  # will soon expire.
+  # 此功能负责创建会话令牌并将其安全地存储在会话和 cookie 中。它可以在登录时、
+  # sudo 模式期间或续订即将过期的会话时调用。
   #
-  # When the session is created, rather than extended, the renew_session
-  # function will clear the session to avoid fixation attacks. See the
-  # renew_session function to customize this behaviour.
+  # 当会话建立时，而不是扩展时，renew_session 函数将清除会话以避免固定攻击。
+  # 请参阅 renew_session/2 函数以自定义此行为。
   defp create_or_extend_session(conn, member, params) do
     token = Accounts.generate_member_session_token(member)
     remember_me = get_session(conn, :member_remember_me)
@@ -114,17 +112,14 @@ defmodule HanaShirabeWeb.MemberAuth do
     |> maybe_write_remember_me_cookie(token, params, remember_me)
   end
 
-  # Do not renew session if the member is already logged in
-  # to prevent CSRF errors or data being lost in tabs that are still open
+  # 不要在成员已经登录的情况下续订会话，以防止仍然打开的标签页中出现 CSRF 错误或数据丢失
   defp renew_session(conn, member) when conn.assigns.current_scope.member.id == member.id do
     conn
   end
 
-  # This function renews the session ID and erases the whole
-  # session to avoid fixation attacks. If there is any data
-  # in the session you may want to preserve after log in/log out,
-  # you must explicitly fetch the session data before clearing
-  # and then immediately set it after clearing, for example:
+  # 此函数续订会话 ID 并清除整个会话以避免固定攻击。如果会话中有任何数据
+  # 您可能希望在登录/注销后保留，您必须在清除之前显式获取会话数据，
+  # 然后在清除后立即设置它，例如：
   #
   #     defp renew_session(conn, _member) do
   #       delete_csrf_token()
@@ -165,7 +160,7 @@ defmodule HanaShirabeWeb.MemberAuth do
   end
 
   @doc """
-  Disconnects existing sockets for the given tokens.
+  断开给定令牌现有的 socket 连接。
   """
   def disconnect_sessions(tokens) do
     Enum.each(tokens, fn %{token: token} ->
@@ -176,23 +171,24 @@ defmodule HanaShirabeWeb.MemberAuth do
   defp member_session_topic(token), do: "members_sessions:#{Base.url_encode64(token)}"
 
   @doc """
-  Handles mounting and authenticating the current_scope in LiveViews.
+  负责处理 LiveView 中的 current_scope 的挂载和认证。
 
-  ## `on_mount` arguments
+  ## `on_mount` 挂载选项
 
-    * `:mount_current_scope` - Assigns current_scope
-      to socket assigns based on member_token, or nil if
-      there's no member_token or no matching member.
+    * `:mount_current_scope` - 将「当前范围」（current_scope）基于
+      member_token 分配到 socket assigns 中，如果没有 member_token
+      或没有匹配的成员，则为 nil。
 
-    * `:require_authenticated` - Authenticates the member from the session,
-      and assigns the current_scope to socket assigns based
-      on member_token.
-      Redirects to login page if there's no logged member.
+    * `:require_authenticated` - 根据会话认证成员，并且将
+      current_scope 分配到 socket assigns 中。
+      如果没有已登录的成员，则重定向到登录页面。
+
+    * `:require_sudo_mode` - 根据会话认证成员，并且确保成员
+      处于 sudo 模式（最近重新认证过）。
 
   ## Examples
 
-  Use the `on_mount` lifecycle macro in LiveViews to mount or authenticate
-  the `current_scope`:
+  使用 `on_mount` 生命周期宏在 LiveViews 中挂载或认证 `current_scope`：
 
       defmodule HanaShirabeWeb.PageLive do
         use HanaShirabeWeb, :live_view
@@ -201,7 +197,7 @@ defmodule HanaShirabeWeb.MemberAuth do
         ...
       end
 
-  Or use the `live_session` of your router to invoke the on_mount callback:
+  或使用 `live_session` 在路由器中调用 on_mount 回调：
 
       live_session :authenticated, on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
         live "/profile", ProfileLive, :index
@@ -252,8 +248,8 @@ defmodule HanaShirabeWeb.MemberAuth do
     end)
   end
 
-  @doc "Returns the path to redirect to after log in."
-  # the member was already logged in, redirect to settings
+  @doc "返回登陆后的重定向路径。"
+  # 成员以及登录了，重定向到设置页面
   def signed_in_path(%Plug.Conn{assigns: %{current_scope: %Scope{member: %Accounts.Member{}}}}) do
     ~p"/me/settings"
   end
@@ -261,7 +257,7 @@ defmodule HanaShirabeWeb.MemberAuth do
   def signed_in_path(_), do: ~p"/"
 
   @doc """
-  Plug for routes that require the member to be authenticated.
+  用于需要成员认证的路由的 Plug 。
   """
   def require_authenticated_member(conn, _opts) do
     if conn.assigns.current_scope && conn.assigns.current_scope.member do

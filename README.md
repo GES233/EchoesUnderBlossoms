@@ -12,12 +12,12 @@ A platform for excavating rarely circulated works from Visual Novels / Galgames 
 >
 > —— Mai Mai Mai Mai Miao
 
-Inspired by the work of [Mai Mai Mai Mai Miao](https://space.bilibili.com/3494356619102794).
-They are dedicated to unearthing buried obscure music, especially lost works from Japanese VN/Galgame.
+Inspired by the work of [Mai Mai Mai Mai Miao(Riri)](https://space.bilibili.com/3494356619102794).
+He's dedicated to unearthing buried obscure music, especially lost works from Japanese VN/Galgame.
 Videos often focus on tracks where the author has disappeared and the source is hard to trace.
 
-In addition to Mai Mai Mai Mai Miao, [HachimiWorld](https://github.com/HachimiWorld)[^hachimi] as a meme-driven community is also a source of inspiration, which is a community-driven Hachimi music player.
-Hachimi music is a subculture phenomenon popular on the Chinese internet. It originated around 2023 during a dispute over the definition of "Hachiimi" and subsequently evolved into a unique form of secondary creation, creating captivating remixes/MADs by deconstructing and reassembling specific audio and visual elements.
+In addition to Riri, [HachimiWorld](https://github.com/HachimiWorld)[^hachimi] as a meme-driven community is also a source of inspiration, which is a community-driven Hachimi music player.
+Hachimi music is a subculture phenomenon popular on the Chinese internet. It originated around 2023 during a dispute over the definition of "Hachimi" and subsequently evolved into a unique form of secondary creation, creating captivating remixes/MADs by deconstructing and reassembling specific audio and visual elements.
 This music, often featuring catchy melodies and comedic elements, has quickly spread among young users.
 
 Therefore, we plan to create a systematic, community-based platform to allow more users to participate in discovery and re-creation, rather than just individual sharing.
