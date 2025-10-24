@@ -1,19 +1,16 @@
 defmodule HanaShirabe.Accounts.Scope do
   @moduledoc """
-  Defines the scope of the caller to be used throughout the app.
+  定义整个应用程序中调用者的作用域。
 
-  The `HanaShirabe.Accounts.Scope` allows public interfaces to receive
-  information about the caller, such as if the call is initiated from an
-  end-user, and if so, which user. Additionally, such a scope can carry fields
-  such as "super user" or other privileges for use as authorization, or to
-  ensure specific code paths can only be access for a given scope.
+  `HanaShirabe.Accounts.Scope` 允许公共接口获取调用者信息，
+  例如调用是否由终端用户发起，若为用户调用则可识别具体用户身份。
+  此外，此范围可承载“超级用户”等特权字段，用于授权验证或
+  确保特定代码路径仅限于指定范围访问。
 
-  It is useful for logging as well as for scoping pubsub subscriptions and
-  broadcasts when a caller subscribes to an interface or performs a particular
-  action.
+  该功能在调用方订阅接口或执行特定操作时，既适用于日志记录，
+  也适用于 pubsub 订阅与广播的范围限定。
 
-  Feel free to extend the fields on this struct to fit the needs of
-  growing application requirements.
+  欢迎根据应用程序不断增长的需求扩展此结构体的字段。
   """
   # 建议参考文档：
   # https://hexdocs.pm/phoenix/scopes.html
@@ -23,9 +20,9 @@ defmodule HanaShirabe.Accounts.Scope do
   defstruct member: nil
 
   @doc """
-  Creates a scope for the given member.
+  从给定用户返回作用域。
 
-  Returns nil if no member is given.
+  如果没有成员那么返回 nil 。
   """
   def for_member(%Member{} = member) do
     %__MODULE__{member: member}

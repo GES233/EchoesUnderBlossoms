@@ -2,6 +2,10 @@ defmodule HanaShirabe.Accounts.Member do
   use Ecto.Schema
   import Ecto.Changeset
 
+  # 因为这里的信息可能会传导到网页（通过 Phoenix Conreoller 或 LiveView）
+  # 所以也一并翻译上吧。
+  use Gettext, backend: HanaShirabe.Gettext
+
   schema "members" do
     field :email, :string
     field :password, :string, virtual: true, redact: true
@@ -13,15 +17,14 @@ defmodule HanaShirabe.Accounts.Member do
   end
 
   @doc """
-  A member changeset for registering or changing the email.
+  和邮件有关的变更集，主要用于注册以及更改邮件。
 
-  It requires the email to change otherwise an error is added.
+  其需要邮件发生变化，否则会添加错误。
 
   ## Options
 
-    * `:validate_unique` - Set to false if you don't want to validate the
-      uniqueness of the email, useful when displaying live validations.
-      Defaults to `true`.
+    * `:validate_unique` - 如果你不想要确保邮件唯一性，可以设置为 false ，这在显示实时验证时很有用。
+      默认是 `true` 。
   """
   def email_changeset(member, attrs, opts \\ []) do
     member
@@ -34,7 +37,7 @@ defmodule HanaShirabe.Accounts.Member do
       changeset
       |> validate_required([:email])
       |> validate_format(:email, ~r/^[^@,;\s]+@[^@,;\s]+$/,
-        message: "must have the @ sign and no spaces"
+        message: dgettext("member", "must have the @ sign and no spaces")
       )
       |> validate_length(:email, max: 160)
 
@@ -50,7 +53,7 @@ defmodule HanaShirabe.Accounts.Member do
 
   defp validate_email_changed(changeset) do
     if get_field(changeset, :email) && get_change(changeset, :email) == nil do
-      add_error(changeset, :email, "did not change")
+      add_error(changeset, :email, dgettext("member", "did not change"))
     else
       changeset
     end
@@ -74,7 +77,7 @@ defmodule HanaShirabe.Accounts.Member do
   def password_changeset(member, attrs, opts \\ []) do
     member
     |> cast(attrs, [:password])
-    |> validate_confirmation(:password, message: "does not match password")
+    |> validate_confirmation(:password, message: dgettext("member", "does not match password"))
     |> validate_password(opts)
   end
 

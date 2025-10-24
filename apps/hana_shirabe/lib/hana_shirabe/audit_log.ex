@@ -22,6 +22,7 @@ defmodule HanaShirabe.AuditLog do
     # spectator => 普通内容管理
     # moderator => 普通成员管理
     # proposal  => 提案相关
+    # site_generate_content => 站点生成内容（例如全站通知或是什么的）相关
     # 这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值
     # 所以到这里需要按照操作本身以及语境做映射
     # 不过更具体的区分可能需要根据业务作梳理
@@ -58,9 +59,9 @@ defmodule HanaShirabe.AuditLog do
   def multi(multi, audit_context, scope, verb, callback_or_context)
 
   # 需要来自 Ecto 的查询结果
-  def multi(multi, audit_context, scope, verb, function) when is_function(function, 2) do
+  def multi(multi, audit_context, scope, verb, callback) when is_function(callback, 2) do
     Ecto.Multi.run(multi, :audit, fn repo, res ->
-      log = build!(function.(audit_context, res), scope, verb, %{})
+      log = build!(callback.(audit_context, res), scope, verb, %{})
       {:ok, repo.insert!(log)}
     end)
   end
@@ -85,4 +86,9 @@ defmodule HanaShirabe.AuditLog do
 
     # TODO: validate
   end
+
+  # TODO：
+  # 创建一个从 Phoenix 的 Scope 构造 AuditLog 的函数
+  # 具体地说，是决定 AuditLog 中的 scope 字段
+  # 因为那决定着 context 里边的键到底有哪些
 end

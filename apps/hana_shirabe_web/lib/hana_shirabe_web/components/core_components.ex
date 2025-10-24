@@ -1,29 +1,25 @@
 defmodule HanaShirabeWeb.CoreComponents do
   @moduledoc """
-  Provides core UI components.
+  提供核心 UI 部件。
 
-  At first glance, this module may seem daunting, but its goal is to provide
-  core building blocks for your application, such as tables, forms, and
-  inputs. The components consist mostly of markup and are well-documented
-  with doc strings and declarative assigns. You may customize and style
-  them in any way you want, based on your application growth and needs.
+  第一眼看上去，这个模块看上去有些令人发怵，但是它的目标是为你的应用提供核心的「积木」，
+  像是模态框、表格以及表单。这些组件主要由标记组成，并通过文档字符串和声明式赋值进行了
+  完善的文档记录。你可以基于你的应用的增长以及需求来通过你喜欢的方式定制化或美化它们。
 
-  The foundation for styling is Tailwind CSS, a utility-first CSS framework,
-  augmented with daisyUI, a Tailwind CSS plugin that provides UI components
-  and themes. Here are useful references:
+  预设的组件使用 TailwindCSS ，一个工具类为一等公民的 CSS 框架，
+  同时结合了 daisyUI，一个提供 UI 组件和主题的 Tailwind CSS 插件。
+  以下可供参考：
 
-    * [daisyUI](https://daisyui.com/docs/intro/) - a good place to get
-      started and see the available components.
+    * [daisyUI](https://daisyui.com/docs/intro/) -
+      一个开始以及查看可用组件的好地方。
 
-    * [Tailwind CSS](https://tailwindcss.com) - the foundational framework
-      we build on. You will use it for layout, sizing, flexbox, grid, and
-      spacing.
+    * [Tailwind CSS](https://tailwindcss.com) - 我们搭建应用的基本框架。
+      你会用它来布局、尺寸、弹性盒子、网格以及间距。
 
-    * [Heroicons](https://heroicons.com) - see `icon/1` for usage.
+    * [Heroicons](https://heroicons.com) - 请通过 `icon/1` 查看用法。
 
     * [Phoenix.Component](https://hexdocs.pm/phoenix_live_view/Phoenix.Component.html) -
-      the component system used by Phoenix. Some components, such as `<.link>`
-      and `<.form>`, are defined there.
+      用于 Phoenix 的组件系统。在这里定义了注入 `<.link>` 和 `<.form>` 的组件。
 
   """
   use Phoenix.Component

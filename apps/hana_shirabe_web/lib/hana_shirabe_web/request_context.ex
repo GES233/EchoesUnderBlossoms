@@ -1,7 +1,10 @@
 defmodule HanaShirabeWeb.RequestContext do
   @moduledoc """
-  ...
+  将 `%AuditLog{}` 挂载在用户的请求上下文中。
+
+  （可能后面会挂别的，但是目前只有这个）
   """
+  # TODO: 考虑实现 on_mount 以适配 LiveView
 
   alias HanaShirabe.AuditLog
 

@@ -1,4 +1,8 @@
 defmodule HanaShirabeWeb.MemberSessionController do
+  # 这个… 等我把别的文档翻译好了再回来看
+  # 至少可以确定的是，这是一个直接和 Router 交互的 Controller
+  # TODO: 翻译 flash 的消息
+
   use HanaShirabeWeb, :controller
 
   alias HanaShirabe.Accounts
@@ -12,7 +16,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
     create(conn, params, "Welcome back!")
   end
 
-  # magic link login
+  # 经由链接的登录
   defp create(conn, %{"member" => %{"token" => token} = member_params}, info) do
     case Accounts.login_member_by_magic_link(token) do
       {:ok, {member, tokens_to_disconnect}} ->
@@ -29,7 +33,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
     end
   end
 
-  # email + password login
+  # 经由邮件与密码的登录
   defp create(conn, %{"member" => member_params}, info) do
     %{"email" => email, "password" => password} = member_params
 
@@ -38,7 +42,9 @@ defmodule HanaShirabeWeb.MemberSessionController do
       |> put_flash(:info, info)
       |> MemberAuth.log_in_member(member, member_params)
     else
-      # In order to prevent user enumeration attacks, don't disclose whether the email is registered.
+      # 为防止邮件地址枚举攻击
+      # （for mail <- 1000000000...2999999999, mail |> Integer.to_string() <> "@qq.com", do: blabla）
+      # 不要透露邮件地址是否已注册。
       conn
       |> put_flash(:error, "Invalid email or password")
       |> put_flash(:email, String.slice(email, 0, 160))
@@ -51,7 +57,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
     true = Accounts.sudo_mode?(member)
     {:ok, {_member, expired_tokens}} = Accounts.update_member_password(member, member_params)
 
-    # disconnect all existing LiveViews with old sessions
+    # 断开所有使用旧会话的现有 LiveViews
     MemberAuth.disconnect_sessions(expired_tokens)
 
     conn
