@@ -1,3 +1,43 @@
+defmodule HanaShirabe.AuditLog.Context do
+  # 专门存储上下文
+
+  # 这是用 Cline 搓的
+  # 后续需要根据业务进行调整以及补充
+  @context_keys_required_within_scope_and_verb %{
+    account: %{
+      "create_account" => [:account_id],
+      "delete_account" => [:account_id]
+    },
+    member: %{
+      "register_member" => [:member_id],
+      "delete_member" => [:member_id],
+      "update_member_email" => [:member_id, :old_email, :new_email]
+    },
+    spectator: %{
+      "suspend_spectator" => [:spectator_id, :duration],
+      "unsuspend_spectator" => [:spectator_id]
+    },
+    moderator: %{
+      "ban_member" => [:member_id, :duration],
+      "unban_member" => [:member_id]
+    },
+    proposal: %{
+      "create_proposal" => [:proposal_id],
+      "approve_proposal" => [:proposal_id],
+      "reject_proposal" => [:proposal_id]
+    },
+    site_generate_content: %{
+      "publish_announcement" => [:announcement_id],
+      "remove_announcement" => [:announcement_id]
+    }
+  }
+
+  def required_keys(scope, verb) do
+    Map.get(@context_keys_required_within_scope_and_verb, scope, %{})
+    |> Map.get(verb, [])
+  end
+end
+
 defmodule HanaShirabe.AuditLog do
   @moduledoc """
   类似于「岁月史书」的功能。
@@ -26,7 +66,9 @@ defmodule HanaShirabe.AuditLog do
     # 这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值
     # 所以到这里需要按照操作本身以及语境做映射
     # 不过更具体的区分可能需要根据业务作梳理
-    field :scope, Ecto.Enum, values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
+    field :scope, Ecto.Enum,
+      values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
+
     field :verb, :string
     field :user_agent, :string
     field :ip_addr, HanaShirabe.EctoIP
@@ -85,6 +127,15 @@ defmodule HanaShirabe.AuditLog do
     }
 
     # TODO: validate
+  end
+
+  @doc "用于测试用的"
+  def localhost!(:test) do
+    %__MODULE__{
+      ip_addr: {127, 0, 0, 1},
+      user_agent: "localhost",
+      member: nil
+    }
   end
 
   # TODO：

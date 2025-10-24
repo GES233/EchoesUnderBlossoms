@@ -60,19 +60,16 @@ defmodule HanaShirabe.Accounts.Member do
   end
 
   @doc """
-  A member changeset for changing the password.
+  用于更换成员密码的更换集。
 
-  It is important to validate the length of the password, as long passwords may
-  be very expensive to hash for certain algorithms.
+  这一点很重要，因为某些算法对长密码的哈希计算可能会非常耗费资源。
 
   ## Options
 
-    * `:hash_password` - Hashes the password so it can be stored securely
-      in the database and ensures the password field is cleared to prevent
-      leaks in the logs. If password hashing is not needed and clearing the
-      password field is not desired (like when using this changeset for
-      validations on a LiveView form), this option can be set to `false`.
-      Defaults to `true`.
+    * `:hash_password` - 将密码进行哈希处理，以便可以安全地存储在数据库中，
+      并确保密码字段被清除以防止日志泄漏。如果不需要密码哈希处理，
+      并且不希望清除密码字段（例如在 LiveView 表单上使用此更改集进行验证时），
+      则可以将此选项设置为 `false` 。默认值为 `true` 。
   """
   def password_changeset(member, attrs, opts \\ []) do
     member
@@ -85,7 +82,7 @@ defmodule HanaShirabe.Accounts.Member do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 12, max: 72)
-    # Examples of additional password validation:
+    # 其他可以使用的：
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
@@ -98,8 +95,8 @@ defmodule HanaShirabe.Accounts.Member do
 
     if hash_password? && password && changeset.valid? do
       changeset
-      # Hashing could be done with `Ecto.Changeset.prepare_changes/2`, but that
-      # would keep the database transaction open longer and hurt performance.
+      # 散列计算可以使用 `Ecto.Changeset.prepare_changes/2` 来完成，
+      # 但那样会使数据库事务保持打开状态更长时间，从而影响性能。
       |> put_change(:hashed_password, Argon2.hash_pwd_salt(password))
       |> delete_change(:password)
     else
@@ -108,7 +105,7 @@ defmodule HanaShirabe.Accounts.Member do
   end
 
   @doc """
-  Confirms the account by setting `confirmed_at`.
+  通过设置 `confirmed_at` 来确认账户。
   """
   def confirm_changeset(member) do
     now = NaiveDateTime.utc_now(:second)
@@ -116,10 +113,9 @@ defmodule HanaShirabe.Accounts.Member do
   end
 
   @doc """
-  Verifies the password.
+  验证密码。
 
-  If there is no member or the member doesn't have a password, we call
-  `Argon2.no_user_verify/0` to avoid timing attacks.
+  如果这里没有成员或者成员没有密码，我们调用 `Argon2.no_user_verify/0` 来避免时间攻击。
   """
   def valid_password?(%HanaShirabe.Accounts.Member{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do

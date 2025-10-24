@@ -4,6 +4,7 @@ defmodule HanaShirabe.Accounts do
   """
 
   import Ecto.Query, warn: false
+  # alias HanaShirabe.AuditLog
   alias HanaShirabe.Repo
 
   alias HanaShirabe.Accounts.{Member, MemberToken, MemberNotifier}
@@ -76,9 +77,19 @@ defmodule HanaShirabe.Accounts do
 
   """
   def register_member(attrs) do
-    %Member{}
+    member_changeset = %Member{}
     |> Member.email_changeset(attrs)
-    |> Repo.insert()
+
+    # 改成针对两个数据库的检查
+    # Ecto.Multi.new()
+    # 这里的 :name 选项更像是一个标签，用于区分 Ecto.Multi 操作中的不同步骤
+    # |> Ecto.Multi.insert(:member, member_changeset)
+    # |> AuditLog.multi(audit_log, ...)
+    # |> Repo.transact()
+    # case do
+    # end
+
+    member_changeset |> Repo.insert()
   end
 
   ## 设置
@@ -246,7 +257,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc ~S"""
-  Delivers the update email instructions to the given member.
+  将更新邮件指令发送给指定的成员。
 
   ## Examples
 
@@ -263,7 +274,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Delivers the magic link login instructions to the given member.
+  将 magic link 登录指令发送给指定的成员。
   """
   def deliver_login_instructions(%Member{} = member, magic_link_url_fun)
       when is_function(magic_link_url_fun, 1) do
@@ -273,7 +284,7 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Deletes the signed token with the given context.
+  删除指定上下文的已签名令牌。
   """
   def delete_member_session_token(token) do
     Repo.delete_all(from(MemberToken, where: [token: ^token, context: "session"]))
