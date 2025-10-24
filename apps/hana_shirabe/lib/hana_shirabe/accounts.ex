@@ -68,14 +68,14 @@ defmodule HanaShirabe.Accounts do
 
   ## Examples
 
-      iex> register_member(%{field: value})
+      iex> register_member(%AuditLog{}, %{field: value})
       {:ok, %Member{}}
 
-      iex> register_member(%{field: bad_value})
+      iex> register_member(%AuditLog{}, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def register_member(attrs) do
+  def register_member(audit_log, attrs) do
     member_changeset = %Member{}
     |> Member.email_changeset(attrs)
 
@@ -84,7 +84,7 @@ defmodule HanaShirabe.Accounts do
     # 这里的 :name 选项更像是一个标签，用于区分 Ecto.Multi 操作中的不同步骤
     |> Ecto.Multi.insert(:member, member_changeset)
     |> AuditLog.multi(
-      AuditLog.localhost!(:test),
+      audit_log,
       [:account],
       "sign_up",
       fn audit_log, %{member: member} ->

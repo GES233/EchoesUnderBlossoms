@@ -66,7 +66,9 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
 
   @impl true
   def handle_event("save", %{"member" => member_params}, socket) do
-    case Accounts.register_member(member_params) do
+    audit_log = socket.assigns[:audit_log]
+
+    case Accounts.register_member(audit_log, member_params) do
       {:ok, member} ->
         {:ok, _} =
           Accounts.deliver_login_instructions(

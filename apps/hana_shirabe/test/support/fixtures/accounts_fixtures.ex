@@ -6,7 +6,7 @@ defmodule HanaShirabe.AccountsFixtures do
 
   import Ecto.Query
 
-  alias HanaShirabe.Accounts
+  alias HanaShirabe.{Accounts, AuditLog}
   alias HanaShirabe.Accounts.Scope
 
   def unique_member_email, do: "member#{System.unique_integer()}@example.com"
@@ -22,7 +22,7 @@ defmodule HanaShirabe.AccountsFixtures do
     {:ok, member} =
       attrs
       |> valid_member_attributes()
-      |> Accounts.register_member()
+      |> Accounts.register_member(AuditLog.localhost!(:test))
 
     member
   end

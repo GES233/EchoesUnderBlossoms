@@ -15,7 +15,7 @@
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.RequestContext, :mount_audit_log}` 被挂载
   - [x] 测试
 - [ ] 将注册与登录的函数与 `%AuditLog{}` 合并
-  - [ ] 注册函数
+  - [x] 注册函数
   - [ ] 登录函数
   - [ ] 验证函数
   - [ ] 从 xxx/1 变成需要 audit_log 的 xxx/2

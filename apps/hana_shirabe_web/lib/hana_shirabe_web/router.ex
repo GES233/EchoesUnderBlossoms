@@ -50,7 +50,10 @@ defmodule HanaShirabeWeb.Router do
     pipe_through [:browser]
 
     live_session :current_member,
-      on_mount: [{HanaShirabeWeb.MemberAuth, :mount_current_scope}] do
+      on_mount: [
+        {HanaShirabeWeb.MemberAuth, :mount_current_scope},
+        {HanaShirabeWeb.RequestContext, :mount_audit_log}
+      ] do
       live "/sign_up", MemberLive.Registration, :new
       live "/login", MemberLive.Login, :new
       live "/login/:token", MemberLive.Confirmation, :new
