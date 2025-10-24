@@ -1,7 +1,7 @@
 import Config
 
 # config/runtime.exs 在所有环境下都会被执行，包括在发布过程中。
-# 它在编译后、系统启动前执行，因此通常用于从环境变量或其他地方加载
+# 它在编译后在系统启动前的这段时间执行，因此通常用于从环境变量或其他地方加载
 # 生产配置和秘密。不要在这里定义任何编译时配置，因为它们不会被应用。
 # 下面的代码块包含生产环境的运行时配置。
 if config_env() == :prod do
@@ -44,7 +44,7 @@ if config_env() == :prod do
   # 然后，你就可以调用 `mix release` 来组装发布。请参阅
   # `mix help release` 获取更多信息。
 
-  # ## SSL Support
+  # ## SSL 支持
   #
   # 要使 SSL 正常工作，您需要将 "https" 密钥添加到端点配置中：
   #
@@ -61,36 +61,36 @@ if config_env() == :prod do
   # 这意味着旧版浏览器和客户端可能不受支持。您可以将其设置为
   # `:compatible`，以获得更广泛的支持。
   #
-  # `:keyfile` and `:certfile` expect an absolute path to the key
-  # and cert in disk or a relative path inside priv, for example
-  # "priv/ssl/server.key". For all supported SSL configuration
-  # options, see https://hexdocs.pm/plug/Plug.SSL.html#configure/1
+  # `:keyfile` 以及 `:certfile` 预期为可访问到磁盘中对应文件的
+  # 【绝对目录】或是相对于 `/priv` 的【相对目录】，比方说
+  # "priv/ssl/server.key" 。对于所有支持 SSL 配置的选项，可以参考
+  # https://hexdocs.pm/plug/Plug.SSL.html#configure/1 。
   #
-  # We also recommend setting `force_ssl` in your config/prod.exs,
-  # ensuring no data is ever sent via http, always redirecting to https:
+  # 此外我们推荐在你的 config/prod.exs 里设置 `force_ssl` ，
+  # 确认所有通过 http 协议的数据都会被重定向为 https ：
   #
   #     config :hana_shirabe_web, HanaShirabeWeb.Endpoint,
   #       force_ssl: [hsts: true]
   #
-  # Check `Plug.SSL` for all available options in `force_ssl`.
+  # 查看 `Plug.SSL` 的文档可以获取 `force_ssl` 中所有的可选选项。
 
   # ## 配置邮箱
   #
-  # In production you need to configure the mailer to use a different adapter.
-  # Here is an example configuration for Mailgun:
+  # 生产环境下你需要配置邮箱以使用不同的适配器。
+  # 这里是一个 Mailgun 的示例配置：
   #
   #     config :hana_shirabe, HanaShirabe.Mailer,
   #       adapter: Swoosh.Adapters.Mailgun,
   #       api_key: System.get_env("MAILGUN_API_KEY"),
   #       domain: System.get_env("MAILGUN_DOMAIN")
   #
-  # Most non-SMTP adapters require an API client. Swoosh supports Req, Hackney,
-  # and Finch out-of-the-box. This configuration is typically done at
-  # compile-time in your config/prod.exs:
+  # 绝大多数 非SMTP 的适配器需要一个 API 客户端。Swoosh 对 Req 、
+  # Hackney 以及 Finch 提供开箱即用的支持。此配置在编译时间被执行的
+  # config/prod.exs 中进行：
   #
   #     config :swoosh, :api_client, Swoosh.ApiClient.Req
   #
-  # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+  # 查看 https://hexdocs.pm/swoosh/Swoosh.html#module-installation 获取详情。
 
   config :hana_shirabe, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 end

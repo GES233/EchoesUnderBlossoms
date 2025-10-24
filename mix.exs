@@ -1,3 +1,20 @@
+# 为了解决在 Windows 下需要调用 elixir_make 来进行编译的库报错的情况
+# 如果你喜欢 CMD 可以参考 https://hexdocs.pm/exqlite/windows.html
+# 如果是 Powershell 可以参考
+# "terminal.integrated.defaultProfile.windows": "PowerShellVS",
+#   "terminal.integrated.profiles.windows": {
+#       "PowerShellVS": {
+#           "source": "PowerShell",
+#           "args": [
+#               "-NoExit",
+#               "-Command",
+#               "&{Import-Module \"...\"}"
+#               // 就是你在安装 VS 后从终端的配置文件那一长串（记得转移引号）
+#           ],
+#           "icon": "terminal-powershell",
+#           "env": {}
+#       }
+#   }
 defmodule HanaShirabe.Umbrella.MixProject do
   use Mix.Project
 

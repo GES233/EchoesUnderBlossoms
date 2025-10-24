@@ -42,7 +42,12 @@ defmodule HanaShirabe.MixProject do
       {:ecto_sqlite3, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.16"},
-      {:req, "~> 0.5"}
+      {:req, "~> 0.5"},
+      {:argon2_elixir, "~> 4.0"},
+      # 在 HanaShirabe.Accounts.MemberNotifier 中被使用
+      # 以支援多语言翻译
+      # （这里就是使用 Umbrella Application 的好处了）
+      {:gettext, "~> 1.0"},
     ]
   end
 
@@ -54,6 +59,11 @@ defmodule HanaShirabe.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run #{__DIR__}/priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      "gettext.update": [
+        "gettext.extract",
+        "gettext.merge priv/gettext --locale ja",
+        "gettext.merge priv/gettext --locale zh_Hans"
+      ],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end

@@ -4,7 +4,7 @@ defmodule HanaShirabe.AuditLog do
 
   ### 格式说明
 
-  用户 `user` 或系统在 `insert_at` 时执行了有关 `scope` 领域的
+  主体（用户或系统）在 `insert_at` 时执行了有关 `scope` 领域的
   `verb` 行动，其上下文为 `context` 。
 
   上下文主要是被操作的对象（比方说管理员动用权限删除推文或封禁用户）
@@ -16,18 +16,22 @@ defmodule HanaShirabe.AuditLog do
   alias HanaShirabe.Repo
 
   schema "audit_log" do
-    # 解释下这里的 scope 分别是什么
+    # 解释下这里的 scope 分别指什么
     # account   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
     # member    => 普通成员相关
     # spectator => 普通内容管理
     # moderator => 普通成员管理
     # proposal  => 提案相关
+    # site_generate_content => 站点生成内容（例如全站通知或是什么的）相关
+    # 这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值
+    # 所以到这里需要按照操作本身以及语境做映射
+    # 不过更具体的区分可能需要根据业务作梳理
     field :scope, Ecto.Enum, values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
     field :verb, :string
     field :user_agent, :string
     field :ip_addr, HanaShirabe.EctoIP
     field :context, :map, default: %{}
-    # TODO: belongs to user.
+    belongs_to :member, HanaShirabe.Accounts.Member
 
     timestamps(updated_at: false)
   end
@@ -55,9 +59,9 @@ defmodule HanaShirabe.AuditLog do
   def multi(multi, audit_context, scope, verb, callback_or_context)
 
   # 需要来自 Ecto 的查询结果
-  def multi(multi, audit_context, scope, verb, function) when is_function(function, 2) do
+  def multi(multi, audit_context, scope, verb, callback) when is_function(callback, 2) do
     Ecto.Multi.run(multi, :audit, fn repo, res ->
-      log = build!(function.(audit_context, res), scope, verb, %{})
+      log = build!(callback.(audit_context, res), scope, verb, %{})
       {:ok, repo.insert!(log)}
     end)
   end
@@ -82,4 +86,9 @@ defmodule HanaShirabe.AuditLog do
 
     # TODO: validate
   end
+
+  # TODO：
+  # 创建一个从 Phoenix 的 Scope 构造 AuditLog 的函数
+  # 具体地说，是决定 AuditLog 中的 scope 字段
+  # 因为那决定着 context 里边的键到底有哪些
 end

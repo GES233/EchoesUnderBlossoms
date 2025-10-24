@@ -1,7 +1,7 @@
 defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
-  # import HanaShirabeWeb.MemberAuth
+  import HanaShirabeWeb.MemberAuth
   import HanaShirabeWeb.RequestContext, only: [put_audit_context: 2]
 
   pipeline :browser do
@@ -11,8 +11,8 @@ defmodule HanaShirabeWeb.Router do
     plug :put_root_layout, html: {HanaShirabeWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    # plug :fetch_current_scope_for_member
-    plug :put_audit_context, []
+    plug :fetch_current_scope_for_member
+    plug :put_audit_context
   end
 
   pipeline :api do
@@ -31,6 +31,34 @@ defmodule HanaShirabeWeb.Router do
   # scope "/api", HanaShirabeWeb do
   #   pipe_through :api
   # end
+
+  ## 认证路由
+
+  scope "/", HanaShirabeWeb do
+    pipe_through [:browser, :require_authenticated_member]
+
+    live_session :require_authenticated_member,
+      on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
+      live "/me/settings", MemberLive.Settings, :edit
+      live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
+    end
+
+    post "/members/update-password", MemberSessionController, :update_password
+  end
+
+  scope "/", HanaShirabeWeb do
+    pipe_through [:browser]
+
+    live_session :current_member,
+      on_mount: [{HanaShirabeWeb.MemberAuth, :mount_current_scope}] do
+      live "/sign_up", MemberLive.Registration, :new
+      live "/login", MemberLive.Login, :new
+      live "/login/:token", MemberLive.Confirmation, :new
+    end
+
+    post "/login", MemberSessionController, :create
+    delete "/logout", MemberSessionController, :delete
+  end
 
   # 在开发中启用 LiveDashboard 和 Swoosh 邮箱预览
   if Application.compile_env(:hana_shirabe_web, :dev_routes) do

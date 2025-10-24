@@ -1,0 +1,27 @@
+## This file is a PO Template file.
+##
+## "msgid"s here are often extracted from source code.
+## Add new messages manually only if they're dynamic
+## messages that can't be statically extracted.
+##
+## Run "mix gettext.extract" to bring this file up to
+## date. Leave "msgstr"s empty as changing them here has no
+## effect: edit them in PO (.po) files instead.
+#
+msgid ""
+msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:37
+#, elixir-autogen, elixir-format
+msgid "\n==============================\n\nHi %{member_email},\n\nYou can change your email by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n\n==============================\n"
+msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:99
+#, elixir-autogen, elixir-format
+msgid "\n==============================\n\nHi %{member_email},\n\nYou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account with us, please ignore this.\n\n==============================\n"
+msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:73
+#, elixir-autogen, elixir-format
+msgid "\n==============================\n\nHi %{member_email},\n\nYou can log into your account by visiting the URL below:\n\n%{url}\n\nIf you didn't request this email, please ignore this.\n\n==============================\n"
+msgstr ""

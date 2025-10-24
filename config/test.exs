@@ -1,5 +1,8 @@
 import Config
 
+# 只在测试环境里这么做，因为降低复杂度节省时间
+config :argon2_elixir, t_cost: 1, m_cost: 8
+
 # 配置你的数据库
 #
 # 为了提供 CI 环境下内建测试分区，
@@ -20,10 +23,10 @@ config :hana_shirabe_web, HanaShirabeWeb.Endpoint,
 # 在测试时只需要输出警告和错误信息
 config :logger, level: :warning
 
-# In test we don't send emails
+# 测试环境无需发送邮件
 config :hana_shirabe, HanaShirabe.Mailer, adapter: Swoosh.Adapters.Test
 
-# Disable swoosh api client as it is only required for production adapters
+# 禁用 Swoosh API 客户端，其只被生产适配器所需要
 config :swoosh, :api_client, false
 
 # 在运行时初始化 plug ，以加快测试编译速度
