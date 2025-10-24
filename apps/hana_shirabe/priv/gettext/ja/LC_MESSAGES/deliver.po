@@ -12,16 +12,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:37
-#, elixir-autogen, elixir-format
-msgid "\n==============================\n\nHi %{member_email},\n\nYou can change your email by visiting the URL below:\n\n%{url}\n\nIf you didn't request this change, please ignore this.\n\n==============================\n"
+#, elixir-autogen, elixir-format, fuzzy
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nYou can change your email by visiting the URL below:\r\n\r\n%{url}\r\n\r\nIf you didn't request this change, please ignore this.\r\n\r\n==============================\r\n"
 msgstr ""
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:99
-#, elixir-autogen, elixir-format
-msgid "\n==============================\n\nHi %{member_email},\n\nYou can confirm your account by visiting the URL below:\n\n%{url}\n\nIf you didn't create an account with us, please ignore this.\n\n==============================\n"
+#, elixir-autogen, elixir-format, fuzzy
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nYou can confirm your account by visiting the URL below:\r\n\r\n%{url}\r\n\r\nIf you didn't create an account with us, please ignore this.\r\n\r\n==============================\r\n"
 msgstr ""
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:73
-#, elixir-autogen, elixir-format
-msgid "\n==============================\n\nHi %{member_email},\n\nYou can log into your account by visiting the URL below:\n\n%{url}\n\nIf you didn't request this email, please ignore this.\n\n==============================\n"
+#, elixir-autogen, elixir-format, fuzzy
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nYou can log into your account by visiting the URL below:\r\n\r\n%{url}\r\n\r\nIf you didn't request this email, please ignore this.\r\n\r\n==============================\r\n"
 msgstr ""

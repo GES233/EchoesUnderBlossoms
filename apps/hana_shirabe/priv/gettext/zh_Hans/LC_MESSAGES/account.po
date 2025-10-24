@@ -16,7 +16,7 @@ msgstr ""
 msgid "did not change"
 msgstr "未改变"
 
-#: lib/hana_shirabe/accounts/member.ex:80
+#: lib/hana_shirabe/accounts/member.ex:77
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr "密码不匹配"

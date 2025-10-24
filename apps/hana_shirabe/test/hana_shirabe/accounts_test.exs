@@ -6,13 +6,6 @@ defmodule HanaShirabe.AccountsTest do
   import HanaShirabe.AccountsFixtures
   alias HanaShirabe.Accounts.{Member, MemberToken}
 
-  setup "create audit log" do
-    # TODO: 如果需要迁移到 member_fixture 里去的话
-    audit_log = HanaShirabe.localhost!(:test)
-
-    %{audit_log: audit_log}
-  end
-
   describe "get_member_by_email/1" do
     test "does not return the member if the email does not exist" do
       refute Accounts.get_member_by_email("unknown@example.com")
@@ -58,14 +51,16 @@ defmodule HanaShirabe.AccountsTest do
   describe "register_member/1" do
     test "requires email to be set" do
       {:error, changeset} = Accounts.register_member(%{})
+      %{email: [error_msg]} = errors_on(changeset)
 
-      assert %{email: ["can't be blank"]} = errors_on(changeset)
+      assert error_msg == dgettext("account", "can't be blank")
     end
 
     test "validates email when given" do
       {:error, changeset} = Accounts.register_member(%{email: "not valid"})
+      %{email: [error_msg]} = errors_on(changeset)
 
-      assert %{email: ["must have the @ sign and no spaces"]} = errors_on(changeset)
+      assert error_msg == dgettext("account", "must have the @ sign and no spaces")
     end
 
     test "validates maximum values for email for security" do

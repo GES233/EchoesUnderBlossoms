@@ -1,41 +1,49 @@
 defmodule HanaShirabe.AuditLog.Context do
   # 专门存储上下文
 
+  @scope [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
+
+  @doc """
+  解释下这里的 scope 分别指什么
+
+  - `:account`   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
+  - `:member`    => 普通成员相关
+  - `spectator`  => 普通内容管理
+  - `moderator`  => 普通成员管理
+  - `proposal`  => 提案相关
+  - `site_generate_content` => 站点生成内容（例如全站通知或是什么的）相关
+
+  这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值，
+  所以到这里需要按照操作本身以及语境做映射。
+
+  不过更具体的区分可能需要根据业务作梳理。
+  """
+  def get_valid_scopes, do: @scope
+
   # 这是用 Cline 搓的
   # 后续需要根据业务进行调整以及补充
   @context_keys_required_within_scope_and_verb %{
     account: %{
-      "create_account" => [:account_id],
-      "delete_account" => [:account_id]
+      "sign_up" => [:account_id],
+      "verify_email" => [:account_id],
+      "update_email" => []
     },
-    member: %{
-      "register_member" => [:member_id],
-      "delete_member" => [:member_id],
-      "update_member_email" => [:member_id, :old_email, :new_email]
-    },
-    spectator: %{
-      "suspend_spectator" => [:spectator_id, :duration],
-      "unsuspend_spectator" => [:spectator_id]
-    },
-    moderator: %{
-      "ban_member" => [:member_id, :duration],
-      "unban_member" => [:member_id]
-    },
-    proposal: %{
-      "create_proposal" => [:proposal_id],
-      "approve_proposal" => [:proposal_id],
-      "reject_proposal" => [:proposal_id]
-    },
-    site_generate_content: %{
-      "publish_announcement" => [:announcement_id],
-      "remove_announcement" => [:announcement_id]
-    }
+    member: %{},
+    spectator: %{},
+    moderator: %{},
+    proposal: %{},
+    site_generate_content: %{}
   }
 
-  def required_keys(scope, verb) do
-    Map.get(@context_keys_required_within_scope_and_verb, scope, %{})
-    |> Map.get(verb, [])
+  @doc "通过范围以及动作返回所需到底上下文的键"
+  def by_scope_and_verb(scope, verb)
+
+  for {scope, map_within_scope} <- @context_keys_required_within_scope_and_verb,
+      {verb, keys_map} <- map_within_scope do
+    def by_scope_and_verb(unquote(scope), unquote(verb)), do: {:ok, unquote(keys_map)}
   end
+
+  def by_scope_and_verb(_scope, _verb), do: {:error, :not_found}
 end
 
 defmodule HanaShirabe.AuditLog do
@@ -54,20 +62,10 @@ defmodule HanaShirabe.AuditLog do
 
   import Ecto.Changeset
   alias HanaShirabe.Repo
+  alias HanaShirabe.AuditLog.Context
 
-  schema "audit_log" do
-    # 解释下这里的 scope 分别指什么
-    # account   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
-    # member    => 普通成员相关
-    # spectator => 普通内容管理
-    # moderator => 普通成员管理
-    # proposal  => 提案相关
-    # site_generate_content => 站点生成内容（例如全站通知或是什么的）相关
-    # 这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值
-    # 所以到这里需要按照操作本身以及语境做映射
-    # 不过更具体的区分可能需要根据业务作梳理
-    field :scope, Ecto.Enum,
-      values: [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
+  schema "audit_logs" do
+    field :scope, {:array, Ecto.Enum}, values: Context.get_valid_scopes()
 
     field :verb, :string
     field :user_agent, :string
@@ -117,7 +115,7 @@ defmodule HanaShirabe.AuditLog do
   # 构造
 
   defp build!(%__MODULE__{} = audit_context, scope, verb, context)
-       when is_atom(scope) and is_binary(verb) and is_map(context) do
+       when is_list(scope) and is_binary(verb) and is_map(context) do
     # 一般地讲，audit_context 已经包括了用户相关的信息
     %{
       audit_context

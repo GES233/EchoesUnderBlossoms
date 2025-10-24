@@ -4,8 +4,7 @@ defmodule HanaShirabe.Accounts do
   """
 
   import Ecto.Query, warn: false
-  # alias HanaShirabe.AuditLog
-  alias HanaShirabe.Repo
+  alias HanaShirabe.{Repo, AuditLog}
 
   alias HanaShirabe.Accounts.{Member, MemberToken, MemberNotifier}
 
@@ -81,15 +80,24 @@ defmodule HanaShirabe.Accounts do
     |> Member.email_changeset(attrs)
 
     # 改成针对两个数据库的检查
-    # Ecto.Multi.new()
+    Ecto.Multi.new()
     # 这里的 :name 选项更像是一个标签，用于区分 Ecto.Multi 操作中的不同步骤
-    # |> Ecto.Multi.insert(:member, member_changeset)
-    # |> AuditLog.multi(audit_log, ...)
-    # |> Repo.transact()
-    # case do
-    # end
-
-    member_changeset |> Repo.insert()
+    |> Ecto.Multi.insert(:member, member_changeset)
+    |> AuditLog.multi(
+      AuditLog.localhost!(:test),
+      [:account],
+      "sign_up",
+      fn audit_log, %{member: member} ->
+        # 没有 {:ok, ...} 主要留意
+        # 这里只考虑成功是一旦是 {:error, _} 就不会调用这个函数了
+        %{audit_log | context: %{"account_id" => member.id, "email" => member.email}}
+      end
+    )
+    |> Repo.transact()
+    |> case do
+      {:ok, %{member: member}} -> {:ok, member}
+      {:error, :member, changeset, _} -> {:error, changeset}
+    end
   end
 
   ## 设置

@@ -5,6 +5,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
   import Phoenix.LiveViewTest
   import HanaShirabe.AccountsFixtures
 
+  use Gettext, backend: HanaShirabeWeb.Gettext
+
   describe "Settings page" do
     test "renders settings page", %{conn: conn} do
       {:ok, _lv, html} =
@@ -12,8 +14,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> log_in_member(member_fixture())
         |> live(~p"/me/settings")
 
-      assert html =~ "Change Email"
-      assert html =~ "Save Password"
+      assert html =~ dgettext("account", "Change Email")
+      assert html =~ dgettext("account", "Save Password")
     end
 
     test "redirects if member is not logged in", %{conn: conn} do
@@ -21,7 +23,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
-      assert %{"error" => "You must log in to access this page."} = flash
+      %{"error" => message} = flash
+      assert message =~ dgettext("account", "You must log in to access this page.")
     end
 
     test "redirects if member is not in sudo mode", %{conn: conn} do
@@ -33,7 +36,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> live(~p"/me/settings")
         |> follow_redirect(conn, ~p"/login")
 
-      assert conn.resp_body =~ "You must re-authenticate to access this page."
+      assert conn.resp_body =~ dgettext("account", "You must re-authenticate to access this page.")
     end
   end
 
@@ -55,7 +58,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         })
         |> render_submit()
 
-      assert result =~ "A link to confirm your email"
+      assert result =~ dgettext("account", "A link to confirm your email")
       assert Accounts.get_member_by_email(member.email)
     end
 
@@ -70,8 +73,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
           "member" => %{"email" => "with spaces"}
         })
 
-      assert result =~ "Change Email"
-      assert result =~ "must have the @ sign and no spaces"
+      assert result =~ dgettext("account", "Change Email")
+      assert result =~ dgettext("account", "must have the @ sign and no spaces")
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn, member: member} do
@@ -84,8 +87,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         })
         |> render_submit()
 
-      assert result =~ "Change Email"
-      assert result =~ "did not change"
+      assert result =~ dgettext("account", "Change Email")
+      assert result =~ dgettext("account", "did not change")
     end
   end
 
@@ -118,7 +121,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert get_session(new_password_conn, :member_token) != get_session(conn, :member_token)
 
       assert Phoenix.Flash.get(new_password_conn.assigns.flash, :info) =~
-               "Password updated successfully"
+               dgettext("account", "Password updated successfully")
 
       assert Accounts.get_member_by_email_and_password(member.email, new_password)
     end
@@ -136,9 +139,9 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
           }
         })
 
-      assert result =~ "Save Password"
-      assert result =~ "should be at least 12 character(s)"
-      assert result =~ "does not match password"
+      assert result =~ dgettext("account", "Save Password")
+      assert result =~ dgettext("account", "should be at least 12 character(s)")
+      assert result =~ dgettext("account", "does not match password")
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn} do
@@ -154,9 +157,9 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         })
         |> render_submit()
 
-      assert result =~ "Save Password"
-      assert result =~ "should be at least 12 character(s)"
-      assert result =~ "does not match password"
+      assert result =~ dgettext("account", "Save Password")
+      assert result =~ dgettext("account", "should be at least 12 character(s)")
+      assert result =~ dgettext("account", "does not match password")
     end
   end
 
@@ -179,7 +182,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/settings"
       assert %{"info" => message} = flash
-      assert message == "Email changed successfully."
+      assert message == dgettext("account", "Email changed successfully.")
       refute Accounts.get_member_by_email(member.email)
       assert Accounts.get_member_by_email(email)
 
@@ -188,7 +191,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/settings"
       assert %{"error" => message} = flash
-      assert message == "Email change link is invalid or it has expired."
+      assert message == dgettext("account", "Email change link is invalid or it has expired.")
     end
 
     test "does not update email with invalid token", %{conn: conn, member: member} do
@@ -196,7 +199,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/settings"
       assert %{"error" => message} = flash
-      assert message == "Email change link is invalid or it has expired."
+      assert message == dgettext("account", "Email change link is invalid or it has expired.")
       assert Accounts.get_member_by_email(member.email)
     end
 
@@ -206,7 +209,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
       assert %{"error" => message} = flash
-      assert message == "You must log in to access this page."
+      assert message == dgettext("account", "You must log in to access this page.")
     end
   end
 end
