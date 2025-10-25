@@ -2,7 +2,7 @@ defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
   import HanaShirabeWeb.MemberAuth
-  import HanaShirabeWeb.RequestContext, only: [put_audit_context: 2]
+  import HanaShirabeWeb.AuditLogInjector, only: [put_audit_context: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -52,7 +52,7 @@ defmodule HanaShirabeWeb.Router do
     live_session :current_member,
       on_mount: [
         {HanaShirabeWeb.MemberAuth, :mount_current_scope},
-        {HanaShirabeWeb.RequestContext, :mount_audit_log}
+        {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
       ] do
       live "/sign_up", MemberLive.Registration, :new
       live "/login", MemberLive.Login, :new

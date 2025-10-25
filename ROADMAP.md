@@ -12,11 +12,12 @@
 
 - [x] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
   - [x] `MemberAuth` 的文档与注释
-- [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.RequestContext, :mount_audit_log}` 被挂载
+- [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
 - [ ] 将注册与登录的函数与 `%AuditLog{}` 合并
   - [x] 注册函数
   - [ ] 登录函数
+    - 需要商讨需要挂载到哪个函数、记录哪些信息
   - [ ] 验证函数
   - [ ] 从 xxx/1 变成需要 audit_log 的 xxx/2
 - [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数

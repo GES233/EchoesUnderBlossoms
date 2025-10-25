@@ -118,6 +118,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
 
     info =
       "If your email is in our system, you will receive instructions for logging in shortly."
+      |> then(dgettext("account", &1))
 
     {:noreply,
      socket

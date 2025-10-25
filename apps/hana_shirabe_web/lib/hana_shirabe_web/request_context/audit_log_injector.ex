@@ -1,4 +1,4 @@
-defmodule HanaShirabeWeb.RequestContext do
+defmodule HanaShirabeWeb.AuditLogInjector do
   @moduledoc """
   将 `%AuditLog{}` 挂载在用户的请求上下文中。
 
@@ -7,7 +7,7 @@ defmodule HanaShirabeWeb.RequestContext do
 
   alias HanaShirabe.AuditLog
 
-  @request_context_key :audit_log
+  @audit_log_key :audit_log
 
   # TODO: 考虑实现 on_mount 以适配 LiveView
   def on_mount(:mount_audit_log, _params, _session, socket) do
@@ -23,13 +23,13 @@ defmodule HanaShirabeWeb.RequestContext do
     case conn_or_socket do
       %Plug.Conn{} ->
         conn_or_socket
-        |> Plug.Conn.assign(@request_context_key, fetch_audit_log(conn_or_socket, opts))
+        |> Plug.Conn.assign(@audit_log_key, fetch_audit_log(conn_or_socket, opts))
 
       %Phoenix.LiveView.Socket{} ->
         # 主要在 MountHelpers 使用
         conn_or_socket
         |> Phoenix.Component.assign(%{
-          @request_context_key => fetch_audit_log(conn_or_socket, opts)
+          @audit_log_key => fetch_audit_log(conn_or_socket, opts)
         })
     end
   end

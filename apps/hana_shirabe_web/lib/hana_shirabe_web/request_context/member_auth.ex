@@ -186,6 +186,9 @@ defmodule HanaShirabeWeb.MemberAuth do
     * `:require_sudo_mode` - 根据会话认证成员，并且确保成员
       处于 sudo 模式（最近重新认证过）。
 
+    * `:mount_scope_and_audit_log` - （未实现）将 current_scope
+      和 audit_log 分配到 socket assigns 中。
+
   ## Examples
 
   使用 `on_mount` 生命周期宏在 LiveViews 中挂载或认证 `current_scope`：
@@ -237,7 +240,7 @@ defmodule HanaShirabeWeb.MemberAuth do
     end
   end
 
-  defp mount_current_scope(socket, session) do
+  def mount_current_scope(socket, session) do
     Phoenix.Component.assign_new(socket, :current_scope, fn ->
       {member, _} =
         if member_token = session["member_token"] do
@@ -247,6 +250,9 @@ defmodule HanaShirabeWeb.MemberAuth do
       Scope.for_member(member)
     end)
   end
+
+  # defp mount_scope_and_audit_log(socket, session) do
+  # end
 
   @doc "返回登陆后的重定向路径。"
   # 成员以及登录了，重定向到设置页面
