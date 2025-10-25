@@ -33,13 +33,13 @@ msgid "is reserved"
 msgstr "被保留"
 
 msgid "does not match confirmation"
-msgstr "仍与此条目关联"
+msgstr "与确认不匹配"
 
 msgid "is still associated with this entry"
 msgstr "仍与此条目关联"
 
 msgid "are still associated with this entry"
-msgstr ""
+msgstr "仍与此条目关联"
 
 msgid "should have %{count} item(s)"
 msgid_plural "should have %{count} item(s)"

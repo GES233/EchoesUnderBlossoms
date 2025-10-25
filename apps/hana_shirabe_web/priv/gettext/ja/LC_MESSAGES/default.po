@@ -11,28 +11,35 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/components/core_components.ex:341
+#: lib/hana_shirabe_web/components/core_components.ex:337
 #, elixir-autogen, elixir-format
 msgid "Actions"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:98
-#: lib/hana_shirabe_web/components/layouts.ex:110
+#: lib/hana_shirabe_web/components/layouts.ex:95
+#: lib/hana_shirabe_web/components/layouts.ex:107
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:105
+#: lib/hana_shirabe_web/components/layouts.ex:102
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:93
+#: lib/hana_shirabe_web/components/layouts.ex:90
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/core_components.ex:74
+#: lib/hana_shirabe_web/components/core_components.ex:70
 #, elixir-autogen, elixir-format
 msgid "close"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/layouts.ex:175
+#: lib/hana_shirabe_web/components/layouts.ex:179
+#: lib/hana_shirabe_web/components/layouts.ex:183
+#, elixir-autogen, elixir-format
+msgid "Echoes Under Blossoms"
 msgstr ""

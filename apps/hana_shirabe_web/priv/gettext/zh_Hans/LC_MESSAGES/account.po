@@ -1,0 +1,57 @@
+## "msgid"s in this file come from POT (.pot) files.
+###
+### Do not add, change, or remove "msgid"s manually here as
+### they're tied to the ones in the corresponding POT file
+### (with the same domain).
+###
+### Use "mix gettext.extract --merge" or "mix gettext.merge"
+### to merge POT files into PO files.
+msgid ""
+msgstr ""
+"Language: zh_Hans\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:24
+#, elixir-autogen, elixir-format
+msgid "Already registered?"
+msgstr "已经注册了？"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:83
+#, elixir-autogen, elixir-format
+msgid "An email was sent to %{member_email}, please access it to confirm your account."
+msgstr "将会有个邮件发到 %{member_email}，请前往确认您的账户。"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:47
+#, elixir-autogen, elixir-format
+msgid "Create an account"
+msgstr "创建账号"
+
+#: lib/hana_shirabe_web/live/member_live/login.ex:120
+#, elixir-autogen, elixir-format
+msgid "If your email is in our system, you will receive instructions for logging in shortly."
+msgstr "如果您的电子邮件在我们的系统中，您将很快收到登录说明。"
+
+#: lib/hana_shirabe_web/live/member_live/login.ex:84
+#, elixir-autogen, elixir-format
+msgid "Log in and stay logged in"
+msgstr "登录并保持登录状态"
+
+#: lib/hana_shirabe_web/live/member_live/login.ex:87
+#, elixir-autogen, elixir-format
+msgid "Log in only this time"
+msgstr "只登录这一次"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:22
+#, elixir-autogen, elixir-format
+msgid "Register for an account"
+msgstr "注册账号"
+
+#: lib/hana_shirabe_web/live/member_live/login.ex:31
+#, elixir-autogen, elixir-format
+msgid "You are running the local mail adapter."
+msgstr "你需要运行本地邮件适配器。"
+
+#: lib/hana_shirabe_web/live/member_live/login.ex:16
+#, elixir-autogen, elixir-format
+msgid "You need to reauthenticate to perform sensitive actions on your account."
+msgstr "你需要重新认证以在你的账户上执行敏感操作。"
