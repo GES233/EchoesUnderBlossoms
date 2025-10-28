@@ -1,10 +1,31 @@
 defmodule HSContent.Special.MediaLink do
   @moduledoc """
-  媒体链接。
+  媒体链接，可以使用形如 `[[...]]` 的 WikiLink 语法。
+
+  目前支持的网站：
+
+  - Acfun
+  - Bilibili (AV 号和 BV 号)
+
+  需要注意的是，目前不支持将嵌入式媒体渲染为 Markdown 导出格式，因为大多数 Markdown
+  渲染器并不支持嵌入式媒体。
+
   """
 
   @wikilink_regex ~r/(!?)\[\[([a-zA-Z0-9]+)(?::[pP](\d+))?(?:\|([^\]]+))?\]\]/
 
+  @doc """
+  定义了支持的媒体链接来源的网站 schema 列表。
+
+  所需要的键值：
+
+  * `:key` - 网站的唯一标识符
+  * `:id_pattern` - 用于匹配媒体 ID 的正则表达式
+  * `:url_pattern` - 用于匹配媒体链接 URL 的正则表达式
+  * `:html_embed_url` - 一个函数，接受媒体 ID 和分 P 参数，返回用于嵌入的
+    HTML URL（若没有和 `:export_url` 一致即可）
+  * `:export_url` - 一个函数，接受媒体 ID 和分 P 参数，返回用于导出的标准链接 URL
+  """
   def schema,
     do: [
       %{
@@ -82,7 +103,7 @@ defmodule HSContent.Special.MediaLink do
   defp transformer(full_match, embedd_flag, id, part, link_alias, environment) do
     source = Enum.find(schema(), &Regex.match?(&1.id_pattern, id))
 
-    embedd = (embedd_flag == "!")
+    embedd = embedd_flag == "!"
 
     link_text = if link_alias, do: link_alias, else: id
 
@@ -101,17 +122,19 @@ defmodule HSContent.Special.MediaLink do
           "[#{link_text}](#{url})"
 
         :domain ->
-          part_segment = case part do
-            "" -> ""
-            _ -> "#{part}"
-          end
+          part_segment =
+            case part do
+              "" -> ""
+              _ -> "#{part}"
+            end
 
-          alias_segment = case link_alias do
-            "" -> ""
-            _ -> "|#{link_alias}"
-          end
+          alias_segment =
+            case link_alias do
+              "" -> ""
+              _ -> "|#{link_alias}"
+            end
 
-          embedd_flag <> "[[" <> id <>part_segment <> alias_segment <> "]]"
+          embedd_flag <> "[[" <> id <> part_segment <> alias_segment <> "]]"
       end
     else
       "#{full_match}(Unknown Source)"

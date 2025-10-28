@@ -23,6 +23,7 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc "因为其他模块会用到所以直接写个函数调过去。"
+  # coveralls-ignore-next-line
   def get_session_validity_in_days, do: @session_validity_in_days
 
   @doc """

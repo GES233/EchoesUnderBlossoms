@@ -47,6 +47,7 @@ defmodule HanaShirabe.Accounts.Member do
       |> unique_constraint(:email)
       |> validate_email_changed()
     else
+      # coveralls-ignore-next-line
       changeset
     end
   end

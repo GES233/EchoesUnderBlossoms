@@ -55,7 +55,7 @@ defmodule HSContent.SpecialItem do
 
                     :export -> "[\#{user.nickname}](/user/\#{user.id})"
 
-                    :repository -> "[[@user:\#{id}]]"
+                    :domain -> "[[@user:\#{id}]]"
                   end
             end
           end)
@@ -63,7 +63,7 @@ defmodule HSContent.SpecialItem do
       end
   """
 
-  @type serialization_env :: :repository | :export | :html
+  @type serialization_env :: :domain | :export | :html
 
   @callback transform(MDEx.Document.t(), serialization_env()) ::
               MDEx.Document.t()
