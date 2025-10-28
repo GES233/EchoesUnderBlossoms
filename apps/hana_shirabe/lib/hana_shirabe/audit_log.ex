@@ -114,8 +114,9 @@ defmodule HanaShirabe.AuditLog do
 
   # 构造
 
+  # TODO: 确定 scope 的具体类型
   defp build!(%__MODULE__{} = audit_context, scope, verb, context)
-       when is_list(scope) and is_binary(verb) and is_map(context) do
+       when is_binary(verb) and is_map(context) do
     # 一般地讲，audit_context 已经包括了用户相关的信息
     %{
       audit_context
@@ -125,15 +126,6 @@ defmodule HanaShirabe.AuditLog do
     }
 
     # TODO: validate
-  end
-
-  @doc "用于测试用的"
-  def localhost!(:test) do
-    %__MODULE__{
-      ip_addr: {127, 0, 0, 1},
-      user_agent: "localhost",
-      member: nil
-    }
   end
 
   # TODO：

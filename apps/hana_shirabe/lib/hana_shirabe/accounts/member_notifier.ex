@@ -33,7 +33,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   def deliver_update_email_instructions(member, url) do
     deliver(
       member.email,
-      "Update email instructions",
+      dgettext("deliver", "Update email instructions"),
       dgettext(
         "deliver",
         """
@@ -69,7 +69,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   defp deliver_magic_link_instructions(member, url) do
     deliver(
       member.email,
-      "Log in instructions",
+      dgettext("deliver", "Log in instructions"),
       dgettext(
         "deliver",
         """
@@ -95,7 +95,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   defp deliver_confirmation_instructions(member, url) do
     deliver(
       member.email,
-      "Confirmation instructions",
+      dgettext("deliver", "Confirmation instructions"),
       dgettext(
         "deliver",
         """

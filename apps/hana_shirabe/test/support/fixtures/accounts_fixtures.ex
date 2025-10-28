@@ -22,9 +22,17 @@ defmodule HanaShirabe.AccountsFixtures do
     {:ok, member} =
       attrs
       |> valid_member_attributes()
-      |> Accounts.register_member(AuditLog.localhost!(:test))
+      |> then(&Accounts.register_member(create_audit_log(), &1))
 
     member
+  end
+
+  def create_audit_log() do
+    struct!(AuditLog, %{
+      ip_addr: {127, 0, 0, 1},
+      user_agent: "localhost",
+      member_id: nil
+    })
   end
 
   def member_fixture(attrs \\ %{}) do

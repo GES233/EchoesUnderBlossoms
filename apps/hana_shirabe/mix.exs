@@ -43,7 +43,8 @@ defmodule HanaShirabe.MixProject do
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.16"},
       {:req, "~> 0.5"},
-      {:argon2_elixir, "~> 4.0"},
+      {:pbkdf2_elixir, "~> 2.0"},
+      # {:argon2_elixir, "~> 4.0"},
       # 在 HanaShirabe 中多个模块被使用以支援多语言翻译
       # （这里就是使用 Umbrella Application 的特点了）
       # 至于我什么要选择 Umbrella 是因为后续应用的复杂度

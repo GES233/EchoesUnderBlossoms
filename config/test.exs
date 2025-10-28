@@ -1,7 +1,7 @@
 import Config
 
 # 只在测试环境里这么做，因为降低复杂度节省时间
-config :argon2_elixir, t_cost: 1, m_cost: 8
+config :pbkdf2_elixir, t_cost: 1, m_cost: 8
 
 # 配置你的数据库
 #

@@ -18,16 +18,16 @@ defmodule HanaShirabe.AccountsTest do
   end
 
   describe "测试 get_member_by_email_and_password/2" do
-    test "邮件不存在不返回用户" do
+    test "邮件不存在则不返回用户" do
       refute Accounts.get_member_by_email_and_password("unknown@example.com", "hello world!")
     end
 
-    test "密码不对不返回用户" do
+    test "密码不对则不返回用户" do
       member = member_fixture() |> set_password()
       refute Accounts.get_member_by_email_and_password(member.email, "invalid")
     end
 
-    test "邮件与密码都合法将返回成员" do
+    test "邮件与密码都正确将返回成员" do
       %{id: id} = member = member_fixture() |> set_password()
 
       assert %Member{id: ^id} =
@@ -50,12 +50,12 @@ defmodule HanaShirabe.AccountsTest do
 
   describe "测试 register_member/2" do
     # 整段亟待重构
-    # test "注册需要邮件" do
-    #   {:error, changeset} = Accounts.register_member(%{})
-    #   %{email: [error_msg]} = errors_on(changeset)
+    test "注册需要邮件" do
+      {:error, changeset} = Accounts.register_member(%{}, create_audit_log())
+      %{email: [error_msg]} = errors_on(changeset)
 
-    #   assert error_msg == dgettext("account", "can't be blank")
-    # end
+      assert error_msg == dgettext("account", "can't be blank")
+    end
 
     # test "validates email when given" do
     #   {:error, changeset} = Accounts.register_member(%{email: "not valid"})

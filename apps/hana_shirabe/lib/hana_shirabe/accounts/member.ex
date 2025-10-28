@@ -81,6 +81,8 @@ defmodule HanaShirabe.Accounts.Member do
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
+    # TODO: 将错误提醒的字符串显式的通过 :message 参数表明以便实现翻译
+    # 需要再看一下代码
     |> validate_length(:password, min: 12, max: 72)
     # 其他可以使用的：
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
@@ -97,7 +99,7 @@ defmodule HanaShirabe.Accounts.Member do
       changeset
       # 散列计算可以使用 `Ecto.Changeset.prepare_changes/2` 来完成，
       # 但那样会使数据库事务保持打开状态更长时间，从而影响性能。
-      |> put_change(:hashed_password, Argon2.hash_pwd_salt(password))
+      |> put_change(:hashed_password, Pbkdf2.hash_pwd_salt(password))
       |> delete_change(:password)
     else
       changeset
@@ -108,6 +110,7 @@ defmodule HanaShirabe.Accounts.Member do
   通过设置 `confirmed_at` 来确认账户。
   """
   def confirm_changeset(member) do
+    # TODO: 一旦实现了成员状态，这里需要将 :status 改为 :normal 或什么的
     now = NaiveDateTime.utc_now(:second)
     change(member, confirmed_at: now)
   end
@@ -115,15 +118,15 @@ defmodule HanaShirabe.Accounts.Member do
   @doc """
   验证密码。
 
-  如果这里没有成员或者成员没有密码，我们调用 `Argon2.no_user_verify/0` 来避免时间攻击。
+  如果这里没有成员或者成员没有密码，我们调用 `Pbkdf2.no_user_verify/0` 来避免时间攻击。
   """
   def valid_password?(%HanaShirabe.Accounts.Member{hashed_password: hashed_password}, password)
       when is_binary(hashed_password) and byte_size(password) > 0 do
-    Argon2.verify_pass(password, hashed_password)
+    Pbkdf2.verify_pass(password, hashed_password)
   end
 
   def valid_password?(_, _) do
-    Argon2.no_user_verify()
+    Pbkdf2.no_user_verify()
     false
   end
 end

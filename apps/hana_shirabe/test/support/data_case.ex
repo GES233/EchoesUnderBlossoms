@@ -21,6 +21,9 @@ defmodule HanaShirabe.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import HanaShirabe.DataCase
+
+      # 虽然严格意义上说不属于数据层，但是应用的数据层有大量的翻译
+      use Gettext, backend: HanaShirabe.Gettext
     end
   end
 
