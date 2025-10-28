@@ -27,7 +27,7 @@ defmodule HanaShirabe.Accounts.MemberToken do
 
   @doc """
   生成一个将会保存在类似于会话或 cookie 的 signed place 的令牌。
-  当被 signed 时，这些令牌不需要被散列处理。
+  当被签名验证时，这些令牌不需要被散列处理。
 
   The reason why we store session tokens in the database, even
   though Phoenix already provides a session cookie, is because

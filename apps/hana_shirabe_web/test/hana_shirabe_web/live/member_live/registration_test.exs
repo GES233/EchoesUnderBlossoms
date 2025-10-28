@@ -4,7 +4,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
   import Phoenix.LiveViewTest
   import HanaShirabe.AccountsFixtures
 
-  describe "Registration page" do
+  describe "注册页" do
     test "renders registration page", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/sign_up")
 

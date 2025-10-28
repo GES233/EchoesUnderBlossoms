@@ -10,8 +10,11 @@
 
 再次基础上，通过修改 `phx mix.gen.auth` 自动生成的代码来处理（也可以魔改此前废弃项目的相关代码，其已经实现了 AuditLog 基于 bytepack）。
 
-- [x] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
+- [ ] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
   - [x] `MemberAuth` 的文档与注释
+  - [ ] `HanaShirabe.Accounts.MemberToken`
+  - [ ] `HanaShirabe.Accounts`
+  - [ ] `HanaShirabeWeb.ConnCase`
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
 - [ ] 将注册与登录的函数与 `%AuditLog{}` 合并
@@ -20,8 +23,10 @@
     - 需要商讨需要挂载到哪个函数、记录哪些信息
   - [ ] 验证函数
   - [ ] 从 xxx/1 变成需要 audit_log 的 xxx/2
+- [ ] 修改代码使测试跑通
 - [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
-  - [ ] 确定是
+  - [ ] 确定 `scope` 是 `t:atom()` 还是 `t:list(atom())`
+- [ ] 实现网页国际化的功能（主要是一堆 LiveView 里乱七八糟的）
 - [ ] 优化「注册」与「修改信息」的流程
   - [ ] 把 `member_live` 里的那些东西搞成多语言
   - 我倒是觉得先激活邮件再填写密码的方式很好

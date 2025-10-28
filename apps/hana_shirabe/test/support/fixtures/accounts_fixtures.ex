@@ -1,11 +1,11 @@
 defmodule HanaShirabe.AccountsFixtures do
   @moduledoc """
-  This module defines test helpers for creating
-  entities via the `HanaShirabe.Accounts` context.
+  此模块定义用于通过 `HanaShirabe.Accounts` 上下文创建实体的测试助手。
   """
 
   import Ecto.Query
 
+  require Config
   alias HanaShirabe.{Accounts, AuditLog}
   alias HanaShirabe.Accounts.Scope
 
@@ -28,9 +28,14 @@ defmodule HanaShirabe.AccountsFixtures do
   end
 
   def create_audit_log() do
+    elixir_version = System.version()
+    otp_version = :erlang.system_info(:otp_release)
+
+    user_agent = "[Localhost] (Elixir#{elixir_version} /OTP #{otp_version})"
+
     struct!(AuditLog, %{
       ip_addr: {127, 0, 0, 1},
-      user_agent: "localhost",
+      user_agent: user_agent,
       member_id: nil
     })
   end

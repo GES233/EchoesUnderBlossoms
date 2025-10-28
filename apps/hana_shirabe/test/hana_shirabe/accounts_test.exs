@@ -48,48 +48,49 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  describe "测试 register_member/2" do
-    # 整段亟待重构
-    test "注册需要邮件" do
-      {:error, changeset} = Accounts.register_member(%{}, create_audit_log())
+  describe "测试附带日志记录的 register_member/2" do
+    setup do
+      %{audit_log: create_audit_log()}
+    end
+
+    test "注册需要邮件", %{audit_log: audit_log} do
+      {:error, changeset} = Accounts.register_member(audit_log, %{})
       %{email: [error_msg]} = errors_on(changeset)
 
       assert error_msg == dgettext("account", "can't be blank")
     end
 
-    # test "validates email when given" do
-    #   {:error, changeset} = Accounts.register_member(%{email: "not valid"})
-    #   %{email: [error_msg]} = errors_on(changeset)
+    test "检验给定邮件", %{audit_log: audit_log} do
+      {:error, changeset} = Accounts.register_member(audit_log, %{email: "not valid"})
+      %{email: [error_msg]} = errors_on(changeset)
 
-    #   assert error_msg == dgettext("account", "must have the @ sign and no spaces")
-    # end
+      assert error_msg == dgettext("account", "must have the @ sign and no spaces")
+    end
 
-    # test "validates maximum values for email for security" do
-    #   too_long = String.duplicate("db", 100)
-    #   {:error, changeset} = Accounts.register_member(%{email: too_long})
-    #   assert "should be at most 160 character(s)" in errors_on(changeset).email
-    # end
+    test "验证邮件地址的最大值", %{audit_log: audit_log} do
+      too_long = String.duplicate("db", 100)
+      {:error, changeset} = Accounts.register_member(audit_log, %{email: too_long})
+      assert "should be at most 160 character(s)" in errors_on(changeset).email
+    end
 
-    # test "validates email uniqueness" do
-    #   %{email: email} = member_fixture()
-    #   {:error, changeset} = Accounts.register_member(%{email: email})
-    #   assert "has already been taken" in errors_on(changeset).email
+    test "验证邮件唯一", %{audit_log: audit_log} do
+      %{email: email} = member_fixture()
+      {:error, changeset} = Accounts.register_member(audit_log, %{email: email})
+      assert "has already been taken" in errors_on(changeset).email
 
-    #   # Now try with the upper cased email too, to check that email case is ignored.
-    #   {:error, changeset} = Accounts.register_member(%{email: String.upcase(email)})
-    #   assert "has already been taken" in errors_on(changeset).email
-    # end
+      # 现在也尝试使用大写的电子邮件，以检查是否忽略电子邮件大小写。
+      {:error, changeset} = Accounts.register_member(audit_log, %{email: String.upcase(email)})
+      assert "has already been taken" in errors_on(changeset).email
+    end
 
-    # test "registers members without password" do
-    #   email = unique_member_email()
-    #   {:ok, member} = Accounts.register_member(valid_member_attributes(email: email))
-    #   assert member.email == email
-    #   assert is_nil(member.hashed_password)
-    #   assert is_nil(member.confirmed_at)
-    #   assert is_nil(member.password)
-    # end
-
-    # 需要更新需要事务日志的测试用例
+    test "不用密码的注册", %{audit_log: audit_log} do
+      email = unique_member_email()
+      {:ok, member} = Accounts.register_member(audit_log, valid_member_attributes(email: email))
+      assert member.email == email
+      assert is_nil(member.hashed_password)
+      assert is_nil(member.confirmed_at)
+      assert is_nil(member.password)
+    end
   end
 
   describe "测试 sudo_mode?/2" do
@@ -113,6 +114,7 @@ defmodule HanaShirabe.AccountsTest do
   end
 
   describe "测试 change_member_email/3" do
+    # 我有点搞不懂这个函数是为了覆盖 coverage 还是为了测试
     test "返回成员变更集" do
       assert %Ecto.Changeset{} = changeset = Accounts.change_member_email(%Member{})
       assert changeset.required == [:email]
@@ -381,7 +383,7 @@ defmodule HanaShirabe.AccountsTest do
       %{member: unconfirmed_member_fixture()}
     end
 
-    test "sends token through notification", %{member: member} do
+    test "通过消息发送令牌", %{member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_login_instructions(member, url)

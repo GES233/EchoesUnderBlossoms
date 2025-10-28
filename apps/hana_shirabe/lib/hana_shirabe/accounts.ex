@@ -117,9 +117,9 @@ defmodule HanaShirabe.Accounts do
   def sudo_mode?(_member, _minutes), do: false
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for changing the member email.
+  更换成员邮件时返回变化表（`%Ecto.Changeset{}`）。
 
-  See `HanaShirabe.Accounts.Member.email_changeset/3` for a list of supported options.
+  可查看 `HanaShirabe.Accounts.Member.email_changeset/3` 以获得支持选项的列表。
 
   ## Examples
 

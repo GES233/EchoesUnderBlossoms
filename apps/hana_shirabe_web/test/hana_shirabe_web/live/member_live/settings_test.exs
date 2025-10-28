@@ -8,7 +8,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
   use Gettext, backend: HanaShirabeWeb.Gettext
 
   describe "Settings page" do
-    test "renders settings page", %{conn: conn} do
+    test "渲染设置页面", %{conn: conn} do
       {:ok, _lv, html} =
         conn
         |> log_in_member(member_fixture())
@@ -18,7 +18,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert html =~ dgettext("account", "Save Password")
     end
 
-    test "redirects if member is not logged in", %{conn: conn} do
+    test "成员未登录会被重定向", %{conn: conn} do
       assert {:error, redirect} = live(conn, ~p"/me/settings")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
@@ -27,7 +27,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert message =~ dgettext("account", "You must log in to access this page.")
     end
 
-    test "redirects if member is not in sudo mode", %{conn: conn} do
+    test "用户未验证（ sudo 模式）会被重定向", %{conn: conn} do
       {:ok, conn} =
         conn
         |> log_in_member(member_fixture(),
@@ -40,13 +40,13 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
   end
 
-  describe "update email form" do
+  describe "更新邮件表单" do
     setup %{conn: conn} do
       member = member_fixture()
       %{conn: log_in_member(conn, member), member: member}
     end
 
-    test "updates the member email", %{conn: conn, member: member} do
+    test "更新成员邮件", %{conn: conn, member: member} do
       new_email = unique_member_email()
 
       {:ok, lv, _html} = live(conn, ~p"/me/settings")

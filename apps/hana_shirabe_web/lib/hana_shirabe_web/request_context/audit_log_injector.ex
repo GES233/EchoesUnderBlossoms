@@ -2,7 +2,7 @@ defmodule HanaShirabeWeb.AuditLogInjector do
   @moduledoc """
   将 `%AuditLog{}` 挂载在用户的请求上下文中。
 
-  （可能后面会挂别的，但是目前只有这个）
+  一般需要放在 `MemberAuth` 之后，以确保可以访问当前用户的信息。
   """
 
   alias HanaShirabe.AuditLog
