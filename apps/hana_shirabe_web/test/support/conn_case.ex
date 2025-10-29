@@ -34,12 +34,11 @@ defmodule HanaShirabeWeb.ConnCase do
   end
 
   @doc """
-  Setup helper that registers and logs in members.
+  安装 helper，注册并登录一个会员。
 
       setup :register_and_log_in_member
 
-  It stores an updated connection and a registered member in the
-  test context.
+  其在测试上下文中存储了更新后的连接和注册的会员。
   """
   def register_and_log_in_member(%{conn: conn} = context) do
     member = HanaShirabe.AccountsFixtures.member_fixture()
@@ -54,9 +53,11 @@ defmodule HanaShirabeWeb.ConnCase do
   end
 
   @doc """
-  Logs the given `member` into the `conn`.
+  将给定的 `member` 登录到 `conn` 中。
 
-  It returns an updated `conn`.
+  可选的 `:token_authenticated_at` 选项可用于设置令牌的身份验证时间。
+
+  返回更新后的 `conn`。
   """
   def log_in_member(conn, member, opts \\ []) do
     token = HanaShirabe.Accounts.generate_member_session_token(member)

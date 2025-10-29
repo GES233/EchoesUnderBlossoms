@@ -132,9 +132,9 @@ defmodule HanaShirabe.Accounts do
   end
 
   @doc """
-  Updates the member email using the given token.
+  使用给定的令牌更新成员邮件。
 
-  If the token matches, the member email is updated and the token is deleted.
+  一旦令牌匹配，成员邮件将会被更新并且令牌被删除。
   """
   def update_member_email(member, token) do
     context = "change:#{member.email}"

@@ -147,7 +147,11 @@ defmodule HanaShirabe.AccountsTest do
 
       token =
         extract_member_token(fn url ->
-          Accounts.deliver_member_update_email_instructions(%{member | email: email}, member.email, url)
+          Accounts.deliver_member_update_email_instructions(
+            %{member | email: email},
+            member.email,
+            url
+          )
         end)
 
       %{member: member, token: token, email: email}
@@ -194,7 +198,7 @@ defmodule HanaShirabe.AccountsTest do
       assert changeset.required == [:password]
     end
 
-    test "allows fields to be set" do
+    test "允许字段被设立" do
       changeset =
         Accounts.change_member_password(
           %Member{},
@@ -222,10 +226,17 @@ defmodule HanaShirabe.AccountsTest do
           password_confirmation: "another"
         })
 
-      assert %{
-               password: ["should be at least 12 character(s)"],
-               password_confirmation: ["does not match password"]
-             } = errors_on(changeset)
+      %{
+        # "should be at least 12 character(s)"
+        password: [should_be_at_least_count_characters],
+        # "does not match password"
+        password_confirmation: [does_not_match_password]
+      } = errors_on(changeset)
+
+      assert does_not_match_password == dgettext("account", "does not match password")
+
+      assert should_be_at_least_count_characters ==
+               dgettext("account", "should be at least %{count} character(s)", count: 12)
     end
 
     test "validates maximum values for password for security", %{member: member} do
@@ -234,7 +245,7 @@ defmodule HanaShirabe.AccountsTest do
       {:error, changeset} =
         Accounts.update_member_password(member, %{password: too_long})
 
-      assert "should be at most 72 character(s)" in errors_on(changeset).password
+      assert dgettext("account", "should be at most %{count} character(s)", count: 72) in errors_on(changeset).password
     end
 
     test "更新密码", %{member: member} do
@@ -282,7 +293,11 @@ defmodule HanaShirabe.AccountsTest do
     end
 
     test "duplicates the authenticated_at of given member in new token", %{member: member} do
-      member = %{member | authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -3600)}
+      member = %{
+        member
+        | authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -3600)
+      }
+
       token = Accounts.generate_member_session_token(member)
       assert member_token = Repo.get_by(MemberToken, token: token)
       assert member_token.authenticated_at == member.authenticated_at
@@ -297,18 +312,18 @@ defmodule HanaShirabe.AccountsTest do
       %{member: member, token: token}
     end
 
-    test "returns member by token", %{member: member, token: token} do
+    test "通过令牌返回成员", %{member: member, token: token} do
       assert {session_member, token_inserted_at} = Accounts.get_member_by_session_token(token)
       assert session_member.id == member.id
       assert session_member.authenticated_at != nil
       assert token_inserted_at != nil
     end
 
-    test "does not return member for invalid token" do
+    test "非法令牌不返回成员" do
       refute Accounts.get_member_by_session_token("oops")
     end
 
-    test "does not return member for expired token", %{token: token} do
+    test "过期令牌不返回成员", %{token: token} do
       dt = ~N[2020-01-01 00:00:00]
       {1, nil} = Repo.update_all(MemberToken, set: [inserted_at: dt, authenticated_at: dt])
       refute Accounts.get_member_by_session_token(token)

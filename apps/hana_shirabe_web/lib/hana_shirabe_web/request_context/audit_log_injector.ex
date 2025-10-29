@@ -9,7 +9,6 @@ defmodule HanaShirabeWeb.AuditLogInjector do
 
   @audit_log_key :audit_log
 
-  # TODO: 考虑实现 on_mount 以适配 LiveView
   def on_mount(:mount_audit_log, _params, _session, socket) do
     {:cont, put_audit_context(socket, [])}
   end

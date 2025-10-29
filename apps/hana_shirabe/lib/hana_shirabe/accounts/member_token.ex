@@ -30,19 +30,15 @@ defmodule HanaShirabe.Accounts.MemberToken do
   生成一个将会保存在类似于会话或 cookie 的 signed place 的令牌。
   当被签名验证时，这些令牌不需要被散列处理。
 
-  The reason why we store session tokens in the database, even
-  though Phoenix already provides a session cookie, is because
-  Phoenix' default session cookies are not persisted, they are
-  simply signed and potentially encrypted. This means they are
-  valid indefinitely, unless you change the signing/encryption
-  salt.
+  我们将会话令牌保存在数据库里（哪怕 Phoenix 以及有了基于会话的
+  cookie）的原因，是因为 Phoenix 默认提供的会话 cookie
+  并不是持久化存储的，它们只是被签名和可能被加密的。
+  这意味着它们是无限期有效的，除非你更改签名/加密盐值。
 
-  Therefore, storing them allows individual member
-  sessions to be expired. The token system can also be extended
-  to store additional data, such as the device used for logging in.
-  You could then use this information to display all valid sessions
-  and devices in the UI and allow users to explicitly expire any
-  session they deem invalid.
+  因此，存储它们允许单独的成员会话被过期。
+  令牌系统也可以被扩展以存储额外的数据，比如用于登录的设备。
+  然后，您可以使用此信息在 UI 中显示所有有效的会话和设备，
+  并允许用户明确地使他们认为无效的任何会话过期。
   """
   def build_session_token(member) do
     token = :crypto.strong_rand_bytes(@rand_size)
@@ -68,17 +64,13 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
-  Builds a token and its hash to be delivered to the member's email.
+  构建一个令牌且将其的哈希值发送到成员的电子邮件。
 
-  The non-hashed token is sent to the member email while the
-  hashed part is stored in the database. The original token cannot be reconstructed,
-  which means anyone with read-only access to the database cannot directly use
-  the token in the application to gain access. Furthermore, if the member changes
-  their email in the system, the tokens sent to the previous email are no longer
-  valid.
+  未经散列处理的令牌被发送到成员的电子邮件，而散列处理的部分则存储在数据库中。
+  原始令牌无法被重建，这意味着任何对数据库有只读访问权限的人都无法直接在应用程序中使用该令牌来获得访问权限。
+  此外，如果成员在系统中更改了他们的电子邮件，则发送到先前电子邮件的令牌将不再有效。
 
-  Users can easily adapt the existing code to provide other types of delivery methods,
-  for example, by phone numbers.
+  用户可以轻易的适配现有代码来提供其他类型的传递方法，例如通过电话号码。
   """
   def build_email_token(member, context) do
     build_hashed_token(member, context, member.email)
@@ -98,13 +90,13 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  检查令牌是否合法并返回其底层查询。
 
-  If found, the query returns a tuple of the form `{member, token}`.
+  一旦找到，查询将返回一个形式为 `{member, token}` 的元组。
 
-  The given token is valid if it matches its hashed counterpart in the
-  database. This function also checks if the token is being used within
-  15 minutes. The context of a magic link token is always "login".
+  给定的令牌如果与数据库中其散列对应项匹配则有效。
+  此函数还检查令牌是否在15分钟内被使用。
+  魔法链接令牌的上下文始终是 "login" 。
   """
   def verify_magic_link_token_query(token) do
     case Base.url_decode64(token, padding: false) do
@@ -126,15 +118,14 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
-  Checks if the token is valid and returns its underlying lookup query.
+  检查令牌是否合法并返回其底层查询。
 
-  The query returns the member_token found by the token, if any.
+  一旦通过令牌找到，查询将返回 member_token 。
 
-  This is used to validate requests to change the member
-  email.
-  The given token is valid if it matches its hashed counterpart in the
-  database and if it has not expired (after @change_email_validity_in_days).
-  The context must always start with "change:".
+  这是用来验证更改成员电子邮件的请求。
+  给定的令牌如果与数据库中其散列对应项匹配则有效。
+  并且如果它没有过期（在 @change_email_validity_in_days 之后）。
+  上下文必须始终以 "change:" 开头。
   """
   def verify_change_email_token_query(token, "change:" <> _ = context) do
     case Base.url_decode64(token, padding: false) do

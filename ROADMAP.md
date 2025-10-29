@@ -12,20 +12,24 @@
 
 - [ ] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
   - [x] `MemberAuth` 的文档与注释
-  - [ ] `HanaShirabe.Accounts.MemberToken`
-  - [ ] `HanaShirabe.Accounts`
-  - [ ] `HanaShirabeWeb.ConnCase`
+  - [x] `HanaShirabe.Accounts.MemberToken`
+  - [x] `HanaShirabe.Accounts`
+  - [x] `HanaShirabeWeb.ConnCase`
+  -  一堆测试代码
+    - [ ] `HanaShirabe.AccountsTest`
+    - [ ] `HanaShirabeWeb.MemberSessionControllerTest`
+    - [ ] `HanaShirabeWeb.MemberLive.ConfirmationTest`
+    - [ ] `HanaShirabeWeb.MemberLive.LoginTest`
+    - [ ] `HanaShirabeWeb.MemberLive.RegistrationTest`
+    - [ ] `HanaShirabeWeb.MemberLive.SettingsTest`
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
-- [ ] 将注册与登录的函数与 `%AuditLog{}` 合并
-  - [x] 注册函数
-  - [ ] 登录函数
-    - 需要商讨需要挂载到哪个函数、记录哪些信息
-  - [ ] 验证函数
-  - [ ] 从 xxx/1 变成需要 audit_log 的 xxx/2
+  - [ ] 编写测试代码
+- [x] 将注册的函数与 `%AuditLog{}` 合并
 - [ ] 修改代码使测试跑通
 - [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
   - [ ] 确定 `scope` 是 `t:atom()` 还是 `t:list(atom())`
+- [ ] 实现登录、验证、邮件修改的 AuditLog 操作
 - [ ] 实现网页国际化的功能（主要是一堆 LiveView 里乱七八糟的）
 - [ ] 优化「注册」与「修改信息」的流程
   - [ ] 把 `member_live` 里的那些东西搞成多语言
@@ -66,9 +70,11 @@
 
 以及对脚手架代码的魔改，需要修改函数以成功运行。
 
+同时尽力提高 coverage 。
+
 ### 多语言支持
 
-计划通过客户端 Cookie + 浏览器 Accept-Language 实现。
+计划通过客户端 Cookie + 浏览器请求头的 Accept-Language 实现。
 
 ### 内容的创建、处理以及导出
 
@@ -85,8 +91,6 @@
 #### 导入
 
 转化为 Markdown （内部）。
-
-### 提升测试的 Coverage
 
 ### 草稿箱的设计与实现
 
@@ -120,6 +124,6 @@
 
 TBD
 
-### 游戏与提案
+### 提案的生命周期的设计与实现
 
-挖掘是针对游戏进行的。
+这是最重要的。
