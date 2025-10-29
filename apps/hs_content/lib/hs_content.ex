@@ -4,7 +4,7 @@ defmodule HSContent do
 
   目前考虑三种形式的内容格式：
 
-  * Markdown(In database), `repository`
+  * Markdown(In database), `domain`
   * Markdown(Export), `link`
   * HTML(Apperance with some link or components), `html`
 
@@ -12,9 +12,9 @@ defmodule HSContent do
 
   一般来讲，一个插件要考虑五个 callback ，分别是：
 
-  * 识别 repository_content
+  * 识别 domain_content
   * 识别 export_content
-  * 将对象变为 repository_content
+  * 将对象变为 domain_content
   * 将对象变为 export_content
   * 将对象变为 html_component
   """
@@ -30,8 +30,8 @@ defmodule HSContent do
   @doc """
   从仓库格式（纯 Markdown 字符串）创建一个 HSContent 实例。
   """
-  @spec from_repository(binary(), list(module()), any()) :: t()
-  def from_repository(markdown_string, plugins \\ [], _opts \\ []) do
+  @spec from_domain(binary(), list(module()), any()) :: t()
+  def from_domain(markdown_string, plugins \\ [], _opts \\ []) do
     %__MODULE__{
       document: MDEx.parse_document!(markdown_string),
       derive: :domain,
@@ -76,8 +76,8 @@ defmodule HSContent do
   @doc """
   将内容转换回仓库格式的 Markdown 字符串。
   """
-  @spec to_repository_markdown(t(), any()) :: binary()
-  def to_repository_markdown(%__MODULE__{document: doc, derive: derive, plugins: plugins}, _opts \\ []) do
+  @spec to_domain_markdown(t(), any()) :: binary()
+  def to_domain_markdown(%__MODULE__{document: doc, derive: derive, plugins: plugins}, _opts \\ []) do
     doc
     |> apply_plugins(derive, :domain, plugins)
     |> MDEx.to_markdown!()
@@ -88,7 +88,7 @@ defmodule HSContent do
     Enum.reduce(plugins, initial_doc, fn plugin_module, current_doc ->
       # 调用每个插件的 transform/2 函数
       case deserialization_env do
-        :outside -> current_doc
+        :export -> current_doc
         |> plugin_module.normalize()
         |> plugin_module.transform(serialization_env)
 
