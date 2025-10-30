@@ -24,9 +24,10 @@
     - [ ] `HanaShirabeWeb.MemberLive.SettingsTest`
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
-  - [ ] 编写测试代码
+  - [ ] 编写测试代码（包括 Plug 以及 LiveView）
 - [x] 将注册的函数与 `%AuditLog{}` 合并
 - [ ] 修改代码使测试跑通
+  - [ ] 主要是 Gettext 会翻译部分错误信息，这和测试代码的断言不一致
 - [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
   - [ ] 确定 `scope` 是 `t:atom()` 还是 `t:list(atom())`
 - [ ] 实现登录、验证、邮件修改的 AuditLog 操作
