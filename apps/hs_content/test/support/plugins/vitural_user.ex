@@ -1,5 +1,7 @@
 defmodule HSContentTest.VituralUser do
-  # 抄的文档
+  defstruct [:id, :nickname]
+
+  ## 以下部分抄的文档
   @behaviour HSContent.SpecialItem
 
   @impl true
@@ -20,7 +22,7 @@ defmodule HSContentTest.VituralUser do
       %MDEx.Link{url: dest, title: _title} = node ->
         case Regex.run(~r|^/user/(\\d+)|, dest) do
           [_, id] ->
-            %MDEx.Text{literal: "[[@user:\#{id}]]"}
+            %MDEx.Text{literal: "[[@user:#{id}]]"}
 
           nil ->
             node
@@ -40,14 +42,13 @@ defmodule HSContentTest.VituralUser do
         user ->
           case target do
             :html ->
-              # Use phoenix component is better
-              ~s(<a href="/user/\#{user.id}" class="domain-link user-link">\#{usre.nickname}</a>)
+              ~s(<a href="/user/#{user.id}" class="domain-link user-link">#{usre.nickname}</a>)
 
             :export ->
-              "[\#{user.nickname}](/user/\#{user.id})"
+              "[#{user.nickname}](/user/#{user.id})"
 
             :domain ->
-              "[[@user:\#{id}]]"
+              "[[@user:#{id}]]"
           end
       end
     end)
