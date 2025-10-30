@@ -21,11 +21,14 @@ defmodule HSContent do
 
   @type t :: %__MODULE__{
           document: MDEx.Document.t(),
-          derive: :outsite | :domain,
+          derive: deserialization_env(),
           plugins: list(module())
         }
 
   defstruct [:document, :derive, :plugins]
+
+  @type serialization_env :: :domain | :export | :html
+  @type deserialization_env :: :export | :domain
 
   @doc """
   从仓库格式（纯 Markdown 字符串）创建一个 HSContent 实例。
@@ -42,7 +45,7 @@ defmodule HSContent do
   def from_export_markdown(markdown_string, plugins \\ [], _opts \\ []) do
     %__MODULE__{
       document: MDEx.parse_document!(markdown_string),
-      derive: :outsite,
+      derive: :export,
       plugins: plugins
     }
   end
@@ -97,4 +100,7 @@ defmodule HSContent do
       end
     end)
   end
+
+  @callback apply(MDEx.Document.t(), serialization_env :: :export | :domain, serialization_env :: :domain | :export | :html) ::
+              MDEx.Document.t()
 end

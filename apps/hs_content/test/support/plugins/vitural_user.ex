@@ -20,7 +20,7 @@ defmodule HSContentTest.VituralUser do
   def normalize(doc) do
     MDEx.traverse_and_update(document, fn
       %MDEx.Link{url: dest, title: _title} = node ->
-        case Regex.run(~r|^/user/(\\d+)|, dest) do
+        case Regex.run(~r|^/user/(\d+)|, dest) do
           [_, id] ->
             %MDEx.Text{literal: "[[@user:#{id}]]"}
 
@@ -34,10 +34,10 @@ defmodule HSContentTest.VituralUser do
   end
 
   defp replace_placeholders(text, target) do
-    Regex.replace(~r/[[@user:(\\d+)]]/, text, fn _full_match, id ->
+    Regex.replace(~r/[[@user:(\d+)]]/, text, fn _full_match, id ->
       case User.gets_user(id) do
         nil ->
-          "[[@user:\#{id}<Not Found>]]"
+          "[[@user:#{id}<Not Found>]]"
 
         user ->
           case target do

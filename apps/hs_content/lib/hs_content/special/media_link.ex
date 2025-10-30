@@ -63,7 +63,7 @@ defmodule HSContent.Special.MediaLink do
       }
     ]
 
-  @behaviour HSContent.SpecialItem
+  use HSContent.SpecialItem
 
   @impl true
   def transform(document, serialization_env) do

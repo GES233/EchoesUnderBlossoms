@@ -63,10 +63,27 @@ defmodule HSContent.SpecialItem do
       end
   """
 
-  @type serialization_env :: :domain | :export | :html
-
-  @callback transform(MDEx.Document.t(), serialization_env()) ::
+  @callback transform(MDEx.Document.t(), HSContent.serialization_env()) ::
               MDEx.Document.t()
 
   @callback normalize(MDEx.Document.t()) :: MDEx.Document.t()
+
+  defmacro __using__(_opts) do
+    quote do
+      @behaviour HSContent
+      @behaviour HSContent.SpecialItem
+
+      @impl HSContent
+      def apply(document, deserialization_env, serialization_env) do
+        case deserialization_env do
+        :export -> document
+        |> normalize()
+        |> transform(serialization_env)
+
+        _ -> document
+        |> transform(serialization_env)
+      end
+      end
+    end
+  end
 end
