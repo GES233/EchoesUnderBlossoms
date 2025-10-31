@@ -70,17 +70,20 @@ defmodule HanaShirabe.AccountsTest do
     test "验证邮件地址的最大值", %{audit_log: audit_log} do
       too_long = String.duplicate("db", 100)
       {:error, changeset} = Accounts.register_member(audit_log, %{email: too_long})
-      assert "should be at most 160 character(s)" in errors_on(changeset).email
+
+      assert dgettext("account", "should be at most %{count} character(s)", count: 160) in errors_on(
+               changeset
+             ).email
     end
 
     test "验证邮件唯一", %{audit_log: audit_log} do
       %{email: email} = member_fixture()
       {:error, changeset} = Accounts.register_member(audit_log, %{email: email})
-      assert "has already been taken" in errors_on(changeset).email
+      assert dgettext("account", "has already been taken") in errors_on(changeset).email
 
       # 现在也尝试使用大写的电子邮件，以检查是否忽略电子邮件大小写。
       {:error, changeset} = Accounts.register_member(audit_log, %{email: String.upcase(email)})
-      assert "has already been taken" in errors_on(changeset).email
+      assert dgettext("account", "has already been taken") in errors_on(changeset).email
     end
 
     test "不用密码的注册", %{audit_log: audit_log} do
