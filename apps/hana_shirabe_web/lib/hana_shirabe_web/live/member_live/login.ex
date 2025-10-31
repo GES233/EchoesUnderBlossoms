@@ -10,16 +10,19 @@ defmodule HanaShirabeWeb.MemberLive.Login do
       <div class="mx-auto max-w-sm space-y-4">
         <div class="text-center">
           <.header>
-            <p>Log in</p>
+            <p>{dgettext("account", "Log in")}</p>
+
             <:subtitle>
               <%= if @current_scope do %>
-                {dgettext("account", "You need to reauthenticate to perform sensitive actions on your account.")}
+                {dgettext(
+                  "account",
+                  "You need to reauthenticate to perform sensitive actions on your account."
+                )}
               <% else %>
-                Don't have an account? <.link
-                  navigate={~p"/sign_up"}
-                  class="font-semibold text-brand hover:underline"
-                  phx-no-format
-                >Sign up</.link> for an account now.
+                {dgettext("account", "Don't have an account? %{sign_up_link} for an account now.",
+                  sign_up_link: translate_sign_up_instruction(%{url: ~p"/sign_up"})
+                )
+                |> raw()}
               <% end %>
             </:subtitle>
           </.header>
@@ -29,8 +32,12 @@ defmodule HanaShirabeWeb.MemberLive.Login do
           <.icon name="hero-information-circle" class="size-6 shrink-0" />
           <div>
             <p>{dgettext("account", "You are running the local mail adapter.")}</p>
+
             <p>
-              To see sent emails, visit <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
+              {dgettext("account", "To see sent emails, visit %{email_page}.",
+                email_page: translate_email_instructions(%{})
+              )
+              |> raw()}
             </p>
           </div>
         </div>
@@ -46,17 +53,17 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             readonly={!!@current_scope}
             field={f[:email]}
             type="email"
-            label="Email"
+            label={dgettext("account", "Email")}
             autocomplete="username"
             required
             phx-mounted={JS.focus()}
           />
           <.button class="btn btn-primary w-full">
-            Log in with email <span aria-hidden="true">→</span>
+            {dgettext("account", "Log in with email")} <span aria-hidden="true">→</span>
           </.button>
         </.form>
 
-        <div class="divider">or</div>
+        <div class="divider">{dgettext("account", "or")}</div>
 
         <.form
           :let={f}
@@ -70,14 +77,14 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             readonly={!!@current_scope}
             field={f[:email]}
             type="email"
-            label="Email"
+            label={dgettext("account", "Email")}
             autocomplete="username"
             required
           />
           <.input
             field={@form[:password]}
             type="password"
-            label="Password"
+            label={dgettext("account", "Password")}
             autocomplete="current-password"
           />
           <.button class="btn btn-primary w-full" name={@form[:remember_me].name} value="true">
@@ -89,6 +96,23 @@ defmodule HanaShirabeWeb.MemberLive.Login do
         </.form>
       </div>
     </Layouts.app>
+    """
+  end
+
+  defp translate_sign_up_instruction(assigns) do
+    ~H"""
+    <.link
+      navigate={@url}
+      class="font-semibold text-brand hover:underline"
+      phx-no-format
+    >{dgettext("account", "Sign up")}</.link>
+    """
+    |> Phoenix.HTML.Safe.to_iodata()
+  end
+
+  defp translate_email_instructions(assigns) do
+    ~H"""
+    <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
     """
   end
 

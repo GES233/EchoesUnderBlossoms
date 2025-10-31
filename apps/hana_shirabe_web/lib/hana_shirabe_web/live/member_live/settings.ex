@@ -11,8 +11,10 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="text-center">
         <.header>
-          Account Settings
-          <:subtitle>Manage your account email address and password settings</:subtitle>
+          {dgettext("account", "Account Settings")}
+          <:subtitle>
+            {dgettext("account", "Manage your account email address and password settings")}
+          </:subtitle>
         </.header>
       </div>
 
@@ -20,19 +22,19 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
         <.input
           field={@email_form[:email]}
           type="email"
-          label="Email"
+          label={dgettext("account", "Email")}
           autocomplete="username"
           required
         />
-        <.button variant="primary" phx-disable-with="Changing...">Change Email</.button>
+        <.button variant="primary" phx-disable-with={dgettext("account", "Changing...")}>
+          {dgettext("account", "Change Email")}
+        </.button>
       </.form>
-
-      <div class="divider" />
-
+       <div class="divider" />
       <.form
         for={@password_form}
         id="password_form"
-        action={~p"/members/update-password"}
+        action={~p"/me/update-password"}
         method="post"
         phx-change="validate_password"
         phx-submit="update_password"
@@ -48,18 +50,18 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
         <.input
           field={@password_form[:password]}
           type="password"
-          label="New password"
+          label={dgettext("account", "New password")}
           autocomplete="new-password"
           required
         />
         <.input
           field={@password_form[:password_confirmation]}
           type="password"
-          label="Confirm new password"
+          label={dgettext("account", "Confirm new password")}
           autocomplete="new-password"
         />
         <.button variant="primary" phx-disable-with="Saving...">
-          Save Password
+          {dgettext("account", "Save Password")}
         </.button>
       </.form>
     </Layouts.app>
@@ -71,10 +73,14 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
     socket =
       case Accounts.update_member_email(socket.assigns.current_scope.member, token) do
         {:ok, _member} ->
-          put_flash(socket, :info, "Email changed successfully.")
+          msg = dgettext("account", "Email changed successfully.")
+
+          put_flash(socket, :info, msg)
 
         {:error, _} ->
-          put_flash(socket, :error, "Email change link is invalid or it has expired.")
+          msg = dgettext("account", "Email change link is invalid or it has expired.")
+
+          put_flash(socket, :error, msg)
       end
 
     {:ok, push_navigate(socket, to: ~p"/me/settings")}
@@ -121,7 +127,12 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           &url(~p"/me/settings/confirm-email/#{&1}")
         )
 
-        info = "A link to confirm your email change has been sent to the new address."
+        info =
+          dgettext(
+            "account",
+            "A link to confirm your email change has been sent to the new address."
+          )
+
         {:noreply, socket |> put_flash(:info, info)}
 
       changeset ->

@@ -21,35 +21,50 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
           <.header>
             {dgettext("account", "Register for an account")}
             <:subtitle>
-              {dgettext("account", "Already registered?")}
-              <!-- 这种带元素的怎么处理来着？ -->
-              <.link navigate={~p"/login"} class="font-semibold text-brand hover:underline">
-                Log in
-              </.link>
-              to your account now.
+              {dgettext("account", "Already registered? %{login_link} to your account now.",
+                login_link: translate_with_link(%{url: ~p"/login"})
+              ) |> raw()}
             </:subtitle>
           </.header>
+
+          <%!-- <%= translate_with_link(%{
+            header: dgettext("account", "Register for an account"),
+            other_cond: dgettext("account", "Already registered?")
+          }) %> --%>
         </div>
 
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
           <.input
             field={@form[:email]}
             type="email"
-            label="Email"
+            label={dgettext("account", "Email")}
             autocomplete="username"
             required
             phx-mounted={JS.focus()}
           />
-
           <!-- 放个将要成为邀请码的 .iuput 在这里 -->
-
-          <.button phx-disable-with="Creating account..." class="btn btn-primary w-full">
+          <.button phx-disable-with={dgettext("account", "Creating account...")} class="btn btn-primary w-full">
             {dgettext("account", "Create an account")}
           </.button>
         </.form>
       </div>
     </Layouts.app>
     """
+  end
+
+  # 这个函数是为了解决操蛋的
+  # Already registered? <link>Log in</link> to your account now.
+  # =>
+  # 已经登录了？那就<link>登录</link> 。
+  # 的问题
+  # 参见 https://elixirforum.com/t/gettext-html-in-translation/14889/5
+  defp translate_with_link(assigns) do
+    ~H"""
+    <.link navigate={@url} class="font-semibold text-brand hover:underline">
+      {dgettext("account", "Log in")}
+    </.link>
+    """
+    |> Phoenix.HTML.Safe.to_iodata()
   end
 
   @impl true

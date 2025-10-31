@@ -43,7 +43,7 @@ defmodule HanaShirabeWeb.Router do
       live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
     end
 
-    post "/members/update-password", MemberSessionController, :update_password
+    post "/me/update-password", MemberSessionController, :update_password
   end
 
   scope "/", HanaShirabeWeb do
