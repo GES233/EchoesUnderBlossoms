@@ -21,7 +21,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   end
 
   describe "log_in_member/3" do
-    test "stores the member token in the session", %{conn: conn, member: member} do
+    test "将成员令牌保存到会话中", %{conn: conn, member: member} do
       conn = MemberAuth.log_in_member(conn, member)
       assert token = get_session(conn, :member_token)
       assert get_session(conn, :live_socket_id) == "members_sessions:#{Base.url_encode64(token)}"
@@ -29,7 +29,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       assert Accounts.get_member_by_session_token(token)
     end
 
-    test "clears everything previously stored in the session", %{conn: conn, member: member} do
+    test "清理此前会话的所有内容", %{conn: conn, member: member} do
       conn = conn |> put_session(:to_be_removed, "value") |> MemberAuth.log_in_member(member)
       refute get_session(conn, :to_be_removed)
     end

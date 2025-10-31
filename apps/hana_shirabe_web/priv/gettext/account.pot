@@ -55,3 +55,33 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "You need to reauthenticate to perform sensitive actions on your account."
 msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:53
+#, elixir-autogen, elixir-format
+msgid "Invalid email or password"
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:78
+#, elixir-autogen, elixir-format
+msgid "Logged out successfully."
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:11
+#, elixir-autogen, elixir-format
+msgid "Member confirmed successfully."
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:67
+#, elixir-autogen, elixir-format
+msgid "Password updated successfully."
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:24
+#, elixir-autogen, elixir-format
+msgid "The link is invalid or it has expired."
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:17
+#, elixir-autogen, elixir-format
+msgid "Welcome back!"
+msgstr ""

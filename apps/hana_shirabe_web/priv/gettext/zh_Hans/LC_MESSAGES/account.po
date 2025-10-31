@@ -55,3 +55,33 @@ msgstr "你需要运行本地邮件适配器。"
 #, elixir-autogen, elixir-format
 msgid "You need to reauthenticate to perform sensitive actions on your account."
 msgstr "你需要重新认证以在你的账户上执行敏感操作。"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:53
+#, elixir-autogen, elixir-format
+msgid "Invalid email or password"
+msgstr "邮件或密码不正确"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:78
+#, elixir-autogen, elixir-format
+msgid "Logged out successfully."
+msgstr "成功登出"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:11
+#, elixir-autogen, elixir-format
+msgid "Member confirmed successfully."
+msgstr "成功确认成员"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:67
+#, elixir-autogen, elixir-format
+msgid "Password updated successfully."
+msgstr "成功更新密码"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:24
+#, elixir-autogen, elixir-format
+msgid "The link is invalid or it has expired."
+msgstr "链接不正确或已过期"
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:17
+#, elixir-autogen, elixir-format
+msgid "Welcome back!"
+msgstr "欢迎回家~"

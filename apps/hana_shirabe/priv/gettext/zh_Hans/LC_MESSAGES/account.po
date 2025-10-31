@@ -11,12 +11,12 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe/accounts/member.ex:56
+#: lib/hana_shirabe/accounts/member.ex:57
 #, elixir-autogen, elixir-format
 msgid "did not change"
 msgstr "未改变"
 
-#: lib/hana_shirabe/accounts/member.ex:77
+#: lib/hana_shirabe/accounts/member.ex:78
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr "密码不匹配"

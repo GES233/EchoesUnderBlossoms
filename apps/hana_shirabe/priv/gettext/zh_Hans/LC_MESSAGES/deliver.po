@@ -76,3 +76,18 @@ msgstr "\r\n"
 "    如果不是您本人操作，请忽略。"
 "\r\n"
 "\r\n==============================\r\n"
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:98
+#, elixir-autogen, elixir-format
+msgid "Confirmation instructions"
+msgstr "邮件确认指示"
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:72
+#, elixir-autogen, elixir-format
+msgid "Log in instructions"
+msgstr "登录指示"
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:36
+#, elixir-autogen, elixir-format
+msgid "Update email instructions"
+msgstr "邮件更新指示"

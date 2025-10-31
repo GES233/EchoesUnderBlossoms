@@ -25,3 +25,18 @@ msgstr ""
 #, elixir-autogen, elixir-format
 msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nYou can log into your account by visiting the URL below:\r\n\r\n%{url}\r\n\r\nIf you didn't request this email, please ignore this.\r\n\r\n==============================\r\n"
 msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:98
+#, elixir-autogen, elixir-format
+msgid "Confirmation instructions"
+msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:72
+#, elixir-autogen, elixir-format
+msgid "Log in instructions"
+msgstr ""
+
+#: lib/hana_shirabe/accounts/member_notifier.ex:36
+#, elixir-autogen, elixir-format
+msgid "Update email instructions"
+msgstr ""
