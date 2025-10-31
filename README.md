@@ -1,89 +1,55 @@
 # Echoes Under Blossoms
 
-[简体中文](./README.zh_Hans.md) [日本語](/README.ja.md)
+[简体中文](./README.zh_Hans.md) | [日本語](./README.ja.md)
 
-HanaShirabe is the romanized abbreviation of the Japanese phrase "花隠れの調べ (Hanakakure no Shirabe)", used to describe our web application. For English users, we refer to it as **Echoes Under Blossoms**.
+This project is not just another forum or wiki. We are building a **Digital Archaeology Professional Team** and a **Living Archive**. Our mission is to establish a sustainable, traceable, and trustworthy system for the discovery and preservation of digital media that has been lost or buried in the torrent of the internet.
 
-A platform for excavating rarely circulated works from Visual Novels / Galgames or other media.
+## Our Quest
 
-## Mission and Inspiration
+Our inspiration comes from the work of pioneers like [埋埋埋埋喵](https://space.bilibili.com/3494356619102794). They have recovered countless precious lost musical pieces through personal passion and perseverance. However, we also recognize that contemporary lost media investigations are often mired in a sea of fragmented information. Clues are scattered across ephemeral chat groups, forum posts, and personal memories. The investigation process is chaotic and untraceable, and valuable discoveries struggle to become part of public knowledge. Sometimes, these discoveries are lost again when these heroes move on.
 
-> _Leave proof of having lived_
->
-> —— Mai Mai Mai Mai Miao
+Individual efforts are commendable, but we strive for a more robust paradigm. We need an engine that can channel the sparks of individual insight into the flame of collective wisdom.
 
-Inspired by the work of [Mai Mai Mai Mai Miao(Riri)](https://space.bilibili.com/3494356619102794).
-He's dedicated to unearthing buried obscure music, especially lost works from Japanese VN/Galgame.
-Videos often focus on tracks where the author has disappeared and the source is hard to trace.
+## Our Solution: Separating Process from Results
 
-In addition to Riri, [HachimiWorld](https://github.com/HachimiWorld)[^hachimi] as a meme-driven community is also a source of inspiration, which is a community-driven Hachimi music player.
-Hachimi music is a subculture phenomenon popular on the Chinese internet. It originated around 2023 during a dispute over the definition of "Hachimi" and subsequently evolved into a unique form of secondary creation, creating captivating remixes/MADs by deconstructing and reassembling specific audio and visual elements.
-This music, often featuring catchy melodies and comedic elements, has quickly spread among young users.
+Chaos is the nature of investigation, while clarity is the form of knowledge. We don't try to eliminate chaos; we harness it. The core design of our project is to completely separate the investigation process from the final conclusions.
 
-Therefore, we plan to create a systematic, community-based platform to allow more users to participate in discovery and re-creation, rather than just individual sharing.
+### The Investigation Map
 
-[^hachimi]: This organization focuses on developing a community-driven open-source meme culture music community.
+This is our **Process Workbench**, a non-linear collaborative space that embraces contradictions, hypotheses, and vast amounts of intelligence. All information, no matter how trivial or seemingly contradictory, is gathered here first. Community members use an **"Evidence Weighting"** mechanism to collectively verify, supplement, and challenge clues. Based on the strength of community consensus, the system automatically surfaces key clues and their relationships as a dynamic **Dependency Graph**. The role of the proposal's lead is no longer that of a judge, but one or more chief curators responsible for interpreting this star chart drawn by collective intelligence.
 
-## Features and Highlights
+### The Main Timeline
 
-### Core Domain Objects
+This is our **Results Showcase**, a public knowledge archive that presents a clear, linear narrative. When the evidence chains in the Investigation Map form a sufficiently stable consensus, the lead will author the **Main Timeline** of the media's discovery journey. Each node on the timeline corresponds strictly to a set of evidence from the Investigation Map. This relationship is transparent and traceable, providing a solid foundation for future questioning, revision, and iteration of knowledge.
 
-- **Proposal**
-  - Users initiate excavation proposals for specific games, providing clues (such as historical records, author contacts) to help recover lost audio
-  - Proposals have a lifecycle: Creation → Resource Gathering → Excavation → Validation → Closure/Abandonment → Supplementation
-    - This also involves searching for authors and developers
-  - Generally contributed by one or more users with clues, verified in an observational manner by other users and administrators (Spectators)
-- **Audio Resource**
-  - The main object of the proposal is the audio resource
-  - Includes metadata of music tracks (composer, work, format, etc.)
-  - Generally provides external links or the file itself (depending on available information)
-  - Resources are associated with games, supporting search and re-creation
-  - Re-creation and interpretation of audio resources involve the audio resource itself
+### The Living Archive
 
-Regarding authors and vendors, since many are lost and hard to retrieve, they will not be considered as **primary** business objects [this point needs discussion].
-### Investigation Process
+Archiving is not the end. Any archived conclusion is merely a **"Stable Snapshot"**. When new, disruptive evidence emerges, the archive is immediately **"reactivated"** to begin a new investigation cycle. The system will use the Dependency Graph to automatically flag old conclusions whose foundations have been shaken, issuing a **"Stability Alert"** to all followers. Here, knowledge is in a perpetual state of dynamic growth and self-correction.
 
-- Proposal Submission and Verification
-  - The initiator(s) submit evidence proving the media may exist.
-  - Platform review or senior community members conduct an investigation to ensure it is unique and valid, and then publicly available on the site.
-- Proposal Investigation
-  - A proposal has two content tracks: the "Discussion Pool" and the "Investigation Tree." Valuable content in the "Discussion Pool" will be posted to the "Investigation Tree."
-  - The goal of the "Investigation Tree" is to organize a complete and mutually verifiable chain of evidence regarding the subject of the proposal's investigation.
-- Investigation, Narrative and Archiving Cycle
-  - When the nodes in the investigation tree reach a certain level, the lead author creates a timeline depicting the development of the incident.
-  - The nodes in the timeline correspond to the nodes in the evidence (i.e., the chain of evidence and the content in the timeline are mutually convertible and have a clear topology). This ensures that any subsequent reversals are feasible.
-  - When the investigation is stable and the timeline is complete, the lead author can create a "stable snapshot" for archiving. The latest snapshot will be publicly displayed.
-  - The archive is not frozen; the emergence of subversive evidence will result in a reopened investigation (which will also affect the corresponding content in the timeline).
-  - Proposals that lack sufficient evidence but are valuable will be subject to a "snapshot"
+## An Invitation to Co-Creators
 
-### Copyright
+We are looking not just for code contributors, but for **co-creators** of this ambitious project.
 
-This project is for educational and research purposes only and does not encourage any infringement.
-All audio resources must obtain author permission or comply with fair use.
-The platform does not host unauthorized files; users are responsible for the compliance of uploaded content.
-We reference community practices like [Lost Media Wiki](https://lostmediawiki.com/Home), emphasizing information sharing rather than distribution.
+-   If you are a **developer**, you will have the opportunity to build an unprecedented knowledge-conversion engine, solving core challenges in community collaboration.
+-   If you are a **researcher** or **lost media enthusiast**, you will get a professional toolkit to turn your every excavation into a solid and credible piece of public heritage.
+-   If you are a **storyteller**, you will have the chance to transform complex investigation processes into compelling narratives, helping more people understand the charm of digital archaeology.
 
-If there are copyright issues, please contact the administrator for removal.
-If you are a composer or rights holder, welcome to contact us to authorize sharing your works!
+This is a challenging field, but we believe that through structured collaboration, individual passion will ultimately converge into a torch of civilization.
 
-## Technology Stack
+## Tech Blueprint
 
-- Backend: Elixir + Phoenix
-- Interaction: Phoenix LiveView
-- Database: SQLite
-- Frontend: Tailwind CSS + DaisyUI
+| Area          | Solution                 |
+| :------------ | :----------------------- |
+| Backend       | Elixir + Phoenix         |
+| Interactivity | Phoenix LiveView         |
+| Database      | SQLite                   |
+| Frontend      | Tailwind CSS + DaisyUI   |
+| Editor        | EasyMDE                  |
 
-## Contributions
-
-Welcome VN / Galgame enthusiasts and developers to participate! Contribution methods:
-
-- Submit Issues: Report bugs or suggest new features
-- New Features: Implement new proposal lifecycle events or UI components
-- Submit Translations: We need Japanese translations!
-- Content Contributions: After the platform launches, create proposals to share clues
+*The project may migrate to PostgreSQL as it scales.*
 
 ## Contact Us
 
-- GitHub: https://github.com/GES233/EchoesUnderBlossoms
+-   GitHub: <https://github.com/GES233/EchoesUnderBlossoms>
 
-Thank you for your attention, let's rediscover lost notes under the flower shadows together!
+Thank you for your interest. Let's rediscover the echoes that should never have been forgotten, together under the blossoms.
