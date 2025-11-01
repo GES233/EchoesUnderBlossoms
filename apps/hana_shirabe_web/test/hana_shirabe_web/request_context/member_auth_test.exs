@@ -4,7 +4,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   alias Phoenix.LiveView
   alias HanaShirabe.Accounts
   alias HanaShirabe.Accounts.Scope
-  alias HanaShirabeWeb.MemberAuth
+  alias HanaShirabeWeb.{MemberAuth, AuditLogInjector}
 
   import HanaShirabe.AccountsFixtures
 
@@ -110,11 +110,15 @@ defmodule HanaShirabeWeb.MemberAuthTest do
     test "擦除会话以及 cookies", %{conn: conn, member: member} do
       member_token = Accounts.generate_member_session_token(member)
 
+      HanaShirabe.Accounts.Scope.for_member(member)
+
       conn =
         conn
         |> put_session(:member_token, member_token)
         |> put_req_cookie(@remember_me_cookie, member_token)
         |> fetch_cookies()
+        |> assign(:current_scope, HanaShirabe.Accounts.Scope.for_member(member))
+        |> AuditLogInjector.put_audit_context()
         |> MemberAuth.log_out_member()
 
       refute get_session(conn, :member_token)

@@ -18,21 +18,6 @@ defmodule HanaShirabeWeb.MemberSessionController do
 
   # 经由链接的登录
   defp create(conn, %{"member" => %{"token" => token} = member_params}, info) do
-    # maybe_link_unusable_msg = dgettext("account", "The link is invalid or it has expired.")
-
-    # case Accounts.login_member_by_magic_link(token) do
-    #   {:ok, {member, tokens_to_disconnect}} ->
-    #     MemberAuth.disconnect_sessions(tokens_to_disconnect)
-
-    #     conn
-    #     |> put_flash(:info, info)
-    #     |> MemberAuth.log_in_member(member, member_params)
-
-    #   _ ->
-    #     conn
-    #     |> put_flash(:error, maybe_link_unusable_msg)
-    #     |> redirect(to: ~p"/login")
-    # end
     case Accounts.log_in_and_log_by_magic_link(conn.assigns[:audit_log], token) do
     {:ok, {member, tokens_to_disconnect}} ->
       # 业务逻辑（包括日志）已在 Accounts 中完成

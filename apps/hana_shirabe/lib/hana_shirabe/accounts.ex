@@ -369,7 +369,14 @@ defmodule HanaShirabe.Accounts do
   end
 
   defp authenticate_and_log(audit_context, member_from_database, maybe_identifier) do
-    case {member_from_database, audit_context.member} do
+    logged_in_member =
+      case audit_context.member do
+        # 将 NotLoaded 视为 nil
+        %Ecto.Association.NotLoaded{} -> nil
+        other -> other
+      end
+
+    case {member_from_database, logged_in_member} do
       {member_from_re_authenticate, _member_from_audit} = {%Member{}, %Member{}} ->
         AuditLog.audit!(audit_context, :account, "member.login.re_authenticate", %{
           "account_id" => member_from_re_authenticate.id
@@ -382,7 +389,7 @@ defmodule HanaShirabe.Accounts do
 
         nil
 
-      {member, nil} = {%Member{}, nil} ->
+      {member, nil} when is_struct(member, Member) ->
         verb =
           case maybe_identifier do
             {:email, _} -> "member.login.via_email"
@@ -479,9 +486,13 @@ defmodule HanaShirabe.Accounts do
         |> multi_for_magic_link(audit_context, member, token_struct)
         |> Repo.transaction()
         |> case do
-          {:ok, %{final_step: {member, tokens_to_disconnect}}} ->
+          {:ok, %{final_step: inner}} ->
             # 如果整个事务成功，返回最终结果
-            {:ok, {member, tokens_to_disconnect}}
+            case inner do
+              {:ok, {:ok, res}} -> {:ok, res}
+              {:ok, res} -> {:ok, res}
+              res -> {:ok, res}
+            end
 
           {:error, _, _, _} ->
             # 如果事务失败
@@ -535,7 +546,7 @@ defmodule HanaShirabe.Accounts do
       :audit_2
     )
     |> Ecto.Multi.run(:final_step, fn _repo, %{confirm_and_delete_tokens: result} ->
-      {:ok, result} |> IO.inspect()
+      {:ok, result}
     end)
   end
 
