@@ -79,11 +79,12 @@ defmodule HanaShirabe.AccountsTest do
     test "验证邮件唯一", %{audit_log: audit_log} do
       %{email: email} = member_fixture()
       {:error, changeset} = Accounts.register_member(audit_log, %{email: email})
-      assert dgettext("account", "has already been taken") in errors_on(changeset).email
+      msg = dgettext("errors", "has already been taken")
+      assert msg in errors_on(changeset).email
 
       # 现在也尝试使用大写的电子邮件，以检查是否忽略电子邮件大小写。
       {:error, changeset} = Accounts.register_member(audit_log, %{email: String.upcase(email)})
-      assert dgettext("account", "has already been taken") in errors_on(changeset).email
+      assert msg in errors_on(changeset).email
     end
 
     test "不用密码的注册", %{audit_log: audit_log} do
@@ -160,7 +161,7 @@ defmodule HanaShirabe.AccountsTest do
       %{member: member, token: token, email: email}
     end
 
-    test "updates the email with a valid token", %{member: member, token: token, email: email} do
+    test "链接不合法尝试更新邮件", %{member: member, token: token, email: email} do
       assert {:ok, %{email: ^email}} = Accounts.update_member_email(member, token)
       changed_member = Repo.get!(Member, member.id)
       assert changed_member.email != member.email
@@ -168,7 +169,7 @@ defmodule HanaShirabe.AccountsTest do
       refute Repo.get_by(MemberToken, member_id: member.id)
     end
 
-    test "does not update email with invalid token", %{member: member} do
+    test "不合法链接不会更新邮件", %{member: member} do
       assert Accounts.update_member_email(member, "oops") ==
                {:error, :transaction_aborted}
 

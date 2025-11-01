@@ -26,13 +26,13 @@ defmodule HSContent.Special.MediaLinkTest do
     test "等我实现了别的网站就放在这里，猴子岛和劈里啪啦不对付"
     # 参见 https://moegirl.icu/Bilibili/争议和影响#与AcFun的纠纷
 
-    test "B站AV号", %{bilibili_av: avid}
+    test "B站AV号" #, %{bilibili_av: avid}
 
-    test "B站BV号", %{bilibili_bv: bvid}
+    test "B站BV号" #, %{bilibili_bv: bvid}
 
-    test "B站AV号带分P", %{bilibili_av: avid}
+    test "B站AV号带分P" #, %{bilibili_av: avid}
 
-    test "B站BV号带分P", %{bilibili_bv: bvid}
+    test "B站BV号带分P" #, %{bilibili_bv: bvid}
   end
 
   describe "测试 transform/2" do

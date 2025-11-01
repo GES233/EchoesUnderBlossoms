@@ -4,7 +4,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
   import HanaShirabe.AccountsFixtures
   alias HanaShirabe.Accounts
 
-  use Gettext, backend: HanaShirabe.Gettext
+  use Gettext, backend: HanaShirabeWeb.Gettext
 
   setup do
     %{unconfirmed_member: unconfirmed_member_fixture(), member: member_fixture()}
@@ -60,7 +60,9 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
         })
 
       assert redirected_to(conn) == "/foo/bar"
-      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "Welcome back!"
+
+      welcomeback = dgettext("account", "Welcome back!")
+      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ welcomeback
     end
 
     test "凭证不正确会重定向至登录界面", %{conn: conn, member: member} do
@@ -69,8 +71,7 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
           "member" => %{"email" => member.email, "password" => "invalid_password"}
         })
 
-      msg = dgettext("account", "Invalid email or password")
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == msg
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == dgettext("account", "Invalid email or password")
       assert redirected_to(conn) == ~p"/login"
     end
   end

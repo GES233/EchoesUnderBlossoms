@@ -13,7 +13,7 @@ defmodule HSContentTest do
       markdown = "# 标题\n\n这是一些内容。"
       hs_content = HSContent.from_export_markdown(markdown)
 
-      assert hs_content.derive == :outsite
+      assert hs_content.derive == :export
     end
 
     test "创建成功的 :document 字段属于 %MDEx.Document{}" do

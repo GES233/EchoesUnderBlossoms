@@ -7,7 +7,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
   use Gettext, backend: HanaShirabeWeb.Gettext
 
-  describe "Settings page" do
+  describe "成员设置页面" do
     test "渲染设置页面", %{conn: conn} do
       {:ok, _lv, html} =
         conn
@@ -27,7 +27,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert message =~ dgettext("account", "You must log in to access this page.")
     end
 
-    test "用户未验证（ sudo 模式）会被重定向", %{conn: conn} do
+    test "用户未验证（不在 sudo 模式）会被重定向", %{conn: conn} do
       {:ok, conn} =
         conn
         |> log_in_member(member_fixture(),
@@ -36,7 +36,8 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> live(~p"/me/settings")
         |> follow_redirect(conn, ~p"/login")
 
-      assert conn.resp_body =~ dgettext("account", "You must re-authenticate to access this page.")
+      msg = dgettext("account", "You must re-authenticate to access this page.")
+      assert conn.resp_body =~ msg
     end
   end
 
@@ -73,8 +74,10 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
           "member" => %{"email" => "with spaces"}
         })
 
-      assert result =~ dgettext("account", "Change Email")
-      assert result =~ dgettext("account", "must have the @ sign and no spaces")
+      title = dgettext("account", "Change Email")
+      msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "must have the @ sign and no spaces")
+      assert result =~ title
+      assert result =~ msg
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn, member: member} do
@@ -87,8 +90,10 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         })
         |> render_submit()
 
-      assert result =~ dgettext("account", "Change Email")
-      assert result =~ dgettext("account", "did not change")
+      title = dgettext("account", "Change Email")
+      msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "did not change")
+      assert result =~ title
+      assert result =~ msg
     end
   end
 
@@ -120,8 +125,9 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
       assert get_session(new_password_conn, :member_token) != get_session(conn, :member_token)
 
-      assert Phoenix.Flash.get(new_password_conn.assigns.flash, :info) =~
-               dgettext("account", "Password updated successfully")
+      update_msg = dgettext("account", "Password updated successfully.")
+
+      assert Phoenix.Flash.get(new_password_conn.assigns.flash, :info) =~ update_msg
 
       assert Accounts.get_member_by_email_and_password(member.email, new_password)
     end
@@ -139,9 +145,13 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
           }
         })
 
-      assert result =~ dgettext("account", "Save Password")
-      assert result =~ dgettext("account", "should be at least 12 character(s)")
-      assert result =~ dgettext("account", "does not match password")
+      button_msg = dgettext("account", "Save Password")
+      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
+      notmatch_msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "does not match password")
+
+      assert result =~ button_msg
+      assert result =~ too_less_msg
+      assert result =~ notmatch_msg
     end
 
     test "renders errors with invalid data (phx-submit)", %{conn: conn} do
@@ -157,9 +167,13 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         })
         |> render_submit()
 
-      assert result =~ dgettext("account", "Save Password")
-      assert result =~ dgettext("account", "should be at least 12 character(s)")
-      assert result =~ dgettext("account", "does not match password")
+      button_msg = dgettext("account", "Save Password")
+      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
+      notmatch_msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "does not match password")
+
+      assert result =~ button_msg
+      assert result =~ too_less_msg
+      assert result =~ notmatch_msg
     end
   end
 

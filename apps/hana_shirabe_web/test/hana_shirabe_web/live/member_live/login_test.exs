@@ -1,20 +1,26 @@
 defmodule HanaShirabeWeb.MemberLive.LoginTest do
   use HanaShirabeWeb.ConnCase
 
+  use Gettext, backend: HanaShirabeWeb.Gettext
+
   import Phoenix.LiveViewTest
   import HanaShirabe.AccountsFixtures
 
-  describe "login page" do
-    test "renders login page", %{conn: conn} do
+  describe "登录页面" do
+    test "渲染登录页面", %{conn: conn} do
       {:ok, _lv, html} = live(conn, ~p"/login")
 
-      assert html =~ "Log in"
-      assert html =~ "Register"
-      assert html =~ "Log in with email"
+      login = dgettext("account", "Log in")
+      register = dgettext("account", "Register")
+      login_with_email = dgettext("account", "Log in with email")
+
+      assert html =~ login
+      assert html =~ register
+      assert html =~ login_with_email
     end
   end
 
-  describe "member login - magic link" do
+  describe "通过链接登录成员" do
     test "sends magic link email when member exists", %{conn: conn} do
       member = member_fixture()
 
@@ -25,7 +31,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         |> render_submit()
         |> follow_redirect(conn, ~p"/login")
 
-      assert html =~ "If your email is in our system"
+      msg = dgettext("account", "If your email is in our system, you will receive instructions for logging in shortly.")
+
+      assert html =~ msg
 
       assert HanaShirabe.Repo.get_by!(HanaShirabe.Accounts.MemberToken, member_id: member.id).context ==
                "login"
@@ -39,7 +47,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         |> render_submit()
         |> follow_redirect(conn, ~p"/login")
 
-      assert html =~ "If your email is in our system"
+      msg = dgettext("account", "If your email is in our system, you will receive instructions for logging in shortly.")
+
+      assert html =~ msg
     end
   end
 
@@ -70,7 +80,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       render_submit(form, %{user: %{remember_me: true}})
 
       conn = follow_trigger_action(form, conn)
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == "Invalid email or password"
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) == dgettext("account", "Invalid email or password")
       assert redirected_to(conn) == ~p"/login"
     end
   end
@@ -79,13 +89,17 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     test "redirects to registration page when the Register button is clicked", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
+      # sign_up_element_name = dgettext("account", "Sign up")
+
       {:ok, _login_live, login_html} =
         lv
-        |> element("main a", "Sign up")
+        |> element("main a", dgettext("account", "Sign up"))
         |> render_click()
         |> follow_redirect(conn, ~p"/sign_up")
 
-      assert login_html =~ "Register"
+      msg = dgettext("account", "Register")
+
+      assert login_html =~ msg
     end
   end
 
@@ -98,9 +112,13 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     test "shows login page with email filled in", %{conn: conn, member: member} do
       {:ok, _lv, html} = live(conn, ~p"/login")
 
-      assert html =~ "You need to reauthenticate"
-      refute html =~ "Register"
-      assert html =~ "Log in with email"
+      info = dgettext("account", "You need to reauthenticate to perform sensitive actions on your account.")
+      title = dgettext("account", "Register")
+      button = dgettext("account", "Log in with email")
+
+      assert html =~ info
+      refute html =~ title
+      assert html =~ button
 
       assert html =~
                ~s(<input type="email" name="member[email]" id="login_form_magic_email" value="#{member.email}")

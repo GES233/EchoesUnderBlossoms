@@ -6,30 +6,40 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
 
   alias HanaShirabe.Accounts
 
+  use Gettext, backend: HanaShirabeWeb.Gettext
+
   setup do
     %{unconfirmed_member: unconfirmed_member_fixture(), confirmed_member: member_fixture()}
   end
 
-  describe "Confirm member" do
-    test "renders confirmation page for unconfirmed member", %{conn: conn, unconfirmed_member: member} do
+  describe "确认成员" do
+    # "renders confirmation page for unconfirmed member"
+    test "对未经确认的成员渲染确认页面", %{conn: conn, unconfirmed_member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_login_instructions(member, url)
         end)
 
       {:ok, _lv, html} = live(conn, ~p"/login/#{token}")
-      assert html =~ "Confirm and stay logged in"
+
+      msg = dgettext("account", "Confirm and stay logged in")
+
+      assert html =~ msg
     end
 
-    test "renders login page for confirmed member", %{conn: conn, confirmed_member: member} do
+    # "renders login page for confirmed member"
+    test "对确认的成员渲染登录页面", %{conn: conn, confirmed_member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_login_instructions(member, url)
         end)
 
       {:ok, _lv, html} = live(conn, ~p"/login/#{token}")
-      refute html =~ "Confirm my account"
-      assert html =~ "Log in"
+      cofirm_msg = dgettext("account", "Confirm my account")
+      login_msg = dgettext("account", "Log in")
+
+      refute html =~ cofirm_msg
+      assert html =~ login_msg
     end
 
     test "confirms the given token once", %{conn: conn, unconfirmed_member: member} do
@@ -45,8 +55,9 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
 
       conn = follow_trigger_action(form, conn)
 
-      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
-               "Member confirmed successfully"
+      msg = dgettext("account", "Member confirmed successfully.")
+
+      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ msg
 
       assert Accounts.get_member!(member.id).confirmed_at
       # we are logged in now
@@ -60,7 +71,9 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
         live(conn, ~p"/login/#{token}")
         |> follow_redirect(conn, ~p"/login")
 
-      assert html =~ "Magic link is invalid or it has expired"
+      msg = dgettext("account", "Magic link is invalid or it has expired.")
+
+      assert html =~ msg
     end
 
     test "logs confirmed member in without changing confirmed_at", %{
@@ -79,27 +92,33 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
 
       conn = follow_trigger_action(form, conn)
 
-      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
-               "Welcome back!"
+      msg = dgettext("account", "Welcome back!")
+
+      assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ msg
+
 
       assert Accounts.get_member!(member.id).confirmed_at == member.confirmed_at
 
-      # log out, new conn
+      # 用新的连接表示登出
       conn = build_conn()
 
       {:ok, _lv, html} =
         live(conn, ~p"/login/#{token}")
         |> follow_redirect(conn, ~p"/login")
 
-      assert html =~ "Magic link is invalid or it has expired"
+      msg = dgettext("account", "Magic link is invalid or it has expired.")
+
+      assert html =~ msg
     end
 
-    test "raises error for invalid token", %{conn: conn} do
+    test "非法链接抛出错误", %{conn: conn} do
       {:ok, _lv, html} =
         live(conn, ~p"/login/invalid-token")
         |> follow_redirect(conn, ~p"/login")
 
-      assert html =~ "Magic link is invalid or it has expired"
+      msg = dgettext("account", "Magic link is invalid or it has expired.")
+
+      assert html =~ msg
     end
   end
 end
