@@ -416,6 +416,8 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
+  # describe "测试 authenticate_and_log_via_password/3 以及 authenticate_and_log_via_magic_link_token/3"
+
   describe "测试用于成员结构体的 inspect/2" do
     test "不要显示密码" do
       # 也实现不了，因为 password 是 vitual 字段

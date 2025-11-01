@@ -76,8 +76,9 @@ defmodule HanaShirabe.Accounts do
 
   """
   def register_member(audit_log, attrs) do
-    member_changeset = %Member{}
-    |> Member.email_changeset(attrs)
+    member_changeset =
+      %Member{}
+      |> Member.email_changeset(attrs)
 
     # 改成针对两个数据库的检查
     Ecto.Multi.new()
@@ -85,12 +86,18 @@ defmodule HanaShirabe.Accounts do
     |> Ecto.Multi.insert(:member, member_changeset)
     |> AuditLog.multi(
       audit_log,
-      [:account],
-      "sign_up",
+      :account,
+      "member.sign_up",
       fn audit_log, %{member: member} ->
         # 没有 {:ok, ...} 主要留意
         # 这里只考虑成功是一旦是 {:error, _} 就不会调用这个函数了
-        %{audit_log | context: %{"account_id" => member.id, "email" => member.email}}
+        %{
+          audit_log
+          | context: %{"account_id" => member.id, "email" => member.email},
+            member: member
+        }
+
+        # 另外一点是注册比较特殊，上下文没有用户，所以需要把用户再注入进去
       end
     )
     |> Repo.transact()
@@ -273,9 +280,14 @@ defmodule HanaShirabe.Accounts do
       {:ok, %{to: ..., body: ...}}
 
   """
-  def deliver_member_update_email_instructions(%Member{} = member, current_email, update_email_url_fun)
+  def deliver_member_update_email_instructions(
+        %Member{} = member,
+        current_email,
+        update_email_url_fun
+      )
       when is_function(update_email_url_fun, 1) do
-    {encoded_token, member_token} = MemberToken.build_email_token(member, "change:#{current_email}")
+    {encoded_token, member_token} =
+      MemberToken.build_email_token(member, "change:#{current_email}")
 
     Repo.insert!(member_token)
     MemberNotifier.deliver_update_email_instructions(member, update_email_url_fun.(encoded_token))
@@ -306,10 +318,67 @@ defmodule HanaShirabe.Accounts do
       with {:ok, member} <- Repo.update(changeset) do
         tokens_to_expire = Repo.all_by(MemberToken, member_id: member.id)
 
-        Repo.delete_all(from(t in MemberToken, where: t.id in ^Enum.map(tokens_to_expire, & &1.id)))
+        Repo.delete_all(
+          from(t in MemberToken, where: t.id in ^Enum.map(tokens_to_expire, & &1.id))
+        )
 
         {:ok, {member, tokens_to_expire}}
       end
     end)
   end
+
+  ## 与 AuditLog 的封装
+
+  def authenticate_and_log_via_password(audit_context, email, password) do
+    authenticate_and_log(audit_context, get_member_by_email_and_password(email, password), {:email, email})
+  end
+
+  def authenticate_and_log_via_magic_link_token(audit_context, token) do
+    authenticate_and_log(audit_context, get_member_by_magic_link_token(token), :magic_link)
+  end
+
+  defp authenticate_and_log(audit_context, member_from_database, maybe_identifier) do
+    case {member_from_database, audit_context.member} do
+      {member_from_re_authenticate, _member_from_audit} = {%Member{}, %Member{}} ->
+        AuditLog.audit!(audit_context, :account, "member.login.re_authenticate", %{
+          "account_id" => member_from_re_authenticate.id
+        })
+
+        member_from_re_authenticate
+
+      {nil, _member_from_audit} = {nil, %Member{}} ->
+        # 这种情况得考虑用户把密码忘了，或者是操作的不是本人
+
+        nil
+
+      {member, nil} = {%Member{}, nil} ->
+        verb = case maybe_identifier do
+          {:email, _} -> "member.login.via_email"
+          :magic_link -> "member.login.via_link"
+        end
+        AuditLog.audit!(audit_context, :account, verb, %{
+          "account_id" => member.id
+        })
+
+        member
+
+      {nil, nil} ->
+        attempt_target = case maybe_identifier do
+          {:email, email} -> get_member_by_email(email) || %{id: nil}
+
+          _ -> %{id: nil}
+        end
+
+        AuditLog.audit!(audit_context, :account, "member.login.via_email_attempt", %{
+          "maybe_target_account_id" => attempt_target.id
+        })
+
+        nil
+    end
+  end
+
+  # def logout_with_log(audit_log, env)
+  # invoke delete_member_session_token/1
+  # scope: :account
+  # verb: "member.logout.in_purpose"
 end

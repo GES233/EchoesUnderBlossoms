@@ -1,17 +1,16 @@
 defmodule HanaShirabe.AuditLog.Context do
   # 专门存储上下文
 
-  @scope [:account, :member, :spectator, :moderator, :proposal, :site_generate_content]
+  @scope [:account, :member, :member_content, :proposal, :site_content]
 
   @doc """
   解释下这里的 scope 分别指什么
 
   - `:account`   => 账户相关，无论是否是管理员，只要在这个账号系统下，一视同仁
   - `:member`    => 普通成员相关
-  - `spectator`  => 普通内容管理
-  - `moderator`  => 普通成员管理
+  - `member_content`  => 其他内容相关
   - `proposal`  => 提案相关
-  - `site_generate_content` => 站点生成内容（例如全站通知或是什么的）相关
+  - `site_content` => 站点生成内容（例如全站通知或是什么的）相关
 
   这里需要注意的是，因为 Phoenix 的 Scope 可能会存在多个键值，
   所以到这里需要按照操作本身以及语境做映射。
@@ -20,19 +19,27 @@ defmodule HanaShirabe.AuditLog.Context do
   """
   def get_valid_scopes, do: @scope
 
-  # 这是用 Cline 搓的
-  # 后续需要根据业务进行调整以及补充
+  # verb 应该是清晰、一致的“动词”，遵循 action.resources(.maybe_divide) 的格式
+  # context 是一个 map，用于存储所有与操作相关的、非结构化的“证据”，记录导致状态变化的关键信息
   @context_keys_required_within_scope_and_verb %{
     account: %{
-      "sign_up" => [:account_id],
-      "verify_email" => [:account_id],
-      "update_email" => []
+      "member.sign_up" => ~w(account_id),
+      "member.re_authenticate" => ~w(account_id),
+      "member.confirm_email" => ~w(account_id email),
+      "member.update_email" => ~w(account_id old_email new_email),
+      "member.login.via_email" => ~w(account_id),
+      "member.login.via_email_attempt" => ~w(maybe_target_account_id),
+      "member.login.via_link" => ~w(account_id),
+      "member.logout.in_purpose" => ~w(reason),
+      "member.logout.expire" => ~w(reason)
     },
-    member: %{},
-    spectator: %{},
-    moderator: %{},
+    member: %{
+      "info.update.self" => ~w(item current_value),
+      "info.update.others" => ~w(target item current_value reason),
+    },
     proposal: %{},
-    site_generate_content: %{}
+    member_content: %{},
+    site_content: %{}
   }
 
   @doc "通过范围以及动作返回所需到底上下文的键"
@@ -116,7 +123,7 @@ defmodule HanaShirabe.AuditLog do
 
   # TODO: 确定 scope 的具体类型
   defp build!(%__MODULE__{} = audit_context, scope, verb, context)
-       when is_binary(verb) and is_map(context) do
+       when is_atom(scope) and is_binary(verb) and is_map(context) do
     # 一般地讲，audit_context 已经包括了用户相关的信息
     %{
       audit_context
@@ -127,9 +134,4 @@ defmodule HanaShirabe.AuditLog do
 
     # TODO: validate
   end
-
-  # TODO：
-  # 创建一个从 Phoenix 的 Scope 构造 AuditLog 的函数
-  # 具体地说，是决定 AuditLog 中的 scope 字段
-  # 因为那决定着 context 里边的键到底有哪些
 end
