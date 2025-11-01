@@ -40,7 +40,7 @@ defmodule HanaShirabeWeb.Router do
     live_session :require_authenticated_member,
       on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
       live "/me/settings", MemberLive.Settings, :edit
-      live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_email
+      live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_account
     end
 
     post "/me/update-password", MemberSessionController, :update_password

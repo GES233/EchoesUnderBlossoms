@@ -242,7 +242,7 @@ defmodule HanaShirabe.Accounts do
      删除了所有这些。
 
   3. 成员没有确认邮件，但是已经设置密码了。
-     这默认情况下不可能发生，但是可能因为安全的 pitfalls 发生。
+     这默认情况下不可能发生，但是可能因为安全隐患。
      参见 "mix help phx.gen.auth" 中的 "Mixing magic link and password registration"（） 一节。
   """
   def login_member_by_magic_link(token) do
@@ -314,6 +314,23 @@ defmodule HanaShirabe.Accounts do
   end
 
   ## 令牌 helper
+
+  @doc """
+  验证一个 magic link token 并返回 member 和 token struct。
+  """
+  def verify_magic_link_token(token) do
+    with {:ok, query} <- MemberToken.verify_magic_link_token_query(token),
+         {member, token} <- Repo.one(query) do
+      # 验证是否存在安全风险
+      if is_nil(member.confirmed_at) && member.hashed_password do
+        {:error, :unconfirmed_with_password}
+      else
+        {:ok, {member, token}}
+      end
+    else
+      _ -> {:error, :not_found}
+    end
+  end
 
   defp update_member_and_delete_all_tokens(changeset) do
     Repo.transact(fn ->
@@ -435,5 +452,99 @@ defmodule HanaShirabe.Accounts do
       err_with_changeset ->
         err_with_changeset
     end
+  end
+
+  @doc """
+  使用 magic link 登录成员，并在此过程中记录审计日志。
+
+  这是一个高级事务函数，它会：
+  1. 验证 token 的有效性。
+  2. 根据用户的状态（是否已确认）记录相应的审计日志。
+  3. 执行确认邮箱或删除 token 的操作。
+  4. 返回成员和需要断开的旧会话列表。
+  """
+  def log_in_and_log_by_magic_link(audit_context, token) do
+    # 首先，在事务之外进行查询和验证
+    case verify_magic_link_token(token) do
+      {:ok, {member, token_struct}} ->
+        # 如果验证通过，我们开始一个事务
+        Ecto.Multi.new()
+        # 步骤 1: 确定要执行的副作用，并记录日志
+        |> multi_for_magic_link(audit_context, member, token_struct)
+        |> Repo.transaction()
+        |> case do
+          {:ok, %{final_step: {:ok, {member, tokens_to_disconnect}}}} ->
+            # 如果整个事务成功，返回最终结果
+            {:ok, {member, tokens_to_disconnect}}
+
+          {:error, _, _, _} ->
+            # 如果事务失败
+            {:error, :transaction_failed}
+        end
+
+      {:error, reason} ->
+        # 如果 token 验证失败，记录失败日志并返回
+        AuditLog.audit!(
+          audit_context,
+          :accounts,
+          "magic_link.login.fail",
+          %{reason: reason, attempt_token: token}
+        )
+
+        {:error, reason}
+    end
+  end
+
+  # 用户首次通过 magic link 确认邮箱
+  defp multi_for_magic_link(multi, audit_context, %{confirmed_at: nil} = member, _token_struct) do
+    multi
+    |> Ecto.Multi.run(:confirm_and_delete_tokens, fn _repo, _changes ->
+      # 调用一个只执行数据库操作的底层函数
+      update_member_and_delete_all_tokens(member)
+    end)
+    # 将 confirm 以及 login 分开
+    |> AuditLog.multi(
+      audit_context,
+      :account,
+      "member.confirm_account",
+      fn audit_context, %{confirm_and_delete_tokens: {member, _}} ->
+        %{
+          audit_context
+          | context: %{"account_id" => member.id},
+            member: member
+        }
+      end,
+      :audit_1
+    )
+    |> AuditLog.multi(
+      audit_context,
+      :account,
+      "member.login.via_link",
+      fn audit_context, %{confirm_and_delete_tokens: {member, _}} ->
+        %{
+          audit_context
+          | context: %{"account_id" => member.id},
+            member: member
+        }
+      end,
+      :audit_2
+    )
+    |> Ecto.Multi.put(:final_step, fn %{confirm_and_delete_tokens: result} -> result end)
+  end
+
+  # 已确认用户通过 magic link 登录
+  defp multi_for_magic_link(multi, audit_context, member, token_struct) do
+    multi
+    |> Ecto.Multi.delete(:delete_token, token_struct)
+    |> AuditLog.multi(
+      audit_context,
+      :account,
+      "session.login.via_link",
+      fn audit_context, _changes ->
+        %{audit_context | context: %{"account_id" => member.id}, member: member}
+      end
+    )
+    # 这种情况下没有需要断开的会话
+    |> Ecto.Multi.put(:final_step, {:ok, {member, []}})
   end
 end

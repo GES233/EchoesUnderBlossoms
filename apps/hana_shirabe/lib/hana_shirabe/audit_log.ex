@@ -25,7 +25,7 @@ defmodule HanaShirabe.AuditLog.Context do
     account: %{
       "member.sign_up" => ~w(account_id),
       "member.re_authenticate" => ~w(account_id),
-      "member.confirm_email" => ~w(account_id email),
+      "member.confirm_account" => ~w(account_id),
       "member.update_email" => ~w(account_id old_email new_email),
       "member.update_password" => ~w(account_id),
       "member.login.via_email" => ~w(account_id),
@@ -104,18 +104,18 @@ defmodule HanaShirabe.AuditLog do
 
   前者需要提供一个能够从 Audit 以及数据库的返回结果对数据进行处理的函数。
   """
-  def multi(multi, audit_context, scope, verb, callback_or_context)
+  def multi(multi, audit_context, scope, verb, callback_or_context, name \\ :audit)
 
   # 需要来自 Ecto 的查询结果
-  def multi(multi, audit_context, scope, verb, callback) when is_function(callback, 2) do
-    Ecto.Multi.run(multi, :audit, fn repo, res ->
+  def multi(multi, audit_context, scope, verb, callback, name) when is_function(callback, 2) do
+    Ecto.Multi.run(multi, name, fn repo, res ->
       log = build!(callback.(audit_context, res), scope, verb, %{})
       {:ok, repo.insert!(log)}
     end)
   end
 
-  def multi(multi, audit_context, scope, verb, context) when is_map(context) do
-    Ecto.Multi.insert(multi, :audit, fn _ ->
+  def multi(multi, audit_context, scope, verb, context, name) when is_map(context) do
+    Ecto.Multi.insert(multi, name, fn _ ->
       build!(audit_context, scope, verb, context)
     end)
   end
