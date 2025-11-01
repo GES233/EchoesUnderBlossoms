@@ -473,7 +473,7 @@ defmodule HanaShirabe.Accounts do
       :account,
       "member.logout.in_purpose",
       fn audit_log, %{fetch_id_from_token: member_token} ->
-        context = %{"account_id" => member_token.member_id}
+        context = %{"reason" => "Log out"}
         # 还需要注入，因为不确定清除 member 和 执行该函数哪个在前
         %{audit_log | context: context, member: member_token.member}
       end
@@ -597,7 +597,7 @@ defmodule HanaShirabe.Accounts do
     |> AuditLog.multi(
       audit_context,
       :account,
-      "session.login.via_link",
+      "member.login.via_link",
       fn audit_context, _changes ->
         %{audit_context | context: %{"account_id" => member.id}, member: member}
       end

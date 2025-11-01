@@ -23,7 +23,7 @@ defmodule HanaShirabe.AuditLog.Context do
   # context 是一个 map，用于存储所有与操作相关的、非结构化的“证据”，记录导致状态变化的关键信息
   @context_keys_required_within_scope_and_verb %{
     account: %{
-      "member.sign_up" => ~w(account_id),
+      "member.sign_up" => ~w(account_id email),
       "member.re_authenticate" => ~w(account_id),
       "member.confirm_account" => ~w(account_id),
       "member.update_email" => ~w(account_id old_email new_email),
@@ -187,6 +187,8 @@ defmodule HanaShirabe.AuditLog do
 
       {[], extra} ->
         raise Context.InvalidError, {:extra, extra}
+      # 慢慢改吧先。
+      # _ -> nil
     end
 
     struct

@@ -45,7 +45,7 @@ defmodule HSContent.Special.MediaLink do
           "//player.bilibili.com/player.html?aid=#{String.trim_leading(id, "av")}&page=#{part || 1}&high_quality=1&danmaku=0"
         end,
         export_url: fn id, part ->
-          page_query = if String.length(part) > 0, do: "?p=#{part}", else: ""
+          page_query = if is_binary(part) and String.length(part) > 0, do: "?p=#{part}", else: "/"
           "https://www.bilibili.com/video/#{id}#{page_query}"
         end
       },

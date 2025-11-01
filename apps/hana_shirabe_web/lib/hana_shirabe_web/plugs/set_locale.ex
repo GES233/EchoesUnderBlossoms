@@ -24,19 +24,20 @@ defmodule HanaShirabeWeb.Plugs.SetLocale do
       # TODO: 实现用户偏好
       # conn.assigns.current_scope && conn.assigns.current_scope.member.prefer_lang,
       conn.req_cookies[@locale_cookie],
-      get_req_header(conn, "Accept-Language") |> hd() |> parse_accept_language()
+      get_req_header(conn, "Accept-Language") |> parse_accept_language()
     ]
     |> Enum.find(Gettext.get_locale(), &(&1 in available_locales))
   end
 
-  defp parse_accept_language(<<>>), do: nil
-  defp parse_accept_language(header) when is_binary(header) do
+  defp parse_accept_language([]), do: nil
+  defp parse_accept_language([item | _]) when is_binary(item) do
     # TODO: 考虑权重
-    header
+    item
     |> String.split(",")
     |> List.first()
     |> String.split(";")
     |> List.first()
     |> String.replace("-", "_")
   end
+  # defp parse_accept_language([_ | _]), do: nil
 end

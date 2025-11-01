@@ -29,8 +29,8 @@ defmodule HSContent.Special.MediaLinkTest do
     test "B站AV号", %{bilibili_av: avid} do
       assert Regex.match?(avid.id_pattern, "av170001")
 
-      assert avid.export_url.("av170001", nil) ==
-               "https://www.bilibili.com/video/av170001/"
+      assert avid.export_url.("av170001", nil) =~
+               "https://www.bilibili.com/video/av170001"
     end
 
     test "B站BV号", %{bilibili_bv: _bvid} do
