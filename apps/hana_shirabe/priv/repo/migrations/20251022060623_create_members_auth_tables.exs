@@ -6,6 +6,11 @@ defmodule HanaShirabe.Repo.Migrations.CreateMembersAuthTables do
       add :email, :string, null: false, collate: :nocase
       add :hashed_password, :string
       add :confirmed_at, :naive_datetime
+      add :nickname, :string
+      add :status, :string
+      add :prefer_locale, :string
+      add :avatar, :string, default: ""
+      add :intro, :string
 
       timestamps()
     end

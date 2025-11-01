@@ -14,13 +14,14 @@ defmodule HanaShirabe.Accounts.Member do
     field :confirmed_at, :naive_datetime
     field :authenticated_at, :naive_datetime, virtual: true
     # 其他信息
-    # field :nickname, :string
+    field :nickname, :string
     # def nickname_changeset/2
-    # field :status, Ecto.Enum, []
+    field :status, Ecto.Enum, values: [:normal, :frozen, :blocked, :deleted], default: :normal
     # defp status_changeset/2
     # implement namy_status_transform_function
-    # field :prefer_locale, :string
-    # field :intro, :string
+    field :prefer_locale, :string, default: Gettext.get_locale()
+    field :avatar, :string, default: ""
+    field :intro, :string
 
     timestamps()
   end
