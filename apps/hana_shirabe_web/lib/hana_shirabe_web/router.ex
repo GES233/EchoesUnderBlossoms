@@ -13,11 +13,13 @@ defmodule HanaShirabeWeb.Router do
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_member
     plug :put_audit_context
+    plug HanaShirabeWeb.Plugs.SetLocale
   end
 
   pipeline :api do
     plug :accepts, ["json"]
     # TODO: 实现通过 API 的登录
+    plug HanaShirabeWeb.Plugs.SetLocale
   end
 
   scope "/", HanaShirabeWeb do
@@ -42,7 +44,7 @@ defmodule HanaShirabeWeb.Router do
       on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
       live "/me/settings", MemberLive.Settings, :edit
       live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_account
-      # live "/me/sessions", MemberLive.Sessions, 
+      # live "/me/sessions", MemberLive.Sessions,
     end
 
     post "/me/update-password", MemberSessionController, :update_password

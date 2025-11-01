@@ -79,7 +79,6 @@ config :logger, :default_formatter,
 config :phoenix, :json_library, Jason
 
 # 将简体中文设置为缺省语言
-# TODO: 添加自定义语言
 config :gettext,
   default_locale: "zh_Hans",
   locales: ~w(en zh_Hans ja)
