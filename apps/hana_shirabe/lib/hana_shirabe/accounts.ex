@@ -3,6 +3,8 @@ defmodule HanaShirabe.Accounts do
   账户相关上下文。
   """
 
+  require Logger
+
   import Ecto.Query, warn: false
   alias HanaShirabe.{Repo, AuditLog}
 
@@ -330,7 +332,11 @@ defmodule HanaShirabe.Accounts do
   ## 与 AuditLog 的封装
 
   def authenticate_and_log_via_password(audit_context, email, password) do
-    authenticate_and_log(audit_context, get_member_by_email_and_password(email, password), {:email, email})
+    authenticate_and_log(
+      audit_context,
+      get_member_by_email_and_password(email, password),
+      {:email, email}
+    )
   end
 
   def authenticate_and_log_via_magic_link_token(audit_context, token) do
@@ -352,10 +358,12 @@ defmodule HanaShirabe.Accounts do
         nil
 
       {member, nil} = {%Member{}, nil} ->
-        verb = case maybe_identifier do
-          {:email, _} -> "member.login.via_email"
-          :magic_link -> "member.login.via_link"
-        end
+        verb =
+          case maybe_identifier do
+            {:email, _} -> "member.login.via_email"
+            :magic_link -> "member.login.via_link"
+          end
+
         AuditLog.audit!(audit_context, :account, verb, %{
           "account_id" => member.id
         })
@@ -363,11 +371,11 @@ defmodule HanaShirabe.Accounts do
         member
 
       {nil, nil} ->
-        attempt_target = case maybe_identifier do
-          {:email, email} -> get_member_by_email(email) || %{id: nil}
-
-          _ -> %{id: nil}
-        end
+        attempt_target =
+          case maybe_identifier do
+            {:email, email} -> get_member_by_email(email) || %{id: nil}
+            _ -> %{id: nil}
+          end
 
         AuditLog.audit!(audit_context, :account, "member.login.via_email_attempt", %{
           "maybe_target_account_id" => attempt_target.id
@@ -377,8 +385,55 @@ defmodule HanaShirabe.Accounts do
     end
   end
 
-  # def logout_with_log(audit_log, env)
-  # invoke delete_member_session_token/1
-  # scope: :account
-  # verb: "member.logout.in_purpose"
+  def logout_member_in_purpose_with_log(audit_context, token) do
+    Ecto.Multi.new()
+    |> Ecto.Multi.run(:fetch_id_from_token, fn repo, _changes ->
+      case repo.get_by(MemberToken, token: token) do
+        nil ->
+          {:error, :token_not_found}
+
+        member_token ->
+          {:ok, member_token}
+      end
+    end)
+    |> AuditLog.multi(
+      audit_context,
+      :account,
+      "member.logout.in_purpose",
+      fn audit_log, %{fetch_id_from_token: member_token} ->
+        context = %{"account_id" => member_token.member_id}
+        # 还需要注入，因为不确定清除 member 和 执行该函数哪个在前
+        %{audit_log | context: context, member: member_token.member}
+      end
+    )
+    |> Ecto.Multi.delete_all(
+      :delete_token,
+      from(MemberToken, where: [token: ^token, context: "session"])
+    )
+    |> Repo.transact()
+    |> case do
+      {:ok, _} ->
+        :ok
+
+      {:error, :token_not_found, _, _} ->
+        :ok
+
+      {:error, failed_op, reason, _changes} ->
+        Logger.error("Failed to log out and log: #{failed_op}, #{inspect(reason)}")
+
+        :ok
+    end
+  end
+
+  def update_member_password_with_log(audit_context, member, attrs) do
+    case update_member_password(member, attrs) do
+      {:ok, {member = %Member{id: id}, tokens}} ->
+        AuditLog.audit!(audit_context, :account, "member.update_password", %{"account_id" => id})
+
+        {:ok, {member, tokens}}
+
+      err_with_changeset ->
+        err_with_changeset
+    end
+  end
 end

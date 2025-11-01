@@ -27,6 +27,7 @@ defmodule HanaShirabe.AuditLog.Context do
       "member.re_authenticate" => ~w(account_id),
       "member.confirm_email" => ~w(account_id email),
       "member.update_email" => ~w(account_id old_email new_email),
+      "member.update_password" => ~w(account_id),
       "member.login.via_email" => ~w(account_id),
       "member.login.via_email_attempt" => ~w(maybe_target_account_id),
       "member.login.via_link" => ~w(account_id),
@@ -72,7 +73,7 @@ defmodule HanaShirabe.AuditLog do
   alias HanaShirabe.AuditLog.Context
 
   schema "audit_logs" do
-    field :scope, {:array, Ecto.Enum}, values: Context.get_valid_scopes()
+    field :scope, Ecto.Enum, values: Context.get_valid_scopes()
 
     field :verb, :string
     field :user_agent, :string

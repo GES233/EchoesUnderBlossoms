@@ -1,7 +1,4 @@
 defmodule HanaShirabeWeb.MemberSessionController do
-  # 这个… 等我把别的文档翻译好了再回来看
-  # 至少可以确定的是，这是一个直接和 Router 交互的 Controller
-
   use HanaShirabeWeb, :controller
 
   alias HanaShirabe.Accounts
@@ -40,9 +37,11 @@ defmodule HanaShirabeWeb.MemberSessionController do
 
   # 经由邮件与密码的登录
   defp create(conn, %{"member" => member_params}, info) do
+    audit_context = conn.assigns[:audit_log]
+
     %{"email" => email, "password" => password} = member_params
 
-    if member = Accounts.get_member_by_email_and_password(email, password) do
+    if member = Accounts.authenticate_and_log_via_password(audit_context, email, password) do
       conn
       |> put_flash(:info, info)
       |> MemberAuth.log_in_member(member, member_params)
@@ -62,7 +61,9 @@ defmodule HanaShirabeWeb.MemberSessionController do
   def update_password(conn, %{"member" => member_params} = params) do
     member = conn.assigns.current_scope.member
     true = Accounts.sudo_mode?(member)
-    {:ok, {_member, expired_tokens}} = Accounts.update_member_password(member, member_params)
+
+    {:ok, {_member, expired_tokens}} =
+      Accounts.update_member_password_with_log(conn.assigns[:audit_log], member, member_params)
 
     update_pswd_msg = dgettext("account", "Password updated successfully.")
 

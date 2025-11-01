@@ -43,7 +43,9 @@ defmodule HanaShirabeWeb.MemberAuth do
   """
   def log_out_member(conn) do
     member_token = get_session(conn, :member_token)
-    member_token && Accounts.delete_member_session_token(member_token)
+
+    member_token &&
+      Accounts.logout_member_in_purpose_with_log(conn.assigns[:audit_log], member_token)
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       HanaShirabeWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
