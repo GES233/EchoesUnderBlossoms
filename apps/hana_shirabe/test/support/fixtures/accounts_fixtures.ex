@@ -40,6 +40,10 @@ defmodule HanaShirabe.AccountsFixtures do
     })
   end
 
+  def create_audit_log(member = %Accounts.Member{}) do
+    %{create_audit_log() | member: member}
+  end
+
   def member_fixture(attrs \\ %{}) do
     member = unconfirmed_member_fixture(attrs)
 
@@ -49,7 +53,7 @@ defmodule HanaShirabe.AccountsFixtures do
       end)
 
     {:ok, {member, _expired_tokens}} =
-      Accounts.login_member_by_magic_link(token)
+      Accounts.log_in_and_log_by_magic_link(create_audit_log(), token)
 
     member
   end
@@ -65,7 +69,7 @@ defmodule HanaShirabe.AccountsFixtures do
 
   def set_password(member) do
     {:ok, {member, _expired_tokens}} =
-      Accounts.update_member_password(member, %{password: valid_member_password()})
+      Accounts.update_member_password_with_log(create_audit_log(), member, %{password: valid_member_password()})
 
     member
   end

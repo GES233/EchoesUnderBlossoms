@@ -323,6 +323,14 @@ defmodule HanaShirabe.Accounts do
          {member, token} <- Repo.one(query) do
       # 验证是否存在安全风险
       if is_nil(member.confirmed_at) && member.hashed_password do
+        Logger.error("""
+        magic link log in is not allowed for unconfirmed users with a password set!
+
+        This cannot happen with the default implementation, which indicates that you
+        might have adapted the code to a different use case. Please make sure to read the
+        "Mixing magic link and password registration" section of `mix help phx.gen.auth`.
+        """)
+
         {:error, :unconfirmed_with_password}
       else
         {:ok, {member, token}}
@@ -467,13 +475,11 @@ defmodule HanaShirabe.Accounts do
     # 首先，在事务之外进行查询和验证
     case verify_magic_link_token(token) do
       {:ok, {member, token_struct}} ->
-        # 如果验证通过，我们开始一个事务
         Ecto.Multi.new()
-        # 步骤 1: 确定要执行的副作用，并记录日志
         |> multi_for_magic_link(audit_context, member, token_struct)
         |> Repo.transaction()
         |> case do
-          {:ok, %{final_step: {:ok, {member, tokens_to_disconnect}}}} ->
+          {:ok, %{final_step: {member, tokens_to_disconnect}}} ->
             # 如果整个事务成功，返回最终结果
             {:ok, {member, tokens_to_disconnect}}
 
@@ -483,13 +489,13 @@ defmodule HanaShirabe.Accounts do
         end
 
       {:error, reason} ->
-        # 如果 token 验证失败，记录失败日志并返回
-        AuditLog.audit!(
-          audit_context,
-          :accounts,
-          "magic_link.login.fail",
-          %{reason: reason, attempt_token: token}
-        )
+        # 不考虑计入事务了
+        # AuditLog.audit!(
+        #   audit_context,
+        #   :accounts,
+        #   "magic_link.login.fail",
+        #   %{reason: reason, attempt_token: token}
+        # )
 
         {:error, reason}
     end
@@ -499,8 +505,7 @@ defmodule HanaShirabe.Accounts do
   defp multi_for_magic_link(multi, audit_context, %{confirmed_at: nil} = member, _token_struct) do
     multi
     |> Ecto.Multi.run(:confirm_and_delete_tokens, fn _repo, _changes ->
-      # 调用一个只执行数据库操作的底层函数
-      update_member_and_delete_all_tokens(member)
+      member |> Member.confirm_changeset() |> update_member_and_delete_all_tokens()
     end)
     # 将 confirm 以及 login 分开
     |> AuditLog.multi(
@@ -529,7 +534,9 @@ defmodule HanaShirabe.Accounts do
       end,
       :audit_2
     )
-    |> Ecto.Multi.put(:final_step, fn %{confirm_and_delete_tokens: result} -> result end)
+    |> Ecto.Multi.run(:final_step, fn _repo, %{confirm_and_delete_tokens: result} ->
+      {:ok, result} |> IO.inspect()
+    end)
   end
 
   # 已确认用户通过 magic link 登录

@@ -122,7 +122,6 @@ defmodule HanaShirabe.AuditLog do
 
   # 构造
 
-  # TODO: 确定 scope 的具体类型
   defp build!(%__MODULE__{} = audit_context, scope, verb, context)
        when is_atom(scope) and is_binary(verb) and is_map(context) do
     # 一般地讲，audit_context 已经包括了用户相关的信息

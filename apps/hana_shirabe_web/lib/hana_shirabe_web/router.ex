@@ -17,6 +17,7 @@ defmodule HanaShirabeWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    # TODO: 实现通过 API 的登录
   end
 
   scope "/", HanaShirabeWeb do
