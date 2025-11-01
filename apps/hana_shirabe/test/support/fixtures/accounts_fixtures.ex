@@ -5,7 +5,7 @@ defmodule HanaShirabe.AccountsFixtures do
 
   import Ecto.Query
 
-  require Config
+  # require Config
   alias HanaShirabe.{Accounts, AuditLog}
   alias HanaShirabe.Accounts.Scope
 

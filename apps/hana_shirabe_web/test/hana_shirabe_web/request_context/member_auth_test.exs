@@ -107,7 +107,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   end
 
   describe "logout_member/1" do
-    test "erases session and cookies", %{conn: conn, member: member} do
+    test "擦除会话以及 cookies", %{conn: conn, member: member} do
       member_token = Accounts.generate_member_session_token(member)
 
       conn =
@@ -124,7 +124,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       refute Accounts.get_member_by_session_token(member_token)
     end
 
-    test "broadcasts to the given live_socket_id", %{conn: conn} do
+    test "广播给定 live_socket_id", %{conn: conn} do
       live_socket_id = "members_sessions:abcdef-token"
       HanaShirabeWeb.Endpoint.subscribe(live_socket_id)
 
@@ -135,7 +135,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       assert_receive %Phoenix.Socket.Broadcast{event: "disconnect", topic: ^live_socket_id}
     end
 
-    test "works even if member is already logged out", %{conn: conn} do
+    test "在已登出依旧执行", %{conn: conn} do
       conn = conn |> fetch_cookies() |> MemberAuth.log_out_member()
       refute get_session(conn, :member_token)
       assert %{max_age: 0} = conn.resp_cookies[@remember_me_cookie]
