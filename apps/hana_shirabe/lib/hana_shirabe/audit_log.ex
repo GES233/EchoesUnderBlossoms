@@ -53,6 +53,42 @@ defmodule HanaShirabe.AuditLog.Context do
   end
 
   def by_scope_and_verb(_scope, _verb), do: {:error, :not_found}
+
+  defmodule UnmatchQuery do
+    @moduledoc "查无此上下文。"
+    defexception [:message]
+  end
+
+  defmodule InvalidError do
+    @moduledoc """
+    当上下文不符合要求时抛出的异常。
+
+    ### Examples
+
+        iex> raise InvalidError, {:missing, [:foo]}
+        ** (HanaShirabe.AuditLog.Context.InvalidError) Missing fields: [:foo]
+        iex> raise InvalidError, {:extra, [:bar]}
+        ** (HanaShirabe.AuditLog.Context.InvalidError) Extra fields: [:bar]
+    """
+
+    defexception [:message]
+
+    # 这个可以细一点
+    # 检查给定的键所对应的上下文与输入有哪些不同
+    @impl true
+    def exception(term) do
+      msg =
+        case term do
+          {:missing, missing_fields} ->
+            "Missing fields: #{inspect(missing_fields)}"
+
+          {:extra, extra_fields} ->
+            "Extra fields: #{inspect(extra_fields)}"
+        end
+
+      %InvalidError{message: msg}
+    end
+  end
 end
 
 defmodule HanaShirabe.AuditLog do
@@ -131,8 +167,28 @@ defmodule HanaShirabe.AuditLog do
       | scope: scope,
         verb: verb,
         context: Map.merge(audit_context.context, context)
-    }
+    } |> validate_context!()
+  end
 
-    # TODO: validate
+  # 调用相关模块实现检查功能
+  alias HanaShirabe.AuditLog.Context
+
+  defp validate_context!(%__MODULE__{scope: scope, verb: verb, context: context} = struct) do
+    with {:ok, valid_context} <- Context.by_scope_and_verb(scope, verb),
+         actual_context <- context |> Map.keys() |> Enum.map(&to_string/1),
+         {[], []} <- {valid_context -- actual_context, actual_context -- valid_context} do
+      :ok
+    else
+      {:error, _} ->
+        raise Context.UnmatchQuery, "Invalid scope `#{inspect(scope)}` or verb `#{inspect(verb)}`."
+
+      {missing = [_ | _], _} ->
+        raise Context.InvalidError, {:missing, missing}
+
+      {[], extra} ->
+        raise Context.InvalidError, {:extra, extra}
+    end
+
+    struct
   end
 end
