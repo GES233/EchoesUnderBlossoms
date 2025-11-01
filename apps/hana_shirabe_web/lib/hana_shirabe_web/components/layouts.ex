@@ -38,17 +38,17 @@ defmodule HanaShirabeWeb.Layouts do
           <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
         </a>
       </div>
+
       <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
-          <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
-          </li>
+          <li><a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a></li>
+
           <li>
             <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
           </li>
-          <li>
-            <.theme_toggle />
-          </li>
+
+          <li><.theme_toggle /></li>
+
           <li>
             <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
               Get Started <span aria-hidden="true">&rarr;</span>
@@ -59,12 +59,9 @@ defmodule HanaShirabeWeb.Layouts do
     </header>
 
     <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
-        {render_slot(@inner_block)}
-      </div>
+      <div class="mx-auto max-w-2xl space-y-4">{render_slot(@inner_block)}</div>
     </main>
-
-    <.flash_group flash={@flash} />
+     <.flash_group flash={@flash} />
     """
   end
 
@@ -81,9 +78,7 @@ defmodule HanaShirabeWeb.Layouts do
   def flash_group(assigns) do
     ~H"""
     <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} />
-      <.flash kind={:error} flash={@flash} />
-
+      <.flash kind={:info} flash={@flash} /> <.flash kind={:error} flash={@flash} />
       <.flash
         id="client-error"
         kind={:error}
@@ -120,7 +115,6 @@ defmodule HanaShirabeWeb.Layouts do
     ~H"""
     <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
       <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=dark]_&]:left-2/3 transition-[left]" />
-
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
@@ -128,7 +122,6 @@ defmodule HanaShirabeWeb.Layouts do
       >
         <.icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
-
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
@@ -136,7 +129,6 @@ defmodule HanaShirabeWeb.Layouts do
       >
         <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
-
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
@@ -145,44 +137,6 @@ defmodule HanaShirabeWeb.Layouts do
         <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
-    """
-  end
-
-  @doc"""
-  客制化的页面标题。
-
-  本站的标题，一般分为两种情况：
-
-  - 内容为主（比方说网页主要是某歌曲或提案）
-    - 其格式为 `{page_title} - SiteName`
-  - 功能为主（注册、登录、首页等等）
-    - 其格式为 `SiteName :: {page_role}`
-
-  当然还有另一种情况，没有其他信息。那么就是
-  `SiteName - Description` 。
-
-  ## Examples
-
-      <.naive_title title_or_role={fn -> gettext("SignUp") end} />
-      <.naive_title title_or_role={assigns[:page_title]} />
-  """
-  attr :title_or_role, :any, required: true, doc: "Content rendered inside the `title` tag."
-
-  def naive_title(assigns) do
-    ~H"""
-    <%= cond do %>
-      <% is_atom(@title_or_role) and !is_nil(@title_or_role) -> %> <!-- Role -->
-        <.live_title prefix={gettext("Echoes Under Blossoms") <> " :: "}>
-          {@title_or_role |> Atom.to_string()}
-        </.live_title>
-      <% is_binary(@title_or_role) -> %> <!-- Title -->
-        <.live_title suffix={" - " <> gettext("Echoes Under Blossoms")}>
-          {@title_or_role}
-        </.live_title>
-      <% true -> %> <!-- Other situation -->
-        <.live_title default={gettext("Echoes Under Blossoms")}>
-        </.live_title>
-    <% end %>
     """
   end
 end

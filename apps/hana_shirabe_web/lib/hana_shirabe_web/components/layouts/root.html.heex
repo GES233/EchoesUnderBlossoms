@@ -4,10 +4,24 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.naive_title title_or_role={assigns[:page_title]} />
-    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <.live_title default={gettext("Echoes Under Blossoms")}>
+      <%= cond do %>
+        <% is_nil(assigns[:page_title]) -> %>
+          {}
+        <% is_atom(@page_title) and !is_nil(@page_title) -> %>
+          {gettext("Echoes Under Blossoms :: %{role_as_title}",
+            role_as_title: @page_title |> Atom.to_string()
+          )}
+        <% is_binary(@page_title) -> %>
+          {gettext("%{title} - Echoes Under Blossoms", title: @page_title)}
+        <% true -> %>
+          {}
+      <% end %>
+    </.live_title>
+     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
+
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -28,27 +42,23 @@
       })();
     </script>
   </head>
+
   <body>
     <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
       <%= if @current_scope do %>
+        <li>{@current_scope.member.email}</li>
+
+        <li><.link href={~p"/me/settings"}>{dgettext("account", "Settings")}</.link></li>
+
         <li>
-          {@current_scope.member.email}
-        </li>
-        <li>
-          <.link href={~p"/me/settings"}><%= dgettext("account", "Settings") %></.link>
-        </li>
-        <li>
-          <.link href={~p"/logout"} method="delete"><%= dgettext("account", "Log out") %></.link>
+          <.link href={~p"/logout"} method="delete">{dgettext("account", "Log out")}</.link>
         </li>
       <% else %>
-        <li>
-          <.link href={~p"/sign_up"}><%= dgettext("account", "Register") %></.link>
-        </li>
-        <li>
-          <.link href={~p"/login"}><%= dgettext("account", "Log in") %></.link>
-        </li>
+        <li><.link href={~p"/sign_up"}>{dgettext("account", "Register")}</.link></li>
+
+        <li><.link href={~p"/login"}>{dgettext("account", "Log in")}</.link></li>
       <% end %>
     </ul>
-    {@inner_content}
+     {@inner_content}
   </body>
 </html>
