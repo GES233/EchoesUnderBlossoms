@@ -139,4 +139,16 @@ defmodule HanaShirabeWeb.Layouts do
     </div>
     """
   end
+
+  @doc """
+  实现语言选择。
+  """
+  # TODO
+  def locale_select(assigns) do
+    ~H"""
+    <span>{gettext("Locale Preference")}</span>
+    <%= for locale <- Gettext.known_locales(HanaShirabeWeb.Gettext) do %>
+    <% end %>
+    """
+  end
 end
