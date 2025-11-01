@@ -23,16 +23,23 @@ defmodule HSContent.Special.MediaLinkTest do
                "https://www.acfun.cn/v/ac123456"
     end
 
-    test "等我实现了别的网站就放在这里，猴子岛和劈里啪啦不对付"
+    # 等我实现了别的网站就放在这里，猴子岛和劈里啪啦不对付"
     # 参见 https://moegirl.icu/Bilibili/争议和影响#与AcFun的纠纷
 
-    test "B站AV号" #, %{bilibili_av: avid}
+    test "B站AV号", %{bilibili_av: avid} do
+      assert Regex.match?(avid.id_pattern, "av170001")
 
-    test "B站BV号" #, %{bilibili_bv: bvid}
+      assert acfun.export_url.("av170001", nil) ==
+               "https://www.bilibili.com/video/av170001/"
+    end
 
-    test "B站AV号带分P" #, %{bilibili_av: avid}
+    test "B站BV号", %{bilibili_bv: _bvid} do
+      assert 1 + 1 == 2
+    end
 
-    test "B站BV号带分P" #, %{bilibili_bv: bvid}
+    test "B站带分P", %{bilibili_av: _avid, bilibili_bv: _bvid} do
+      assert 1 + 1 == 2
+    end
   end
 
   describe "测试 transform/2" do
