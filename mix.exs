@@ -1,5 +1,5 @@
 # 为了解决在 Windows 下需要调用 elixir_make 来进行编译的库报错的情况
-# 可以参考 https://hexdocs.pm/exqlite/windows.html
+# 可以参考 https://github.com/elixir-sqlite/exqlite/blob/main/guides/windows.md
 # （没错那个 PR 是我提交的）
 # 另外关于 `mix.lock` 不规范的报错…
 # ~~我再想想办法~~ 等到 ElixirLS 重新运行一遍就可以忽略了

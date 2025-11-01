@@ -32,6 +32,7 @@ defmodule HanaShirabe.AuditLog.Context do
       "member.login.via_email_attempt" => ~w(maybe_target_account_id),
       "member.login.via_link" => ~w(account_id),
       "member.logout.in_purpose" => ~w(reason),
+      "member.logout.remote" => ~w(target_session_context target_session_id),
       "member.logout.expire" => ~w(reason)
     },
     member: %{

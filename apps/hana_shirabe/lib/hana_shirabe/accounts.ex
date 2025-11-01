@@ -354,6 +354,46 @@ defmodule HanaShirabe.Accounts do
     end)
   end
 
+  ## 对会话的处理（用于多设备显示操作）
+
+  @doc """
+  列出某个成员所有活动的会话。
+  """
+  def list_active_sessions_for_member(member) do
+    Repo.all(
+      from t in MemberToken,
+        where: t.member_id == ^member.id and t.context == "session"
+    )
+  end
+
+  @doc """
+  在一个事务中，根据 token 的 ID 删除一个会话并记录审计日志。
+  """
+  def log_out_session_and_log(audit_context, member, session_token_id) do
+    token_to_delete =
+      Repo.get_by(MemberToken, id: session_token_id, member_id: member.id)
+
+    if token_to_delete do
+      Ecto.Multi.new()
+      |> Ecto.Multi.delete(:delete_token, token_to_delete)
+      |> AuditLog.multi(
+        audit_context,
+        :accounts,
+        "member.logout.remote",
+        fn audit_log, _changes ->
+          context = %{
+            "target_session_context" => token_to_delete.context
+          }
+
+          %{audit_log | context: context, member: member}
+        end
+      )
+      |> Repo.transaction()
+    else
+      {:error, :not_found_or_unauthorized}
+    end
+  end
+
   ## 与 AuditLog 的封装
 
   def authenticate_and_log_via_password(audit_context, email, password) do
