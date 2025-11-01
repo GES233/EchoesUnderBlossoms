@@ -31,7 +31,10 @@ defmodule HanaShirabe.EctoIP do
   end
 
   def dump(value) when is_tuple(value) do
-    {:ok, to_string(:inet.ntoa(value))}
+    case :inet.ntoa(value) do
+      {:error, _} -> :error
+      res -> {:ok, to_string(res)}
+    end
   end
 
   def dump(value) when is_binary(value) do
