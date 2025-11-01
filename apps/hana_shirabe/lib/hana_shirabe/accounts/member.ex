@@ -7,11 +7,20 @@ defmodule HanaShirabe.Accounts.Member do
   use Gettext, backend: HanaShirabe.Gettext
 
   schema "members" do
+    # 来自 mix phx.gen.auth
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :confirmed_at, :naive_datetime
     field :authenticated_at, :naive_datetime, virtual: true
+    # 其他信息
+    # field :nickname, :string
+    # def nickname_changeset/2
+    # field :status, Ecto.Enum, []
+    # defp status_changeset/2
+    # implement namy_status_transform_function
+    # field :prefer_locale, :string
+    # field :intro, :string
 
     timestamps()
   end

@@ -177,6 +177,7 @@ defmodule HanaShirabe.AccountsTest do
       assert Repo.get_by(MemberToken, member_id: member.id)
     end
 
+    #
     test "does not update email if member email changed", %{member: member, token: token} do
       assert Accounts.update_member_email(%{member | email: "current@example.com"}, token) ==
                {:error, :transaction_aborted}
@@ -185,7 +186,7 @@ defmodule HanaShirabe.AccountsTest do
       assert Repo.get_by(MemberToken, member_id: member.id)
     end
 
-    test "does not update email if token expired", %{member: member, token: token} do
+    test "一旦令牌过期不支持更新邮件", %{member: member, token: token} do
       {1, nil} = Repo.update_all(MemberToken, set: [inserted_at: ~N[2020-01-01 00:00:00]])
 
       assert Accounts.update_member_email(member, token) ==
@@ -286,7 +287,7 @@ defmodule HanaShirabe.AccountsTest do
       assert member_token.context == "session"
       assert member_token.authenticated_at != nil
 
-      # Creating the same token for another member should fail
+      # 对另一个成员创建相同的令牌会失败
       assert_raise Ecto.ConstraintError, fn ->
         Repo.insert!(%MemberToken{
           token: member_token.token,
@@ -296,7 +297,7 @@ defmodule HanaShirabe.AccountsTest do
       end
     end
 
-    test "duplicates the authenticated_at of given member in new token", %{member: member} do
+    test "重复认证会给予成员新令牌", %{member: member} do
       member = %{
         member
         | authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -3600)

@@ -6,8 +6,6 @@
 
 #### 用户的注册、登录与 `%AuditLog{}`
 
-因为需要记录用户在登录期间的活动，需要设计好 `%AuditLog{}` 。
-
 再次基础上，通过修改 `phx mix.gen.auth` 自动生成的代码来处理（也可以魔改此前废弃项目的相关代码，其已经实现了 AuditLog 基于 bytepack）。
 
 - [ ] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
@@ -17,7 +15,7 @@
   - [x] `HanaShirabeWeb.ConnCase`
   -  一堆测试代码
     - [ ] `HanaShirabe.AccountsTest`
-    - [ ] `HanaShirabeWeb.MemberSessionControllerTest`
+    - [x] `HanaShirabeWeb.MemberSessionControllerTest`
     - [ ] `HanaShirabeWeb.MemberLive.ConfirmationTest`
     - [ ] `HanaShirabeWeb.MemberLive.LoginTest`
     - [ ] `HanaShirabeWeb.MemberLive.RegistrationTest`
@@ -28,12 +26,12 @@
 - [x] 将注册的函数与 `%AuditLog{}` 合并
 - [x] 修改代码使测试跑通
   - 是 Gettext 会翻译部分错误信息，这和测试代码的断言不一致（修改完成）
-- [ ] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
-  - [ ] 确定 `scope` 是 `t:atom()` 还是 `t:list(atom())`
-- [ ] 实现登录、验证、邮件修改的 AuditLog 操作
+- [x] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
+  - [x] 确定 `scope` 是 `t:atom()` 还是 `t:list(atom())`
+- [x] 实现登录、验证、邮件修改的 AuditLog 操作
 - [x] 实现网页国际化的功能（主要是一堆 LiveView 里乱七八糟的）
 - [ ] 优化「注册」与「修改信息」的流程
-  - [ ] 把 `member_live` 里的那些东西搞成多语言
+  - [x] 把 `member_live` 里的那些东西搞成多语言
   - 我倒是觉得先激活邮件再填写密码的方式很好
   - [ ] 仅有敏感操作（例如修改密码邮件）需要 sudo
 
@@ -46,12 +44,12 @@
 - `status`
   - 账号的状态（包括未激活、正常、被封禁、被清退、已注销、主动冻结留档六种状态）
   - 状态转移的主体包括网站、用户本人以及对用户有管理权限的管理员
-- `join_at`
+- `join_at`（`confirmed_at`）
   - 加入的时间（按照被激活的时间算起）
 - `avatar_link`
   - 【需要确定头像方案后落实】
-- `prefer_lang`
-  - 【需要讨论】语言相关，决定了界面的语言选择
+- `prefer_locale`
+  - 语言相关，决定了界面的语言选择
   - 之前向根据请求的市区以及系统语言来决策，但那样好麻烦，还有一种方案是本地 Cookie
 - `intro`
   - 自我介绍
@@ -72,6 +70,18 @@
 ### 多语言支持
 
 计划通过客户端 Cookie + 浏览器请求头的 Accept-Language 实现。
+
+当前已经实现对应的 Plug 。
+
+其预计包含（优先级依次向后）：
+
+- 请求的 `locale` 参数
+- Cookie 的信息（如有）
+- 用户的偏好（可能要修改数据表并设计页面）
+- 浏览器请求头的 Accept-Language
+- 应用默认
+
+### 页面的设计与实现
 
 ### 内容的创建、处理以及导出
 
@@ -101,11 +111,9 @@
 
 - 将 Markdown 文本注入 `placeholder`
 
-### 基于 `%AuditLog{}` 扩展的管理
+### 消息机制、`@` 、邀请机制与社交关系
 
-【需要讨论】
-
-### 消息机制、`@` 与社交关系
+### 多设备管理
 
 ## 核心业务的梳理、设计与实现
 

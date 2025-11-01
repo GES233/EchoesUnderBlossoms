@@ -4,11 +4,11 @@ defmodule HanaShirabeWeb.ErrorHTMLTest do
   # 将 render_to_string/4 用于测试自定义的 views
   import Phoenix.Template, only: [render_to_string: 4]
 
-  test "renders 404.html" do
+  test "渲染 404.html" do
     assert render_to_string(HanaShirabeWeb.ErrorHTML, "404", "html", []) == "Not Found"
   end
 
-  test "renders 500.html" do
+  test "渲染 500.html" do
     assert render_to_string(HanaShirabeWeb.ErrorHTML, "500", "html", []) == "Internal Server Error"
   end
 end
