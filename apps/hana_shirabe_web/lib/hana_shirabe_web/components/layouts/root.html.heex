@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="[--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -18,10 +18,9 @@
           {}
       <% end %>
     </.live_title>
-     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
-    
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -42,23 +41,9 @@
       })();
     </script>
   </head>
-  
-  <body>
-    <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
-      <%= if @current_scope do %>
-        <li>{@current_scope.member.email}</li>
-        
-        <li><.link href={~p"/me/settings"}>{dgettext("account", "Settings")}</.link></li>
-        
-        <li>
-          <.link href={~p"/logout"} method="delete">{dgettext("account", "Log out")}</.link>
-        </li>
-      <% else %>
-        <li><.link href={~p"/sign_up"}>{dgettext("account", "Register")}</.link></li>
-        
-        <li><.link href={~p"/login"}>{dgettext("account", "Log in")}</.link></li>
-      <% end %>
-    </ul>
-     {@inner_content}
+  <body class="antialiased">
+    <.app flash={@flash} current_scope={@current_scope}>
+      {@inner_content}
+    </.app>
   </body>
 </html>
