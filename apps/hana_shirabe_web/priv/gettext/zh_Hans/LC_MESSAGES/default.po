@@ -11,35 +11,60 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/components/core_components.ex:337
+#: lib/hana_shirabe_web/components/core_components.ex:330
 #, elixir-autogen, elixir-format
 msgid "Actions"
 msgstr "操作"
 
-#: lib/hana_shirabe_web/components/layouts.ex:95
-#: lib/hana_shirabe_web/components/layouts.ex:107
+#: lib/hana_shirabe_web/components/layouts.ex:116
+#: lib/hana_shirabe_web/components/layouts.ex:128
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr "试图重新连接"
 
-#: lib/hana_shirabe_web/components/layouts.ex:102
+#: lib/hana_shirabe_web/components/layouts.ex:123
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr "有东西出问题了！"
 
-#: lib/hana_shirabe_web/components/layouts.ex:90
+#: lib/hana_shirabe_web/components/layouts.ex:111
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr "连不上蓝牙了"
 
-#: lib/hana_shirabe_web/components/core_components.ex:70
+#: lib/hana_shirabe_web/components/core_components.ex:71
 #, elixir-autogen, elixir-format
 msgid "close"
-msgstr "关系"
+msgstr "关闭"
 
-#: lib/hana_shirabe_web/components/layouts.ex:175
-#: lib/hana_shirabe_web/components/layouts.ex:179
-#: lib/hana_shirabe_web/components/layouts.ex:183
+#: lib/hana_shirabe_web/components/layouts.ex:87
+#: lib/hana_shirabe_web/components/layouts/root.html.heex:7
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:4
 #, elixir-autogen, elixir-format
 msgid "Echoes Under Blossoms"
 msgstr "花影下的音符"
+
+#: lib/hana_shirabe_web/components/layouts/root.html.heex:16
+#, elixir-autogen, elixir-format
+msgid "%{title} - Echoes Under Blossoms"
+msgstr "%{title} - 花影下的音符"
+
+#: lib/hana_shirabe_web/components/layouts/root.html.heex:12
+#, elixir-autogen, elixir-format
+msgid "Echoes Under Blossoms :: %{role_as_title}"
+msgstr "花影下的音符 :: %{role_as_title}"
+
+#: lib/hana_shirabe_web/components/layouts.ex:175
+#, elixir-autogen, elixir-format
+msgid "Locale Preference"
+msgstr "语言偏好"
+
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:8
+#, elixir-autogen, elixir-format
+msgid "Under construction..."
+msgstr "施工中..."
+
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:4
+#, elixir-autogen, elixir-format
+msgid "Welcome to %{site_name}"
+msgstr "欢迎来到%{site_name}"

@@ -11,12 +11,12 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:98
+#: lib/hana_shirabe_web/live/member_live/registration.ex:102
 #, elixir-autogen, elixir-format
 msgid "An email was sent to %{member_email}, please access it to confirm your account."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:47
+#: lib/hana_shirabe_web/live/member_live/registration.ex:51
 #, elixir-autogen, elixir-format
 msgid "Create an account"
 msgstr ""
@@ -51,32 +51,32 @@ msgstr ""
 msgid "You need to reauthenticate to perform sensitive actions on your account."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:53
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:54
 #, elixir-autogen, elixir-format
 msgid "Invalid email or password"
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:78
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:81
 #, elixir-autogen, elixir-format
 msgid "Logged out successfully."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:11
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:8
 #, elixir-autogen, elixir-format
 msgid "Member confirmed successfully."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:67
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:70
 #, elixir-autogen, elixir-format
 msgid "Password updated successfully."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:24
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:32
 #, elixir-autogen, elixir-format
 msgid "The link is invalid or it has expired."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:17
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:14
 #, elixir-autogen, elixir-format
 msgid "Welcome back!"
 msgstr ""
@@ -106,12 +106,12 @@ msgstr ""
 msgid "Changing..."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:34
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:39
 #, elixir-autogen, elixir-format
 msgid "Confirm and log in only this time"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:31
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:33
 #, elixir-autogen, elixir-format
 msgid "Confirm and stay logged in"
 msgstr ""
@@ -121,15 +121,15 @@ msgstr ""
 msgid "Confirm new password"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:28
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:33
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:30
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:36
 #, elixir-autogen, elixir-format
 msgid "Confirming..."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:56
 #: lib/hana_shirabe_web/live/member_live/login.ex:80
-#: lib/hana_shirabe_web/live/member_live/registration.ex:40
+#: lib/hana_shirabe_web/live/member_live/registration.ex:41
 #: lib/hana_shirabe_web/live/member_live/settings.ex:25
 #, elixir-autogen, elixir-format
 msgid "Email"
@@ -145,30 +145,30 @@ msgstr ""
 msgid "Email changed successfully."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:59
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:67
 #, elixir-autogen, elixir-format
 msgid "Keep me logged in on this device"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts/root.html.heex:48
+#: lib/hana_shirabe_web/components/layouts.ex:72
 #: lib/hana_shirabe_web/live/member_live/login.ex:13
-#: lib/hana_shirabe_web/live/member_live/registration.ex:64
+#: lib/hana_shirabe_web/live/member_live/registration.ex:68
 #, elixir-autogen, elixir-format
 msgid "Log in"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:62
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:70
 #, elixir-autogen, elixir-format
 msgid "Log me in only this time"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:49
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:56
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:55
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:64
 #, elixir-autogen, elixir-format
 msgid "Logging in..."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:83
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:94
 #, elixir-autogen, elixir-format
 msgid "Magic link is invalid or it has expired."
 msgstr ""
@@ -188,17 +188,17 @@ msgstr ""
 msgid "Save Password"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:68
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:76
 #, elixir-autogen, elixir-format
 msgid "Tip: If you prefer passwords, you can enable them in the member settings."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/confirmation.ex:12
+#: lib/hana_shirabe_web/live/member_live/confirmation.ex:13
 #, elixir-autogen, elixir-format
 msgid "Welcome %{member_email}"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:46
+#: lib/hana_shirabe_web/live/member_live/registration.ex:48
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Creating account..."
 msgstr ""
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Log in with email"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts/root.html.heex:41
+#: lib/hana_shirabe_web/components/layouts.ex:58
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
@@ -223,12 +223,12 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts/root.html.heex:45
+#: lib/hana_shirabe_web/components/layouts.ex:65
 #, elixir-autogen, elixir-format
 msgid "Register"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts/root.html.heex:38
+#: lib/hana_shirabe_web/components/layouts.ex:50
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr ""
@@ -246,4 +246,15 @@ msgstr ""
 #: lib/hana_shirabe_web/live/member_live/login.ex:66
 #, elixir-autogen, elixir-format
 msgid "or"
+msgstr ""
+
+#: lib/hana_shirabe_web/request_context/member_auth.ex:228
+#: lib/hana_shirabe_web/request_context/member_auth.ex:283
+#, elixir-autogen, elixir-format
+msgid "You must log in to access this page."
+msgstr ""
+
+#: lib/hana_shirabe_web/request_context/member_auth.ex:246
+#, elixir-autogen, elixir-format
+msgid "You must re-authenticate to access this page."
 msgstr ""

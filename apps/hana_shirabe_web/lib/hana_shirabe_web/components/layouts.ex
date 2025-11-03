@@ -35,13 +35,13 @@ defmodule HanaShirabeWeb.Layouts do
       <nav class="navbar px-4 sm:px-6 lg:px-8">
         <div class="navbar-start">
           <a href={~p"/"} class="btn btn-ghost text-xl">
-            EchoesUnderBlossoms
+            <HanaShirabeWeb.HanaIcon.hana_icon />
           </a>
         </div>
         <div class="navbar-end">
           <div class="hidden sm:flex items-center gap-4">
             <%= if @current_scope do %>
-              <span class="text-sm font-medium"><%= @current_scope.member.email %></span>
+              <span class="text-sm font-medium">{@current_scope.member.email}</span>
 
               <.link
                 href={~p"/me/settings"}
@@ -84,12 +84,18 @@ defmodule HanaShirabeWeb.Layouts do
     <footer class="mt-16 border-t py-8">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p class="text-center text-sm text-gray-500">
-          🄯 {DateTime.utc_now().year} {gettext("Echoes Under Blossoms")}. 站内用户创作的版权归其自身所有
+          {copyleft_declaration()}
         </p>
       </div>
     </footer>
     """
   end
+
+  defp copyleft_declaration(),
+    # TODO 把这里的版权声明说一下
+    do:
+      "🄯 #{DateTime.utc_now().year} #{gettext("Echoes Under Blossoms")} " <>
+        "站内用户创作的版权归其自身所有"
 
   @doc """
   用于统一 flash 组内标题和内容的显示。

@@ -11,17 +11,17 @@
 msgid ""
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member.ex:57
+#: lib/hana_shirabe/accounts/member.ex:67
 #, elixir-autogen, elixir-format
 msgid "did not change"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member.ex:78
+#: lib/hana_shirabe/accounts/member.ex:88
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member.ex:40
+#: lib/hana_shirabe/accounts/member.ex:50
 #, elixir-autogen, elixir-format
 msgid "must have the @ sign and no spaces"
 msgstr ""

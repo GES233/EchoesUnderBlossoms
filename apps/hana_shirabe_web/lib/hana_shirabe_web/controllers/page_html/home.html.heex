@@ -3,9 +3,11 @@
     <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl">
       <%= gettext("Welcome to %{site_name}", site_name: gettext("Echoes Under Blossoms")) %>
     </h1>
-    <progress class="progress w-56"></progress>
-    <p class="mt-6 text-lg leading-8 text-gray-600">
-      建设中...
-    </p>
+    <div class="mt-6">
+      <progress class="progress w-56"></progress>
+      <p class="text-lg leading-8 text-gray-600">
+        <%= gettext("Under construction...") %>
+      </p>
+    </div>
   </div>
 </div>
