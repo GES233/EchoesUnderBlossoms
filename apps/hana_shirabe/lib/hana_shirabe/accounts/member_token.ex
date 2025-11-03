@@ -42,7 +42,9 @@ defmodule HanaShirabe.Accounts.MemberToken do
   def build_session_token(member) do
     token = :crypto.strong_rand_bytes(@rand_size)
     dt = member.authenticated_at || NaiveDateTime.utc_now(:second)
-    {token, %MemberToken{token: token, context: "session", member_id: member.id, authenticated_at: dt}}
+
+    {token,
+     %MemberToken{token: token, context: "session", member_id: member.id, authenticated_at: dt}}
   end
 
   @doc """

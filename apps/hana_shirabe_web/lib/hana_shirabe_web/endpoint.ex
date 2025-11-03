@@ -14,7 +14,6 @@ defmodule HanaShirabeWeb.Endpoint do
     websocket: [connect_info: [:peer_data, :user_agent, session: @session_options]],
     longpoll: [connect_info: [:peer_data, :user_agent, session: @session_options]]
 
-
   # 在生产环境下，如果你在运行 phx.digest 你应该把 gzip 设为真。
   #
   # 当代码重新加载被禁用时（例如生产环境），将启用 "gzip"

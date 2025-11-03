@@ -184,7 +184,11 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
       token =
         extract_member_token(fn url ->
-          Accounts.deliver_member_update_email_instructions(%{member | email: email}, member.email, url)
+          Accounts.deliver_member_update_email_instructions(
+            %{member | email: email},
+            member.email,
+            url
+          )
         end)
 
       %{conn: log_in_member(conn, member), token: token, email: email, member: member}

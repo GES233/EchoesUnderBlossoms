@@ -71,7 +71,9 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
           "member" => %{"email" => member.email, "password" => "invalid_password"}
         })
 
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == dgettext("account", "Invalid email or password")
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) ==
+               dgettext("account", "Invalid email or password")
+
       assert redirected_to(conn) == ~p"/login"
     end
   end

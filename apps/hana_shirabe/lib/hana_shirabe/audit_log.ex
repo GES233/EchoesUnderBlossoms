@@ -37,7 +37,7 @@ defmodule HanaShirabe.AuditLog.Context do
     },
     member: %{
       "info.update.self" => ~w(item current_value),
-      "info.update.others" => ~w(target item current_value reason),
+      "info.update.others" => ~w(target item current_value reason)
     },
     proposal: %{},
     member_content: %{},
@@ -167,7 +167,8 @@ defmodule HanaShirabe.AuditLog do
       | scope: scope,
         verb: verb,
         context: Map.merge(audit_context.context, context)
-    } |> validate_context!()
+    }
+    |> validate_context!()
   end
 
   # 调用相关模块实现检查功能
@@ -180,15 +181,16 @@ defmodule HanaShirabe.AuditLog do
       :ok
     else
       {:error, _} ->
-        raise Context.UnmatchQuery, "Invalid scope `#{inspect(scope)}` or verb `#{inspect(verb)}`."
+        raise Context.UnmatchQuery,
+              "Invalid scope `#{inspect(scope)}` or verb `#{inspect(verb)}`."
 
       {missing = [_ | _], _} ->
         raise Context.InvalidError, {:missing, missing}
 
       {[], extra} ->
         raise Context.InvalidError, {:extra, extra}
-      # 慢慢改吧先。
-      # _ -> nil
+        # 慢慢改吧先。
+        # _ -> nil
     end
 
     struct

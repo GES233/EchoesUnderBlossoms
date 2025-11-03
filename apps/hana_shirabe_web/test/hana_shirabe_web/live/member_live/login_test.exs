@@ -31,7 +31,11 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         |> render_submit()
         |> follow_redirect(conn, ~p"/login")
 
-      msg = dgettext("account", "If your email is in our system, you will receive instructions for logging in shortly.")
+      msg =
+        dgettext(
+          "account",
+          "If your email is in our system, you will receive instructions for logging in shortly."
+        )
 
       assert html =~ msg
 
@@ -47,7 +51,11 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         |> render_submit()
         |> follow_redirect(conn, ~p"/login")
 
-      msg = dgettext("account", "If your email is in our system, you will receive instructions for logging in shortly.")
+      msg =
+        dgettext(
+          "account",
+          "If your email is in our system, you will receive instructions for logging in shortly."
+        )
 
       assert html =~ msg
     end
@@ -80,7 +88,10 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       render_submit(form, %{user: %{remember_me: true}})
 
       conn = follow_trigger_action(form, conn)
-      assert Phoenix.Flash.get(conn.assigns.flash, :error) == dgettext("account", "Invalid email or password")
+
+      assert Phoenix.Flash.get(conn.assigns.flash, :error) ==
+               dgettext("account", "Invalid email or password")
+
       assert redirected_to(conn) == ~p"/login"
     end
   end
@@ -110,7 +121,12 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     test "展示存在邮件输入栏的登录页面", %{conn: conn, member: member} do
       {:ok, _lv, html} = live(conn, ~p"/login")
 
-      info = dgettext("account", "You need to reauthenticate to perform sensitive actions on your account.")
+      info =
+        dgettext(
+          "account",
+          "You need to reauthenticate to perform sensitive actions on your account."
+        )
+
       title = dgettext("account", "Register")
       button = dgettext("account", "Log in with email")
 

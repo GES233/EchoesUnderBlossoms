@@ -45,10 +45,14 @@ defmodule HanaShirabeWeb.MemberAuth do
   def log_out_member(conn) do
     member_token = get_session(conn, :member_token)
 
-      case conn.assigns[:audit_log] do
-        nil -> member_token && Accounts.delete_member_session_token(member_token)
-          %HanaShirabe.AuditLog{} -> member_token && Accounts.logout_member_in_purpose_with_log(conn.assigns[:audit_log], member_token)
-      end
+    case conn.assigns[:audit_log] do
+      nil ->
+        member_token && Accounts.delete_member_session_token(member_token)
+
+      %HanaShirabe.AuditLog{} ->
+        member_token &&
+          Accounts.logout_member_in_purpose_with_log(conn.assigns[:audit_log], member_token)
+    end
 
     if live_socket_id = get_session(conn, :live_socket_id) do
       HanaShirabeWeb.Endpoint.broadcast(live_socket_id, "disconnect", %{})
@@ -238,7 +242,8 @@ defmodule HanaShirabeWeb.MemberAuth do
     if Accounts.sudo_mode?(socket.assigns.current_scope.member, -10) do
       {:cont, socket}
     else
-      require_authenticate_msg = dgettext("account", "You must re-authenticate to access this page.")
+      require_authenticate_msg =
+        dgettext("account", "You must re-authenticate to access this page.")
 
       socket =
         socket

@@ -76,13 +76,15 @@ defmodule HSContent.SpecialItem do
       @impl HSContent
       def apply(document, deserialization_env, serialization_env) do
         case deserialization_env do
-        :export -> document
-        |> normalize()
-        |> transform(serialization_env)
+          :export ->
+            document
+            |> normalize()
+            |> transform(serialization_env)
 
-        _ -> document
-        |> transform(serialization_env)
-      end
+          _ ->
+            document
+            |> transform(serialization_env)
+        end
       end
     end
   end

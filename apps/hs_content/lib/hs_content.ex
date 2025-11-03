@@ -70,7 +70,10 @@ defmodule HSContent do
   它会按顺序应用所有插件的 `:export` 转换逻辑。
   """
   @spec to_export_markdown(t(), any()) :: binary()
-  def to_export_markdown(%__MODULE__{document: doc, derive: derive, plugins: plugins}, _opts \\ []) do
+  def to_export_markdown(
+        %__MODULE__{document: doc, derive: derive, plugins: plugins},
+        _opts \\ []
+      ) do
     doc
     |> apply_plugins(derive, :export, plugins)
     |> MDEx.to_markdown!()
@@ -80,7 +83,10 @@ defmodule HSContent do
   将内容转换回仓库格式的 Markdown 字符串。
   """
   @spec to_domain_markdown(t(), any()) :: binary()
-  def to_domain_markdown(%__MODULE__{document: doc, derive: derive, plugins: plugins}, _opts \\ []) do
+  def to_domain_markdown(
+        %__MODULE__{document: doc, derive: derive, plugins: plugins},
+        _opts \\ []
+      ) do
     doc
     |> apply_plugins(derive, :domain, plugins)
     |> MDEx.to_markdown!()
@@ -91,16 +97,22 @@ defmodule HSContent do
     Enum.reduce(plugins, initial_doc, fn plugin_module, current_doc ->
       # 调用每个插件的 transform/2 函数
       case deserialization_env do
-        :export -> current_doc
-        |> plugin_module.normalize()
-        |> plugin_module.transform(serialization_env)
+        :export ->
+          current_doc
+          |> plugin_module.normalize()
+          |> plugin_module.transform(serialization_env)
 
-        _ -> current_doc
-        |> plugin_module.transform(serialization_env)
+        _ ->
+          current_doc
+          |> plugin_module.transform(serialization_env)
       end
     end)
   end
 
-  @callback apply(MDEx.Document.t(), serialization_env :: :export | :domain, serialization_env :: :domain | :export | :html) ::
+  @callback apply(
+              MDEx.Document.t(),
+              serialization_env :: :export | :domain,
+              serialization_env :: :domain | :export | :html
+            ) ::
               MDEx.Document.t()
 end

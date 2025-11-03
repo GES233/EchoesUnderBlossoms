@@ -19,22 +19,22 @@ defmodule HanaShirabeWeb.MemberSessionController do
   # 经由链接的登录
   defp create(conn, %{"member" => %{"token" => token} = member_params}, info) do
     case Accounts.log_in_by_magic_link_and_log(conn.assigns[:audit_log], token) do
-    {:ok, {member, tokens_to_disconnect}} ->
-      # 业务逻辑（包括日志）已在 Accounts 中完成
-      MemberAuth.disconnect_sessions(tokens_to_disconnect)
+      {:ok, {member, tokens_to_disconnect}} ->
+        # 业务逻辑（包括日志）已在 Accounts 中完成
+        MemberAuth.disconnect_sessions(tokens_to_disconnect)
 
-      conn
-      |> put_flash(:info, info)
-      |> MemberAuth.log_in_member(member, member_params)
+        conn
+        |> put_flash(:info, info)
+        |> MemberAuth.log_in_member(member, member_params)
 
-    {:error, _reason} ->
-      # Accounts 模块已经记录了失败日志
-      maybe_link_unusable_msg = dgettext("account", "The link is invalid or it has expired.")
+      {:error, _reason} ->
+        # Accounts 模块已经记录了失败日志
+        maybe_link_unusable_msg = dgettext("account", "The link is invalid or it has expired.")
 
-      conn
-      |> put_flash(:error, maybe_link_unusable_msg)
-      |> redirect(to: ~p"/login")
-  end
+        conn
+        |> put_flash(:error, maybe_link_unusable_msg)
+        |> redirect(to: ~p"/login")
+    end
   end
 
   # 经由邮件与密码的登录

@@ -249,7 +249,9 @@ defmodule HanaShirabe.AccountsTest do
       {:error, changeset} =
         Accounts.update_member_password(member, %{password: too_long})
 
-      assert dgettext("account", "should be at most %{count} character(s)", count: 72) in errors_on(changeset).password
+      assert dgettext("account", "should be at most %{count} character(s)", count: 72) in errors_on(
+               changeset
+             ).password
     end
 
     test "更新密码", %{member: member} do

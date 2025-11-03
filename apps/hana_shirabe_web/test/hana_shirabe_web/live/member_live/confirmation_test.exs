@@ -95,7 +95,6 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
 
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ msg
 
-
       assert Accounts.get_member!(member.id).confirmed_at == member.confirmed_at
 
       # 用新的连接表示登出

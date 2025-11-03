@@ -38,17 +38,17 @@ defmodule HanaShirabeWeb.Layouts do
           <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
         </a>
       </div>
-
+      
       <div class="flex-none">
         <ul class="flex flex-column px-1 space-x-4 items-center">
           <li><a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a></li>
-
+          
           <li>
             <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
           </li>
-
+          
           <li><.theme_toggle /></li>
-
+          
           <li>
             <a href="https://hexdocs.pm/phoenix/overview.html" class="btn btn-primary">
               Get Started <span aria-hidden="true">&rarr;</span>
@@ -90,7 +90,7 @@ defmodule HanaShirabeWeb.Layouts do
         {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
       </.flash>
-
+      
       <.flash
         id="server-error"
         kind={:error}

@@ -17,7 +17,7 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           </:subtitle>
         </.header>
       </div>
-
+      
       <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
         <.input
           field={@email_form[:email]}

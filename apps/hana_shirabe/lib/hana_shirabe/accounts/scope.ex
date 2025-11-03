@@ -12,6 +12,7 @@ defmodule HanaShirabe.Accounts.Scope do
 
   欢迎根据应用程序不断增长的需求扩展此结构体的字段。
   """
+
   # 建议参考文档：
   # https://hexdocs.pm/phoenix/scopes.html
 

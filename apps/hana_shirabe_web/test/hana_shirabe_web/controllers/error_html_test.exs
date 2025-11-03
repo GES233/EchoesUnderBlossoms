@@ -9,6 +9,7 @@ defmodule HanaShirabeWeb.ErrorHTMLTest do
   end
 
   test "渲染 500.html" do
-    assert render_to_string(HanaShirabeWeb.ErrorHTML, "500", "html", []) == "Internal Server Error"
+    assert render_to_string(HanaShirabeWeb.ErrorHTML, "500", "html", []) ==
+             "Internal Server Error"
   end
 end

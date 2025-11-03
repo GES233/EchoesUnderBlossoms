@@ -81,9 +81,9 @@ defmodule HanaShirabeWeb.Content do
     <div id="editor-container" phx-hook=".QuillEditor" phx-update="ignore">
       <div id="editor"></div>
     </div>
-
-    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js">
+    </script>
 
     <script :type={Phoenix.LiveView.ColocatedHook} name=".QuillEditor">
       export default {
@@ -123,5 +123,4 @@ defmodule HanaShirabeWeb.Content do
 
   ## TODO
   # 渲染相关
-
 end

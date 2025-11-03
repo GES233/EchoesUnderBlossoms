@@ -44,6 +44,7 @@ defmodule HSContentTest do
       assert String.contains?(export_markdown, "# 标题")
       assert String.contains?(export_markdown, "这是一些内容。")
     end
+
     # TODO: 上下后续可以重构为一个测试，两类 Markdown 最大的差别源于插件的差异化设置
     test "to_domain_markdown/2 方法返回 Markdown 字符串" do
       markdown = "# 标题\n\n这是一些内容。"

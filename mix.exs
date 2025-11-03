@@ -35,7 +35,7 @@ defmodule HanaShirabe.Umbrella.MixProject do
         #
         # 参见： https://github.com/elixir-lang/elixir/issues/14576 以及
         # https://github.com/erlang/otp/issues/9140
-        flags: [:no_opaque, :no_contracts],
+        flags: [:no_opaque, :no_contracts]
         # 如果 dialyzer 还是报错（比方说在新环境开发的时候）的话
         # 解除注释下面这行，在根目录创建对应的文件
         # ignore_warnings: "dialyzer.ignore"
@@ -71,7 +71,7 @@ defmodule HanaShirabe.Umbrella.MixProject do
   defp deps do
     [
       # 需要运行 "mix format" 来针对位于伞项目根目录其他的 ~H 或 .heex 文件进行格式化
-      {:phoenix_live_view, ">= 0.0.0"},
+      {:phoenix_live_view, ">= 0.0.0"}
       # 不需要加上 gettext ，只需要在所用到的应用下面写入
       # 否则通不过编译
     ]

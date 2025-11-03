@@ -23,16 +23,17 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             <:subtitle>
               {dgettext("account", "Already registered? %{login_link} to your account now.",
                 login_link: translate_with_link(%{url: ~p"/login"})
-              ) |> raw()}
+              )
+              |> raw()}
             </:subtitle>
           </.header>
-
+          
           <%!-- <%= translate_with_link(%{
             header: dgettext("account", "Register for an account"),
             other_cond: dgettext("account", "Already registered?")
           }) %> --%>
         </div>
-
+        
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
           <.input
             field={@form[:email]}
@@ -43,7 +44,10 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             phx-mounted={JS.focus()}
           />
           <!-- 放个将要成为邀请码的 .iuput 在这里 -->
-          <.button phx-disable-with={dgettext("account", "Creating account...")} class="btn btn-primary w-full">
+          <.button
+            phx-disable-with={dgettext("account", "Creating account...")}
+            class="btn btn-primary w-full"
+          >
             {dgettext("account", "Create an account")}
           </.button>
         </.form>

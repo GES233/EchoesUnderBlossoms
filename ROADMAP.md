@@ -8,18 +8,18 @@
 
 再次基础上，通过修改 `phx mix.gen.auth` 自动生成的代码来处理（也可以魔改此前废弃项目的相关代码，其已经实现了 AuditLog 基于 bytepack）。
 
-- [ ] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
+- [x] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
   - [x] `MemberAuth` 的文档与注释
   - [x] `HanaShirabe.Accounts.MemberToken`
   - [x] `HanaShirabe.Accounts`
   - [x] `HanaShirabeWeb.ConnCase`
   -  一堆测试代码
-    - [ ] `HanaShirabe.AccountsTest`
+    - [x] `HanaShirabe.AccountsTest`
     - [x] `HanaShirabeWeb.MemberSessionControllerTest`
-    - [ ] `HanaShirabeWeb.MemberLive.ConfirmationTest`
-    - [ ] `HanaShirabeWeb.MemberLive.LoginTest`
-    - [ ] `HanaShirabeWeb.MemberLive.RegistrationTest`
-    - [ ] `HanaShirabeWeb.MemberLive.SettingsTest`
+    - [x] `HanaShirabeWeb.MemberLive.ConfirmationTest`
+    - [x] `HanaShirabeWeb.MemberLive.LoginTest`
+    - [x] `HanaShirabeWeb.MemberLive.RegistrationTest`
+    - [x] `HanaShirabeWeb.MemberLive.SettingsTest`
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
   - [ ] 编写测试代码（包括 Plug 以及 LiveView）

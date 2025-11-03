@@ -65,7 +65,9 @@ defmodule HanaShirabeWeb.MemberAuthTest do
     end
 
     test "writes a cookie if remember_me is configured", %{conn: conn, member: member} do
-      conn = conn |> fetch_cookies() |> MemberAuth.log_in_member(member, %{"remember_me" => "true"})
+      conn =
+        conn |> fetch_cookies() |> MemberAuth.log_in_member(member, %{"remember_me" => "true"})
+
       assert get_session(conn, :member_token) == conn.cookies[@remember_me_cookie]
       assert get_session(conn, :member_remember_me) == true
 
@@ -83,8 +85,13 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       assert redirected_to(conn) == ~p"/me/settings"
     end
 
-    test "writes a cookie if remember_me was set in previous session", %{conn: conn, member: member} do
-      conn = conn |> fetch_cookies() |> MemberAuth.log_in_member(member, %{"remember_me" => "true"})
+    test "writes a cookie if remember_me was set in previous session", %{
+      conn: conn,
+      member: member
+    } do
+      conn =
+        conn |> fetch_cookies() |> MemberAuth.log_in_member(member, %{"remember_me" => "true"})
+
       assert get_session(conn, :member_token) == conn.cookies[@remember_me_cookie]
       assert get_session(conn, :member_remember_me) == true
 
@@ -152,7 +159,9 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       member_token = Accounts.generate_member_session_token(member)
 
       conn =
-        conn |> put_session(:member_token, member_token) |> MemberAuth.fetch_current_scope_for_member([])
+        conn
+        |> put_session(:member_token, member_token)
+        |> MemberAuth.fetch_current_scope_for_member([])
 
       assert conn.assigns.current_scope.member.id == member.id
       assert conn.assigns.current_scope.member.authenticated_at == member.authenticated_at
@@ -187,7 +196,10 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       refute conn.assigns.current_scope
     end
 
-    test "reissues a new token after a few days and refreshes cookie", %{conn: conn, member: member} do
+    test "reissues a new token after a few days and refreshes cookie", %{
+      conn: conn,
+      member: member
+    } do
       logged_in_conn =
         conn |> fetch_cookies() |> MemberAuth.log_in_member(member, %{"remember_me" => "true"})
 
@@ -250,7 +262,10 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   end
 
   describe "on_mount :require_authenticated" do
-    test "authenticates current_scope based on a valid member_token", %{conn: conn, member: member} do
+    test "authenticates current_scope based on a valid member_token", %{
+      conn: conn,
+      member: member
+    } do
       member_token = Accounts.generate_member_session_token(member)
       session = conn |> put_session(:member_token, member_token) |> get_session()
 
@@ -287,7 +302,10 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   end
 
   describe "on_mount :require_sudo_mode" do
-    test "allows members that have authenticated in the last 10 minutes", %{conn: conn, member: member} do
+    test "allows members that have authenticated in the last 10 minutes", %{
+      conn: conn,
+      member: member
+    } do
       member_token = Accounts.generate_member_session_token(member)
       session = conn |> put_session(:member_token, member_token) |> get_session()
 

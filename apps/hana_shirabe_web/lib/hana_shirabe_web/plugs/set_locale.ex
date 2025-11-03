@@ -30,6 +30,7 @@ defmodule HanaShirabeWeb.Plugs.SetLocale do
   end
 
   defp parse_accept_language([]), do: nil
+
   defp parse_accept_language([item | _]) when is_binary(item) do
     # TODO: 考虑权重
     item
@@ -39,5 +40,6 @@ defmodule HanaShirabeWeb.Plugs.SetLocale do
     |> List.first()
     |> String.replace("-", "_")
   end
+
   # defp parse_accept_language([_ | _]), do: nil
 end

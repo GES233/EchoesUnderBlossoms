@@ -69,7 +69,9 @@ defmodule HanaShirabe.AccountsFixtures do
 
   def set_password(member) do
     {:ok, {member, _expired_tokens}} =
-      Accounts.update_member_password_with_log(create_audit_log(), member, %{password: valid_member_password()})
+      Accounts.update_member_password_with_log(create_audit_log(), member, %{
+        password: valid_member_password()
+      })
 
     member
   end

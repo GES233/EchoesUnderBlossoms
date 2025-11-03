@@ -9,9 +9,11 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm">
         <div class="text-center">
-          <.header>{dgettext("account", "Welcome %{member_email}", member_email: @member.email)}</.header>
+          <.header>
+            {dgettext("account", "Welcome %{member_email}", member_email: @member.email)}
+          </.header>
         </div>
-
+        
         <.form
           :if={!@member.confirmed_at}
           for={@form}
@@ -30,11 +32,14 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
           >
             {dgettext("account", "Confirm and stay logged in")}
           </.button>
-          <.button phx-disable-with={dgettext("account", "Confirming...")} class="btn btn-primary btn-soft w-full mt-2">
+          <.button
+            phx-disable-with={dgettext("account", "Confirming...")}
+            class="btn btn-primary btn-soft w-full mt-2"
+          >
             {dgettext("account", "Confirm and log in only this time")}
           </.button>
         </.form>
-
+        
         <.form
           :if={@member.confirmed_at}
           for={@form}
@@ -46,7 +51,10 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
         >
           <input type="hidden" name={@form[:token].name} value={@form[:token].value} />
           <%= if @current_scope do %>
-            <.button phx-disable-with={dgettext("account", "Logging in...")} class="btn btn-primary w-full">
+            <.button
+              phx-disable-with={dgettext("account", "Logging in...")}
+              class="btn btn-primary w-full"
+            >
               Log in
             </.button>
           <% else %>
@@ -63,9 +71,12 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             </.button>
           <% end %>
         </.form>
-
+        
         <p :if={!@member.confirmed_at} class="alert alert-outline mt-8">
-          {dgettext("account", "Tip: If you prefer passwords, you can enable them in the member settings.")}
+          {dgettext(
+            "account",
+            "Tip: If you prefer passwords, you can enable them in the member settings."
+          )}
         </p>
       </div>
     </Layouts.app>

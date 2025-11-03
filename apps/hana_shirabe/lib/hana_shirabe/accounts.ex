@@ -364,6 +364,7 @@ defmodule HanaShirabe.Accounts do
       from t in MemberToken,
         where: t.member_id == ^member.id and t.context == "session"
     )
+
     # 如果支持通过 API 登录的话，还需要考虑这些
   end
 
