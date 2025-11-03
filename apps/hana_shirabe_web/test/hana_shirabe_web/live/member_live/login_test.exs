@@ -21,7 +21,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
   end
 
   describe "通过链接登录成员" do
-    test "sends magic link email when member exists", %{conn: conn} do
+    test "成员存在发送登录链接", %{conn: conn} do
       member = member_fixture()
 
       {:ok, lv, _html} = live(conn, ~p"/login")
@@ -39,7 +39,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
                "login"
     end
 
-    test "does not disclose if member is registered", %{conn: conn} do
+    test "不会泄露某个邮箱地址是否已被注册", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       {:ok, _lv, html} =
@@ -53,8 +53,8 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     end
   end
 
-  describe "member login - password" do
-    test "redirects if member logs in with valid credentials", %{conn: conn} do
+  describe "通过密码登录成员" do
+    test "输入合法凭证将会跳转", %{conn: conn} do
       member = member_fixture() |> set_password()
 
       {:ok, lv, _html} = live(conn, ~p"/login")
@@ -69,7 +69,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       assert redirected_to(conn) == ~p"/"
     end
 
-    test "redirects to login page with a flash error if credentials are invalid", %{
+    test "输入不合法屏障将原地跳转", %{
       conn: conn
     } do
       {:ok, lv, _html} = live(conn, ~p"/login")
@@ -85,11 +85,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     end
   end
 
-  describe "login navigation" do
-    test "redirects to registration page when the Register button is clicked", %{conn: conn} do
+  describe "登录导航" do
+    test "注册按钮被点击将重定向至注册页面", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
-
-      # sign_up_element_name = dgettext("account", "Sign up")
 
       {:ok, _login_live, login_html} =
         lv
@@ -103,13 +101,13 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     end
   end
 
-  describe "re-authentication (sudo mode)" do
+  describe "重新认证用户（sudo 模式）" do
     setup %{conn: conn} do
       member = member_fixture()
       %{member: member, conn: log_in_member(conn, member)}
     end
 
-    test "shows login page with email filled in", %{conn: conn, member: member} do
+    test "展示存在邮件输入栏的登录页面", %{conn: conn, member: member} do
       {:ok, _lv, html} = live(conn, ~p"/login")
 
       info = dgettext("account", "You need to reauthenticate to perform sensitive actions on your account.")

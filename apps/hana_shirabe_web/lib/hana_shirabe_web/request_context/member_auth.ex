@@ -1,5 +1,6 @@
 defmodule HanaShirabeWeb.MemberAuth do
   use HanaShirabeWeb, :verified_routes
+  use Gettext, backend: HanaShirabeWeb.Gettext
 
   import Plug.Conn
   import Phoenix.Controller
@@ -220,9 +221,11 @@ defmodule HanaShirabeWeb.MemberAuth do
     if socket.assigns.current_scope && socket.assigns.current_scope.member do
       {:cont, socket}
     else
+      require_login_msg = dgettext("account", "You must log in to access this page.")
+
       socket =
         socket
-        |> Phoenix.LiveView.put_flash(:error, "You must log in to access this page.")
+        |> Phoenix.LiveView.put_flash(:error, require_login_msg)
         |> Phoenix.LiveView.redirect(to: ~p"/login")
 
       {:halt, socket}
@@ -235,9 +238,11 @@ defmodule HanaShirabeWeb.MemberAuth do
     if Accounts.sudo_mode?(socket.assigns.current_scope.member, -10) do
       {:cont, socket}
     else
+      require_authenticate_msg = dgettext("account", "You must re-authenticate to access this page.")
+
       socket =
         socket
-        |> Phoenix.LiveView.put_flash(:error, "You must re-authenticate to access this page.")
+        |> Phoenix.LiveView.put_flash(:error, require_authenticate_msg)
         |> Phoenix.LiveView.redirect(to: ~p"/login")
 
       {:halt, socket}
@@ -270,8 +275,10 @@ defmodule HanaShirabeWeb.MemberAuth do
     if conn.assigns.current_scope && conn.assigns.current_scope.member do
       conn
     else
+      require_login_msg = dgettext("account", "You must log in to access this page.")
+
       conn
-      |> put_flash(:error, "You must log in to access this page.")
+      |> put_flash(:error, require_login_msg)
       |> maybe_store_return_to()
       |> redirect(to: ~p"/login")
       |> halt()

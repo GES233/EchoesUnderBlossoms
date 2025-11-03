@@ -53,7 +53,7 @@ defmodule HanaShirabe.AccountsFixtures do
       end)
 
     {:ok, {member, _expired_tokens}} =
-      Accounts.log_in_and_log_by_magic_link(create_audit_log(), token)
+      Accounts.log_in_by_magic_link_and_log(create_audit_log(), token)
 
     member
   end

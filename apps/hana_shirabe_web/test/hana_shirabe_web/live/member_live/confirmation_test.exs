@@ -27,8 +27,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       assert html =~ msg
     end
 
-    # "renders login page for confirmed member"
-    test "对确认的成员渲染登录页面", %{conn: conn, confirmed_member: member} do
+    test "对已确认成员渲染登录页面", %{conn: conn, confirmed_member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_login_instructions(member, url)
@@ -42,7 +41,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       assert html =~ login_msg
     end
 
-    test "confirms the given token once", %{conn: conn, unconfirmed_member: member} do
+    test "只通过令牌确认一次", %{conn: conn, unconfirmed_member: member} do
       token =
         extract_member_token(fn url ->
           Accounts.deliver_login_instructions(member, url)
@@ -60,11 +59,11 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ msg
 
       assert Accounts.get_member!(member.id).confirmed_at
-      # we are logged in now
+      # 已经登录了
       assert get_session(conn, :member_token)
       assert redirected_to(conn) == ~p"/"
 
-      # log out, new conn
+      # 通过新 %Plug.Conn{} 实现登出
       conn = build_conn()
 
       {:ok, _lv, html} =
@@ -76,7 +75,7 @@ defmodule HanaShirabeWeb.MemberLive.ConfirmationTest do
       assert html =~ msg
     end
 
-    test "logs confirmed member in without changing confirmed_at", %{
+    test "已确认成员登录且不会再度修改 confirmed_at", %{
       conn: conn,
       confirmed_member: member
     } do

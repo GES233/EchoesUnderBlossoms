@@ -13,8 +13,6 @@ defmodule HanaShirabeWeb.AuditLogInjector do
     {:cont, put_audit_context(socket, [])}
   end
 
-  # 因为是照抄 https://github.com/dashbitco/bytepack_archive
-  # 所以不知道现在 Plug 还能跑
   @doc """
   从用户的请求构造获取 %AuditLog{} 的上下文。
   """

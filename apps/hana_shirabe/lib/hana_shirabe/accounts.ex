@@ -112,10 +112,10 @@ defmodule HanaShirabe.Accounts do
   ## 设置
 
   @doc """
-  检查用户是否在 sudo 模式。
+  检查用户是否在 sudo 模式，一般用于需要确认是用户本人操作的敏感事件。
 
-  The member is in sudo mode when the last authentication was done no further
-  than 20 minutes ago. The limit can be given as second argument in minutes.
+  在 20 分钟以内认证过的用户就可以认为其在 sudo 模式。
+  当然，如果你愿意，你可以把第二个参数的单位从分改成秒。
   """
   def sudo_mode?(member, minutes \\ -20)
 
@@ -364,6 +364,7 @@ defmodule HanaShirabe.Accounts do
       from t in MemberToken,
         where: t.member_id == ^member.id and t.context == "session"
     )
+    # 如果支持通过 API 登录的话，还需要考虑这些
   end
 
   @doc """
@@ -396,6 +397,7 @@ defmodule HanaShirabe.Accounts do
 
   ## 与 AuditLog 的封装
 
+  @doc "通过密码登录或认证，计入日志。"
   def authenticate_and_log_via_password(audit_context, email, password) do
     authenticate_and_log(
       audit_context,
@@ -404,6 +406,7 @@ defmodule HanaShirabe.Accounts do
     )
   end
 
+  @doc "通过链接认证，记入日志。"
   def authenticate_and_log_via_magic_link_token(audit_context, token) do
     authenticate_and_log(audit_context, get_member_by_magic_link_token(token), :magic_link)
   end
@@ -457,6 +460,7 @@ defmodule HanaShirabe.Accounts do
     end
   end
 
+  @doc "登出，并计入日志。"
   def logout_member_in_purpose_with_log(audit_context, token) do
     Ecto.Multi.new()
     |> Ecto.Multi.run(:fetch_id_from_token, fn repo, _changes ->
@@ -518,7 +522,7 @@ defmodule HanaShirabe.Accounts do
   3. 执行确认邮箱或删除 token 的操作。
   4. 返回成员和需要断开的旧会话列表。
   """
-  def log_in_and_log_by_magic_link(audit_context, token) do
+  def log_in_by_magic_link_and_log(audit_context, token) do
     # 首先，在事务之外进行查询和验证
     case verify_magic_link_token(token) do
       {:ok, {member, token_struct}} ->

@@ -63,7 +63,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert Accounts.get_member_by_email(member.email)
     end
 
-    test "renders errors with invalid data (phx-change)", %{conn: conn} do
+    test "将附带非法数据的错误渲染 (phx-change)", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert result =~ msg
     end
 
-    test "renders errors with invalid data (phx-submit)", %{conn: conn, member: member} do
+    test "将附带非法数据的错误渲染 (phx-submit)", %{conn: conn, member: member} do
       {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
@@ -97,13 +97,13 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
   end
 
-  describe "update password form" do
+  describe "更新密码的表单" do
     setup %{conn: conn} do
       member = member_fixture()
       %{conn: log_in_member(conn, member), member: member}
     end
 
-    test "updates the member password", %{conn: conn, member: member} do
+    test "更新成员密码", %{conn: conn, member: member} do
       new_password = valid_member_password()
 
       {:ok, lv, _html} = live(conn, ~p"/me/settings")
@@ -132,7 +132,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert Accounts.get_member_by_email_and_password(member.email, new_password)
     end
 
-    test "renders errors with invalid data (phx-change)", %{conn: conn} do
+    test "将附带非法数据的错误渲染 (phx-change)", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
@@ -154,7 +154,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert result =~ notmatch_msg
     end
 
-    test "renders errors with invalid data (phx-submit)", %{conn: conn} do
+    test "将附带非法数据的错误渲染 (phx-submit)", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/me/settings")
 
       result =
@@ -177,7 +177,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
   end
 
-  describe "confirm email" do
+  describe "确认邮件" do
     setup %{conn: conn} do
       member = member_fixture()
       email = unique_member_email()
@@ -190,7 +190,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       %{conn: log_in_member(conn, member), token: token, email: email, member: member}
     end
 
-    test "updates the member email once", %{conn: conn, member: member, token: token, email: email} do
+    test "更新一次邮件", %{conn: conn, member: member, token: token, email: email} do
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
 
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
@@ -208,7 +208,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert message == dgettext("account", "Email change link is invalid or it has expired.")
     end
 
-    test "does not update email with invalid token", %{conn: conn, member: member} do
+    test "令牌不合法不要更新邮件", %{conn: conn, member: member} do
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/oops")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/settings"
@@ -217,7 +217,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       assert Accounts.get_member_by_email(member.email)
     end
 
-    test "redirects if member is not logged in", %{token: token} do
+    test "成员未登录将会跳转", %{token: token} do
       conn = build_conn()
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
       assert {:redirect, %{to: path, flash: flash}} = redirect

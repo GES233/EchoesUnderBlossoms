@@ -18,7 +18,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
 
   # 经由链接的登录
   defp create(conn, %{"member" => %{"token" => token} = member_params}, info) do
-    case Accounts.log_in_and_log_by_magic_link(conn.assigns[:audit_log], token) do
+    case Accounts.log_in_by_magic_link_and_log(conn.assigns[:audit_log], token) do
     {:ok, {member, tokens_to_disconnect}} ->
       # 业务逻辑（包括日志）已在 Accounts 中完成
       MemberAuth.disconnect_sessions(tokens_to_disconnect)
