@@ -34,22 +34,19 @@ defmodule HanaShirabeWeb.Layouts do
     <header class="bg-base-100/80 backdrop-blur-sm sticky top-0 z-10">
       <nav class="navbar px-4 sm:px-6 lg:px-8">
         <div class="navbar-start">
-          <a href={~p"/"} class="btn btn-ghost text-xl">
-            <HanaShirabeWeb.HanaIcon.hana_icon />
-          </a>
+          <a href={~p"/"} class="btn btn-ghost text-xl"><HanaShirabeWeb.HanaIcon.hana_icon /></a>
         </div>
+        
         <div class="navbar-end">
           <div class="hidden sm:flex items-center gap-4">
             <%= if @current_scope do %>
               <span class="text-sm font-medium">{@current_scope.member.email}</span>
-
               <.link
                 href={~p"/me/settings"}
                 class="text-sm font-semibold leading-6 text-gray-900"
               >
                 {dgettext("account", "Settings")}
               </.link>
-
               <.link
                 href={~p"/logout"}
                 method="delete"
@@ -64,7 +61,6 @@ defmodule HanaShirabeWeb.Layouts do
               >
                 {dgettext("account", "Register")}
               </.link>
-
               <.link
                 href={~p"/login"}
                 class="text-sm font-semibold leading-6 text-gray-900"
@@ -73,19 +69,16 @@ defmodule HanaShirabeWeb.Layouts do
               </.link>
             <% end %>
           </div>
-          <.theme_toggle />
+           <.theme_toggle />
         </div>
       </nav>
     </header>
-    <main class="relative isolate">
-      <.flash_group flash={@flash} />
-      {render_slot(@inner_block)}
-    </main>
+
+    <main class="relative isolate"><.flash_group flash={@flash} /> {render_slot(@inner_block)}</main>
+
     <footer class="mt-16 border-t py-8">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-sm text-gray-500">
-          {copyleft_declaration()}
-        </p>
+        <p class="text-center text-sm text-gray-500">{copyleft_declaration()}</p>
       </div>
     </footer>
     """
@@ -122,7 +115,7 @@ defmodule HanaShirabeWeb.Layouts do
         {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
       </.flash>
-
+      
       <.flash
         id="server-error"
         kind={:error}

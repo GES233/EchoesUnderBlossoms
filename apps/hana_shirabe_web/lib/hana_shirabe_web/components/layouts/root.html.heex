@@ -18,9 +18,10 @@
           {}
       <% end %>
     </.live_title>
-    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
+    
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -41,9 +42,6 @@
       })();
     </script>
   </head>
-  <body class="antialiased">
-    <.app flash={@flash} current_scope={@current_scope}>
-      {@inner_content}
-    </.app>
-  </body>
+  
+  <body class="antialiased">{@inner_content}</body>
 </html>

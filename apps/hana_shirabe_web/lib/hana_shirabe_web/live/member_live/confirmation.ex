@@ -6,13 +6,14 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
   @impl true
   def render(assigns) do
     ~H"""
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm">
         <div class="text-center">
           <.header>
             {dgettext("account", "Welcome %{member_email}", member_email: @member.email)}
           </.header>
         </div>
-
+        
         <.form
           :if={!@member.confirmed_at}
           for={@form}
@@ -38,7 +39,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             {dgettext("account", "Confirm and log in only this time")}
           </.button>
         </.form>
-
+        
         <.form
           :if={@member.confirmed_at}
           for={@form}
@@ -70,7 +71,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             </.button>
           <% end %>
         </.form>
-
+        
         <p :if={!@member.confirmed_at} class="alert alert-outline mt-8">
           {dgettext(
             "account",
@@ -78,6 +79,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
           )}
         </p>
       </div>
+    </Layouts.app>
     """
   end
 
