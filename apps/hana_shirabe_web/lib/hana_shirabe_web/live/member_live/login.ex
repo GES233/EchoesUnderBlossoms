@@ -6,12 +6,11 @@ defmodule HanaShirabeWeb.MemberLive.Login do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm space-y-4">
         <div class="text-center">
           <.header>
             <p>{dgettext("account", "Log in")}</p>
-            
+
             <:subtitle>
               <%= if @current_scope do %>
                 {dgettext(
@@ -27,12 +26,12 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             </:subtitle>
           </.header>
         </div>
-        
+
         <div :if={local_mail_adapter?()} class="alert alert-info">
           <.icon name="hero-information-circle" class="size-6 shrink-0" />
           <div>
             <p>{dgettext("account", "You are running the local mail adapter.")}</p>
-            
+
             <p>
               {dgettext("account", "To see sent emails, visit %{email_page}.",
                 email_page: translate_email_instructions(%{})
@@ -41,7 +40,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             </p>
           </div>
         </div>
-        
+
         <.form
           :let={f}
           for={@form}
@@ -62,9 +61,9 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             {dgettext("account", "Log in with email")} <span aria-hidden="true">→</span>
           </.button>
         </.form>
-        
+
         <div class="divider">{dgettext("account", "or")}</div>
-        
+
         <.form
           :let={f}
           for={@form}
@@ -95,7 +94,6 @@ defmodule HanaShirabeWeb.MemberLive.Login do
           </.button>
         </.form>
       </div>
-    </Layouts.app>
     """
   end
 

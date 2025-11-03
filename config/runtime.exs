@@ -31,7 +31,7 @@ if config_env() == :prod do
       # 启用 IPv6 且绑定所有接口。
       # 如果只想要本地访问请改成 {0, 0, 0, 0, 0, 0, 0, 1} 。
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: String.to_integer(System.get_env("PORT") || "4000")
+      port: String.to_integer(System.get_env("PORT") || "8848")
     ],
     secret_key_base: secret_key_base
 

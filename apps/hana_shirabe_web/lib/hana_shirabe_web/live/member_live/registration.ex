@@ -15,7 +15,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm">
         <div class="text-center">
           <.header>
@@ -27,13 +26,8 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
               |> raw()}
             </:subtitle>
           </.header>
-          
-          <%!-- <%= translate_with_link(%{
-            header: dgettext("account", "Register for an account"),
-            other_cond: dgettext("account", "Already registered?")
-          }) %> --%>
         </div>
-        
+
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
           <.input
             field={@form[:email]}
@@ -52,7 +46,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
           </.button>
         </.form>
       </div>
-    </Layouts.app>
     """
   end
 

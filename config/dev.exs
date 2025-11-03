@@ -13,7 +13,7 @@ config :hana_shirabe, HanaShirabe.Repo,
 config :hana_shirabe_web, HanaShirabeWeb.Endpoint,
   # 绑定到环回 IPv4 地址可防止其他机器访问。
   # 如果想要从其他机器访问请改成 `ip: {0, 0, 0, 0}` 。
-  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "4000")],
+  http: [ip: {127, 0, 0, 1}, port: String.to_integer(System.get_env("PORT") || "8847")],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,

@@ -28,6 +28,7 @@ const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
+  // 因为 colocatedHooks 的关系，不再需要建 `/hooks` 文件夹了
   hooks: {...colocatedHooks},
 })
 

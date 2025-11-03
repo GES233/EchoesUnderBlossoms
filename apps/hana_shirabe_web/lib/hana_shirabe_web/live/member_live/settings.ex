@@ -8,7 +8,6 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="text-center">
         <.header>
           {dgettext("account", "Account Settings")}
@@ -17,7 +16,7 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           </:subtitle>
         </.header>
       </div>
-      
+
       <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
         <.input
           field={@email_form[:email]}
@@ -64,7 +63,6 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           {dgettext("account", "Save Password")}
         </.button>
       </.form>
-    </Layouts.app>
     """
   end
 

@@ -91,6 +91,8 @@
   --noise: 0;
 }
 
+/* TODO: 依据 NOCTILUCENT 实现自己的定色方案 */
+
 /* 根据 LiveView 类添加变体 */
 @custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);
 @custom-variant phx-submit-loading (.phx-submit-loading&, .phx-submit-loading &);
