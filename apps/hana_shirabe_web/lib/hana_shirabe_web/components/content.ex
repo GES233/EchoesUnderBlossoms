@@ -81,7 +81,7 @@ defmodule HanaShirabeWeb.Content do
     <div id="editor-container" phx-hook=".QuillEditor" phx-update="ignore">
       <div id="editor"></div>
     </div>
-     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js">
     </script>
 

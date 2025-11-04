@@ -19,7 +19,7 @@
     - [x] `HanaShirabeWeb.MemberLive.ConfirmationTest`
     - [x] `HanaShirabeWeb.MemberLive.LoginTest`
     - [x] `HanaShirabeWeb.MemberLive.RegistrationTest`
-    - [x] `HanaShirabeWeb.MemberLive.SettingsTest`
+    - [x] `HanaShirabeWeb.MemberLive.SensitiveSettingsTest`
 - [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [x] 测试
   - [ ] 编写测试代码（包括 Plug 以及 LiveView）
@@ -33,7 +33,8 @@
 - [ ] 优化「注册」与「修改信息」的流程
   - [x] 把 `member_live` 里的那些东西搞成多语言
   - 我倒是觉得先激活邮件再填写密码的方式很好
-  - [ ] 仅有敏感操作（例如修改密码邮件）需要 sudo
+  - [x] 仅有敏感操作（例如修改密码邮件）需要 sudo
+    - （形如 GitHub ，将敏感操作划分为 Danger Zone）
 
 #### 用户的属性
 
@@ -62,6 +63,7 @@
   - [ ] 自动生成
   - [ ] 站内保存
   - [ ] 外部链接
+- [ ] 个人信息的修改
 
 ### 跑通现有的测试用例
 

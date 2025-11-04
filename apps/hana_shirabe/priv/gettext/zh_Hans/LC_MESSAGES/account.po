@@ -11,17 +11,17 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe/accounts/member.ex:67
+#: lib/hana_shirabe/accounts/member.ex:74
 #, elixir-autogen, elixir-format
 msgid "did not change"
 msgstr "未改变"
 
-#: lib/hana_shirabe/accounts/member.ex:88
+#: lib/hana_shirabe/accounts/member.ex:95
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr "密码不匹配"
 
-#: lib/hana_shirabe/accounts/member.ex:50
+#: lib/hana_shirabe/accounts/member.ex:57
 #, elixir-autogen, elixir-format
 msgid "must have the @ sign and no spaces"
 msgstr "必须有 @ 符号且不能有空格"

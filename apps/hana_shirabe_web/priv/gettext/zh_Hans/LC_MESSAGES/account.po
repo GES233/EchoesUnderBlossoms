@@ -11,7 +11,7 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:107
+#: lib/hana_shirabe_web/live/member_live/registration.ex:117
 #, elixir-autogen, elixir-format
 msgid "An email was sent to %{member_email}, please access it to confirm your account."
 msgstr "将会有个邮件发到 %{member_email}，请前往确认您的账户。"
@@ -81,27 +81,27 @@ msgstr "链接不正确或已过期"
 msgid "Welcome back!"
 msgstr "欢迎回家~"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:131
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:131
 #, elixir-autogen, elixir-format
 msgid "A link to confirm your email change has been sent to the new address."
-msgstr ""
+msgstr "我们已向新邮箱地址发送确认邮件更改的链接"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:14
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:14
 #, elixir-autogen, elixir-format
-msgid "Account Settings"
-msgstr ""
+msgid "Account Sensitive Settings"
+msgstr "账户敏感信息设置"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:24
 #, elixir-autogen, elixir-format
 msgid "Already registered? %{login_link} to your account now."
 msgstr "已经注册了？那就 %{login_link}"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:30
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:30
 #, elixir-autogen, elixir-format
 msgid "Change Email"
 msgstr "更改邮件"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:29
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:29
 #, elixir-autogen, elixir-format
 msgid "Changing..."
 msgstr "更改中..."
@@ -116,7 +116,7 @@ msgstr "确认但仅本次登录"
 msgid "Confirm and stay logged in"
 msgstr "确认且保持登录"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:60
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:60
 #, elixir-autogen, elixir-format
 msgid "Confirm new password"
 msgstr "确认新密码"
@@ -130,17 +130,17 @@ msgstr "确认中..."
 #: lib/hana_shirabe_web/live/member_live/login.ex:56
 #: lib/hana_shirabe_web/live/member_live/login.ex:80
 #: lib/hana_shirabe_web/live/member_live/registration.ex:45
-#: lib/hana_shirabe_web/live/member_live/settings.ex:25
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:25
 #, elixir-autogen, elixir-format
 msgid "Email"
 msgstr "邮件"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:81
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:81
 #, elixir-autogen, elixir-format
 msgid "Email change link is invalid or it has expired."
 msgstr "更换邮件的链接不合法或已过期"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:76
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:76
 #, elixir-autogen, elixir-format
 msgid "Email changed successfully."
 msgstr "成功修改密码。"
@@ -173,17 +173,17 @@ msgstr "登录中..."
 msgid "Magic link is invalid or it has expired."
 msgstr "登录链接不正确或已过期"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:16
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:16
 #, elixir-autogen, elixir-format
 msgid "Manage your account email address and password settings"
 msgstr "管理你的邮件地址和密码设置"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:53
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:53
 #, elixir-autogen, elixir-format
 msgid "New password"
 msgstr "新密码"
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:64
+#: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:64
 #, elixir-autogen, elixir-format
 msgid "Save Password"
 msgstr "保存密码"
@@ -199,7 +199,7 @@ msgid "Welcome %{member_email}"
 msgstr "欢迎 %{member_email} 喵~"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:53
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Creating account..."
 msgstr "创建账号"
 
@@ -249,7 +249,7 @@ msgid "or"
 msgstr "或"
 
 #: lib/hana_shirabe_web/request_context/member_auth.ex:228
-#: lib/hana_shirabe_web/request_context/member_auth.ex:283
+#: lib/hana_shirabe_web/request_context/member_auth.ex:284
 #, elixir-autogen, elixir-format
 msgid "You must log in to access this page."
 msgstr "访问此页面必须登录"
@@ -273,3 +273,13 @@ msgstr "告诉我们该怎么称呼你"
 #, elixir-autogen, elixir-format
 msgid "Please enter your email address so we can contact you."
 msgstr "请输入邮件地址，以便我们联系你"
+
+#: lib/hana_shirabe_web/live/member_live/settings.ex:16
+#, elixir-autogen, elixir-format
+msgid "Account Settings"
+msgstr "账号设置"
+
+#: lib/hana_shirabe_web/live/member_live/settings.ex:18
+#, elixir-autogen, elixir-format
+msgid "Manage your your basic information"
+msgstr "管理您的基本信息"

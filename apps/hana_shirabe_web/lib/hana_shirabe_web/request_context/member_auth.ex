@@ -266,9 +266,10 @@ defmodule HanaShirabeWeb.MemberAuth do
   end
 
   @doc "返回登陆后的重定向路径。"
-  # 成员以及登录了，重定向到设置页面
+  # 成员已经登录了，重定向到设置页面
   def signed_in_path(%Plug.Conn{assigns: %{current_scope: %Scope{member: %Accounts.Member{}}}}) do
-    ~p"/me/settings"
+    # TODO: 改成基本设置
+    ~p"/me/sensitive-settings"
   end
 
   def signed_in_path(_), do: ~p"/"

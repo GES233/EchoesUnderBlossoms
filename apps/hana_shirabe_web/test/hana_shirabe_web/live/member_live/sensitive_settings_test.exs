@@ -1,4 +1,4 @@
-defmodule HanaShirabeWeb.MemberLive.SettingsTest do
+defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
   use HanaShirabeWeb.ConnCase
 
   alias HanaShirabe.Accounts
@@ -12,14 +12,14 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       {:ok, _lv, html} =
         conn
         |> log_in_member(member_fixture())
-        |> live(~p"/me/settings")
+        |> live(~p"/me/sensitive-settings")
 
       assert html =~ dgettext("account", "Change Email")
       assert html =~ dgettext("account", "Save Password")
     end
 
     test "成员未登录会被重定向", %{conn: conn} do
-      assert {:error, redirect} = live(conn, ~p"/me/settings")
+      assert {:error, redirect} = live(conn, ~p"/me/sensitive-settings")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
@@ -33,7 +33,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> log_in_member(member_fixture(),
           token_authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -11, :minute)
         )
-        |> live(~p"/me/settings")
+        |> live(~p"/me/sensitive-settings")
         |> follow_redirect(conn, ~p"/login")
 
       msg = dgettext("account", "You must re-authenticate to access this page.")
@@ -50,7 +50,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     test "更新成员邮件", %{conn: conn, member: member} do
       new_email = unique_member_email()
 
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       result =
         lv
@@ -64,7 +64,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "将附带非法数据的错误渲染 (phx-change)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       result =
         lv
@@ -81,7 +81,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "将附带非法数据的错误渲染 (phx-submit)", %{conn: conn, member: member} do
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       result =
         lv
@@ -106,7 +106,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     test "更新成员密码", %{conn: conn, member: member} do
       new_password = valid_member_password()
 
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       form =
         form(lv, "#password_form", %{
@@ -121,7 +121,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
 
       new_password_conn = follow_trigger_action(form, conn)
 
-      assert redirected_to(new_password_conn) == ~p"/me/settings"
+      assert redirected_to(new_password_conn) == ~p"/me/sensitive-settings"
 
       assert get_session(new_password_conn, :member_token) != get_session(conn, :member_token)
 
@@ -133,7 +133,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "将附带非法数据的错误渲染 (phx-change)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       result =
         lv
@@ -155,7 +155,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     end
 
     test "将附带非法数据的错误渲染 (phx-submit)", %{conn: conn} do
-      {:ok, lv, _html} = live(conn, ~p"/me/settings")
+      {:ok, lv, _html} = live(conn, ~p"/me/sensitive-settings")
 
       result =
         lv
@@ -198,7 +198,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
 
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/me/settings"
+      assert path == ~p"/me/sensitive-settings"
       assert %{"info" => message} = flash
       assert message == dgettext("account", "Email changed successfully.")
       refute Accounts.get_member_by_email(member.email)
@@ -207,7 +207,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       # use confirm token again
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/me/settings"
+      assert path == ~p"/me/sensitive-settings"
       assert %{"error" => message} = flash
       assert message == dgettext("account", "Email change link is invalid or it has expired.")
     end
@@ -215,7 +215,7 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
     test "令牌不合法不要更新邮件", %{conn: conn, member: member} do
       {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/oops")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
-      assert path == ~p"/me/settings"
+      assert path == ~p"/me/sensitive-settings"
       assert %{"error" => message} = flash
       assert message == dgettext("account", "Email change link is invalid or it has expired.")
       assert Accounts.get_member_by_email(member.email)

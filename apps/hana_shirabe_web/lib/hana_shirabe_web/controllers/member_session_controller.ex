@@ -73,7 +73,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
     MemberAuth.disconnect_sessions(expired_tokens)
 
     conn
-    |> put_session(:member_return_to, ~p"/me/settings")
+    |> put_session(:member_return_to, ~p"/me/sensitive-settings")
     |> create(params, update_pswd_msg)
   end
 

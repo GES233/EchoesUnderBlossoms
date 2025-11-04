@@ -28,7 +28,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             </:subtitle>
           </.header>
         </div>
-
+        
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
           <.input
             field={@form[:nickname]}
@@ -46,7 +46,9 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             autocomplete="email"
             required
             phx-mounted={JS.focus()}
-            placeholder={dgettext("account", "Please enter your email address so we can contact you.")}
+            placeholder={
+              dgettext("account", "Please enter your email address so we can contact you.")
+            }
           />
           <!-- 放个将要成为邀请码的 .iuput 在这里 -->
           <.button

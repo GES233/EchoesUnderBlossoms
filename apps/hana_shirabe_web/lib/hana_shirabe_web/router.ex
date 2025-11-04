@@ -40,10 +40,12 @@ defmodule HanaShirabeWeb.Router do
   scope "/", HanaShirabeWeb do
     pipe_through [:browser, :require_authenticated_member]
 
+    live "/me/settings", MemberLive.Settings
+
     live_session :require_authenticated_member,
       on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
-      live "/me/settings", MemberLive.Settings, :edit
-      live "/me/settings/confirm-email/:token", MemberLive.Settings, :confirm_account
+      live "/me/sensitive-settings", MemberLive.SensitiveSettings, :edit
+      live "/me/settings/confirm-email/:token", MemberLive.SensitiveSettings, :confirm_account
       # live "/me/sessions", MemberLive.Sessions, :edit
     end
 

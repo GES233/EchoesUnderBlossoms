@@ -1,9 +1,11 @@
 defmodule HanaShirabeWeb.MemberLive.Settings do
+  # 主要是修改昵称、简介等不敏感信息
+  # 和原来的 Settings （现在的 SensitiveSettings 分开）
   use HanaShirabeWeb, :live_view
 
-  on_mount {HanaShirabeWeb.MemberAuth, :require_sudo_mode}
+  on_mount {HanaShirabeWeb.MemberAuth, :require_authenticated}
 
-  alias HanaShirabe.Accounts
+  # alias HanaShirabe.Accounts
 
   @impl true
   def render(assigns) do
@@ -12,157 +14,15 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
       <div class="text-center">
         <.header>
           {dgettext("account", "Account Settings")}
-          <:subtitle>
-            {dgettext("account", "Manage your account email address and password settings")}
-          </:subtitle>
+          <:subtitle>{dgettext("account", "Manage your your basic information")}</:subtitle>
         </.header>
       </div>
-      
-      <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
-        <.input
-          field={@email_form[:email]}
-          type="email"
-          label={dgettext("account", "Email")}
-          autocomplete="username"
-          required
-        />
-        <.button variant="primary" phx-disable-with={dgettext("account", "Changing...")}>
-          {dgettext("account", "Change Email")}
-        </.button>
-      </.form>
-       <div class="divider" />
-      <.form
-        for={@password_form}
-        id="password_form"
-        action={~p"/me/update-password"}
-        method="post"
-        phx-change="validate_password"
-        phx-submit="update_password"
-        phx-trigger-action={@trigger_submit}
-      >
-        <input
-          name={@password_form[:email].name}
-          type="hidden"
-          id="hidden_member_email"
-          autocomplete="username"
-          value={@current_email}
-        />
-        <.input
-          field={@password_form[:password]}
-          type="password"
-          label={dgettext("account", "New password")}
-          autocomplete="new-password"
-          required
-        />
-        <.input
-          field={@password_form[:password_confirmation]}
-          type="password"
-          label={dgettext("account", "Confirm new password")}
-          autocomplete="new-password"
-        />
-        <.button variant="primary" phx-disable-with="Saving...">
-          {dgettext("account", "Save Password")}
-        </.button>
-      </.form>
     </Layouts.app>
     """
   end
 
   @impl true
-  def mount(%{"token" => token}, _session, socket) do
-    socket =
-      case Accounts.update_member_email(socket.assigns.current_scope.member, token) do
-        {:ok, _member} ->
-          msg = dgettext("account", "Email changed successfully.")
-
-          put_flash(socket, :info, msg)
-
-        {:error, _} ->
-          msg = dgettext("account", "Email change link is invalid or it has expired.")
-
-          put_flash(socket, :error, msg)
-      end
-
-    {:ok, push_navigate(socket, to: ~p"/me/settings")}
-  end
-
   def mount(_params, _session, socket) do
-    member = socket.assigns.current_scope.member
-    email_changeset = Accounts.change_member_email(member, %{}, validate_unique: false)
-    password_changeset = Accounts.change_member_password(member, %{}, hash_password: false)
-
-    socket =
-      socket
-      |> assign(:current_email, member.email)
-      |> assign(:email_form, to_form(email_changeset))
-      |> assign(:password_form, to_form(password_changeset))
-      |> assign(:trigger_submit, false)
-
     {:ok, socket}
-  end
-
-  @impl true
-  def handle_event("validate_email", params, socket) do
-    %{"member" => member_params} = params
-
-    email_form =
-      socket.assigns.current_scope.member
-      |> Accounts.change_member_email(member_params, validate_unique: false)
-      |> Map.put(:action, :validate)
-      |> to_form()
-
-    {:noreply, assign(socket, email_form: email_form)}
-  end
-
-  def handle_event("update_email", params, socket) do
-    %{"member" => member_params} = params
-    member = socket.assigns.current_scope.member
-    true = Accounts.sudo_mode?(member)
-
-    case Accounts.change_member_email(member, member_params) do
-      %{valid?: true} = changeset ->
-        Accounts.deliver_member_update_email_instructions(
-          Ecto.Changeset.apply_action!(changeset, :insert),
-          member.email,
-          &url(~p"/me/settings/confirm-email/#{&1}")
-        )
-
-        info =
-          dgettext(
-            "account",
-            "A link to confirm your email change has been sent to the new address."
-          )
-
-        {:noreply, socket |> put_flash(:info, info)}
-
-      changeset ->
-        {:noreply, assign(socket, :email_form, to_form(changeset, action: :insert))}
-    end
-  end
-
-  def handle_event("validate_password", params, socket) do
-    %{"member" => member_params} = params
-
-    password_form =
-      socket.assigns.current_scope.member
-      |> Accounts.change_member_password(member_params, hash_password: false)
-      |> Map.put(:action, :validate)
-      |> to_form()
-
-    {:noreply, assign(socket, password_form: password_form)}
-  end
-
-  def handle_event("update_password", params, socket) do
-    %{"member" => member_params} = params
-    member = socket.assigns.current_scope.member
-    true = Accounts.sudo_mode?(member)
-
-    case Accounts.change_member_password(member, member_params) do
-      %{valid?: true} = changeset ->
-        {:noreply, assign(socket, trigger_submit: true, password_form: to_form(changeset))}
-
-      changeset ->
-        {:noreply, assign(socket, password_form: to_form(changeset, action: :insert))}
-    end
   end
 end
