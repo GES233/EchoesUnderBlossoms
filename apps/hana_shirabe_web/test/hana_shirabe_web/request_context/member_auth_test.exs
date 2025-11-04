@@ -1,6 +1,8 @@
 defmodule HanaShirabeWeb.MemberAuthTest do
   use HanaShirabeWeb.ConnCase
 
+  use Gettext, backend: HanaShirabeWeb.Gettext
+
   alias Phoenix.LiveView
   alias HanaShirabe.Accounts
   alias HanaShirabe.Accounts.Scope
@@ -348,7 +350,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       assert redirected_to(conn) == ~p"/login"
 
       assert Phoenix.Flash.get(conn.assigns.flash, :error) ==
-               "You must log in to access this page."
+               dgettext("account", "You must log in to access this page.")
     end
 
     test "stores the path to redirect to on GET", %{conn: conn} do

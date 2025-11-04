@@ -25,8 +25,8 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
-      assert response =~ member.email
-      assert response =~ ~p"/me/sensitive-settings"
+      assert response =~ member.nickname
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 
@@ -93,8 +93,8 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
-      assert response =~ member.email
-      assert response =~ ~p"/me/sensitive-settings"
+      assert response =~ member.nickname
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 
@@ -119,8 +119,8 @@ defmodule HanaShirabeWeb.MemberSessionControllerTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, ~p"/")
       response = html_response(conn, 200)
-      assert response =~ member.email
-      assert response =~ ~p"/me/sensitive-settings"
+      assert response =~ member.nickname
+      assert response =~ ~p"/me/settings"
       assert response =~ ~p"/logout"
     end
 

@@ -11,10 +11,12 @@ defmodule HanaShirabe.AccountsFixtures do
 
   def unique_member_email, do: "member#{System.unique_integer()}@example.com"
   def valid_member_password, do: "hello world!"
+  def unique_member_nickname, do: "Member#{System.unique_integer()}"
 
   def valid_member_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
-      email: unique_member_email()
+      email: unique_member_email(),
+      nickname: unique_member_nickname()
     })
   end
 

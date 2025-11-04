@@ -59,7 +59,12 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         })
         |> render_submit()
 
-      assert result =~ dgettext("account", "A link to confirm your email")
+      assert result =~
+               dgettext(
+                 "account",
+                 "A link to confirm your email change has been sent to the new address."
+               )
+
       assert Accounts.get_member_by_email(member.email)
     end
 
