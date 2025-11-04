@@ -36,40 +36,41 @@ defmodule HanaShirabeWeb.Layouts do
         <div class="navbar-start">
           <a href={~p"/"} class="btn btn-ghost text-xl"><HanaShirabeWeb.HanaIcon.hana_icon /></a>
         </div>
-        
+
         <div class="navbar-end">
           <div class="hidden sm:flex items-center gap-4">
             <%= if @current_scope do %>
-              <span class="text-sm font-medium">{@current_scope.member.nickname}</span>
+              <!-- TODO: 如果可以的话改成下拉列表 -->
+              <span class="text-sm font-medium text-base-content/80">{@current_scope.member.nickname}</span>
               <.link
                 href={~p"/me/settings"}
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 text-base-content/70"
               >
                 {dgettext("account", "Settings")}
               </.link>
               <.link
                 href={~p"/logout"}
                 method="delete"
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 text-base-content/70"
               >
                 {dgettext("account", "Log out")}
               </.link>
             <% else %>
               <.link
                 href={~p"/sign_up"}
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 text-base-content/70"
               >
                 {dgettext("account", "Register")}
               </.link>
               <.link
                 href={~p"/login"}
-                class="text-sm font-semibold leading-6 text-gray-900"
+                class="text-sm font-semibold leading-6 text-base-content/70"
               >
                 {dgettext("account", "Log in")}
               </.link>
             <% end %>
           </div>
-           <.theme_toggle />
+          <.theme_toggle />
         </div>
       </nav>
     </header>
@@ -115,7 +116,7 @@ defmodule HanaShirabeWeb.Layouts do
         {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
       </.flash>
-      
+
       <.flash
         id="server-error"
         kind={:error}

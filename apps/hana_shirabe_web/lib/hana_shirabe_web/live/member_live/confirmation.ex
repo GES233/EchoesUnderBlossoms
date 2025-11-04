@@ -10,7 +10,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
       <div class="mx-auto max-w-sm">
         <div class="text-center">
           <.header>
-            {dgettext("account", "Welcome %{member_email}", member_email: @member.email)}
+            {dgettext("account", "Welcome %{member_nickname}", member_nickname: @member.nickname)}
           </.header>
         </div>
 
