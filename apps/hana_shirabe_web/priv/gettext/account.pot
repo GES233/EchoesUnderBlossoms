@@ -11,12 +11,12 @@
 msgid ""
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:102
+#: lib/hana_shirabe_web/live/member_live/registration.ex:107
 #, elixir-autogen, elixir-format
 msgid "An email was sent to %{member_email}, please access it to confirm your account."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:51
+#: lib/hana_shirabe_web/live/member_live/registration.ex:56
 #, elixir-autogen, elixir-format
 msgid "Create an account"
 msgstr ""
@@ -129,7 +129,7 @@ msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:56
 #: lib/hana_shirabe_web/live/member_live/login.ex:80
-#: lib/hana_shirabe_web/live/member_live/registration.ex:41
+#: lib/hana_shirabe_web/live/member_live/registration.ex:45
 #: lib/hana_shirabe_web/live/member_live/settings.ex:25
 #, elixir-autogen, elixir-format
 msgid "Email"
@@ -150,9 +150,9 @@ msgstr ""
 msgid "Keep me logged in on this device"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:72
+#: lib/hana_shirabe_web/components/layouts.ex:68
 #: lib/hana_shirabe_web/live/member_live/login.ex:13
-#: lib/hana_shirabe_web/live/member_live/registration.ex:68
+#: lib/hana_shirabe_web/live/member_live/registration.ex:73
 #, elixir-autogen, elixir-format
 msgid "Log in"
 msgstr ""
@@ -198,7 +198,7 @@ msgstr ""
 msgid "Welcome %{member_email}"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:48
+#: lib/hana_shirabe_web/live/member_live/registration.ex:53
 #, elixir-autogen, elixir-format
 msgid "Creating account..."
 msgstr ""
@@ -213,7 +213,7 @@ msgstr ""
 msgid "Log in with email"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:58
+#: lib/hana_shirabe_web/components/layouts.ex:55
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
@@ -223,12 +223,12 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:65
+#: lib/hana_shirabe_web/components/layouts.ex:62
 #, elixir-autogen, elixir-format
 msgid "Register"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:50
+#: lib/hana_shirabe_web/components/layouts.ex:48
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr ""
@@ -257,4 +257,19 @@ msgstr ""
 #: lib/hana_shirabe_web/request_context/member_auth.ex:246
 #, elixir-autogen, elixir-format
 msgid "You must re-authenticate to access this page."
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:36
+#, elixir-autogen, elixir-format
+msgid "Nickname"
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:40
+#, elixir-autogen, elixir-format
+msgid "Tell us how we should address you."
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:49
+#, elixir-autogen, elixir-format
+msgid "Please enter your email address so we can contact you."
 msgstr ""

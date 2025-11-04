@@ -16,18 +16,18 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:116
-#: lib/hana_shirabe_web/components/layouts.ex:128
+#: lib/hana_shirabe_web/components/layouts.ex:115
+#: lib/hana_shirabe_web/components/layouts.ex:127
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:123
+#: lib/hana_shirabe_web/components/layouts.ex:122
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:111
+#: lib/hana_shirabe_web/components/layouts.ex:110
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr ""
@@ -37,9 +37,9 @@ msgstr ""
 msgid "close"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:87
+#: lib/hana_shirabe_web/components/layouts.ex:90
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:7
-#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:4
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Echoes Under Blossoms"
 msgstr ""
@@ -54,17 +54,17 @@ msgstr ""
 msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:175
+#: lib/hana_shirabe_web/components/layouts.ex:174
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:8
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:10
 #, elixir-autogen, elixir-format
 msgid "Under construction..."
 msgstr ""
 
-#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:4
+#: lib/hana_shirabe_web/controllers/page_html/home.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Welcome to %{site_name}"
 msgstr ""

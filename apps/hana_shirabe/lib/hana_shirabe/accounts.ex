@@ -28,6 +28,10 @@ defmodule HanaShirabe.Accounts do
     Repo.get_by(Member, email: email)
   end
 
+  def get_member_by_nickname(nickname) when is_binary(nickname) do
+    Repo.get_by(Member, nickname: nickname)
+  end
+
   @doc """
   通过邮件以及密码返回成员。
 
@@ -80,7 +84,7 @@ defmodule HanaShirabe.Accounts do
   def register_member(audit_log, attrs) do
     member_changeset =
       %Member{}
-      |> Member.email_changeset(attrs)
+      |> Member.registration_changeset(attrs)
 
     # 改成针对两个数据库的检查
     Ecto.Multi.new()

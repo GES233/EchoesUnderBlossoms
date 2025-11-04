@@ -36,11 +36,11 @@ defmodule HanaShirabeWeb.Layouts do
         <div class="navbar-start">
           <a href={~p"/"} class="btn btn-ghost text-xl"><HanaShirabeWeb.HanaIcon.hana_icon /></a>
         </div>
-        
+
         <div class="navbar-end">
           <div class="hidden sm:flex items-center gap-4">
             <%= if @current_scope do %>
-              <span class="text-sm font-medium">{@current_scope.member.email}</span>
+              <span class="text-sm font-medium">{@current_scope.member.nickname}</span>
               <.link
                 href={~p"/me/settings"}
                 class="text-sm font-semibold leading-6 text-gray-900"
@@ -115,7 +115,7 @@ defmodule HanaShirabeWeb.Layouts do
         {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
       </.flash>
-      
+
       <.flash
         id="server-error"
         kind={:error}

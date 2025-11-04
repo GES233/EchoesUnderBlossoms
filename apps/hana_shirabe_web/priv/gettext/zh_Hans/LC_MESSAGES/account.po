@@ -11,12 +11,12 @@ msgstr ""
 "Language: zh_Hans\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:102
+#: lib/hana_shirabe_web/live/member_live/registration.ex:107
 #, elixir-autogen, elixir-format
 msgid "An email was sent to %{member_email}, please access it to confirm your account."
 msgstr "将会有个邮件发到 %{member_email}，请前往确认您的账户。"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:51
+#: lib/hana_shirabe_web/live/member_live/registration.ex:56
 #, elixir-autogen, elixir-format
 msgid "Create an account"
 msgstr "创建账号"
@@ -129,7 +129,7 @@ msgstr "确认中..."
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:56
 #: lib/hana_shirabe_web/live/member_live/login.ex:80
-#: lib/hana_shirabe_web/live/member_live/registration.ex:41
+#: lib/hana_shirabe_web/live/member_live/registration.ex:45
 #: lib/hana_shirabe_web/live/member_live/settings.ex:25
 #, elixir-autogen, elixir-format
 msgid "Email"
@@ -150,9 +150,9 @@ msgstr "成功修改密码。"
 msgid "Keep me logged in on this device"
 msgstr "让我在此设备保持登录"
 
-#: lib/hana_shirabe_web/components/layouts.ex:72
+#: lib/hana_shirabe_web/components/layouts.ex:68
 #: lib/hana_shirabe_web/live/member_live/login.ex:13
-#: lib/hana_shirabe_web/live/member_live/registration.ex:68
+#: lib/hana_shirabe_web/live/member_live/registration.ex:73
 #, elixir-autogen, elixir-format
 msgid "Log in"
 msgstr "登录"
@@ -198,7 +198,7 @@ msgstr "小提示：如果你更喜欢密码，可以在成员设置里启用噢
 msgid "Welcome %{member_email}"
 msgstr "欢迎 %{member_email} 喵~"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:48
+#: lib/hana_shirabe_web/live/member_live/registration.ex:53
 #, elixir-autogen, elixir-format, fuzzy
 msgid "Creating account..."
 msgstr "创建账号"
@@ -213,22 +213,22 @@ msgstr "没有账号？那就 %{sign_up_link} 。"
 msgid "Log in with email"
 msgstr "通过邮件登录"
 
-#: lib/hana_shirabe_web/components/layouts.ex:58
+#: lib/hana_shirabe_web/components/layouts.ex:55
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr "登出"
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:87
-#, elixir-autogen, elixir-format, fuzzy
+#, elixir-autogen, elixir-format
 msgid "Password"
-msgstr "保存密码"
+msgstr "密码"
 
-#: lib/hana_shirabe_web/components/layouts.ex:65
+#: lib/hana_shirabe_web/components/layouts.ex:62
 #, elixir-autogen, elixir-format
 msgid "Register"
 msgstr "注册"
 
-#: lib/hana_shirabe_web/components/layouts.ex:50
+#: lib/hana_shirabe_web/components/layouts.ex:48
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr "设置"
@@ -252,9 +252,24 @@ msgstr "或"
 #: lib/hana_shirabe_web/request_context/member_auth.ex:283
 #, elixir-autogen, elixir-format
 msgid "You must log in to access this page."
-msgstr ""
+msgstr "访问此页面必须登录"
 
 #: lib/hana_shirabe_web/request_context/member_auth.ex:246
 #, elixir-autogen, elixir-format
 msgid "You must re-authenticate to access this page."
-msgstr ""
+msgstr "你必须再次验证才可以访问"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:36
+#, elixir-autogen, elixir-format
+msgid "Nickname"
+msgstr "昵称"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:40
+#, elixir-autogen, elixir-format
+msgid "Tell us how we should address you."
+msgstr "告诉我们该怎么称呼你"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:49
+#, elixir-autogen, elixir-format
+msgid "Please enter your email address so we can contact you."
+msgstr "请输入邮件地址，以便我们联系你"

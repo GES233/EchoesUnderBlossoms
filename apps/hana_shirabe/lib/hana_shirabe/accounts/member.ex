@@ -15,7 +15,7 @@ defmodule HanaShirabe.Accounts.Member do
     field :authenticated_at, :naive_datetime, virtual: true
     # 其他信息
     field :nickname, :string
-    # def nickname_changeset/2
+    # def validate_nickname/2
     field :status, Ecto.Enum, values: [:normal, :frozen, :blocked, :deleted], default: :normal
     # defp status_changeset/2
     # implement namy_status_transform_function
@@ -24,6 +24,13 @@ defmodule HanaShirabe.Accounts.Member do
     field :intro, :string
 
     timestamps()
+  end
+
+  def registration_changeset(member, attrs, opts \\ []) do
+    member
+    |> cast(attrs, [:nickname, :email])
+    |> validate_nickname()
+    |> validate_email(opts)
   end
 
   @doc """
@@ -115,6 +122,11 @@ defmodule HanaShirabe.Accounts.Member do
     else
       changeset
     end
+  end
+
+  defp validate_nickname(changeset) do
+    changeset
+    |> validate_required([:nickname])
   end
 
   @doc """

@@ -28,15 +28,25 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             </:subtitle>
           </.header>
         </div>
-        
+
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
+          <.input
+            field={@form[:nickname]}
+            type="text"
+            label={dgettext("account", "Nickname")}
+            autocomplete="username"
+            required
+            phx-mounted={JS.focus()}
+            placeholder={dgettext("account", "Tell us how we should address you.")}
+          />
           <.input
             field={@form[:email]}
             type="email"
             label={dgettext("account", "Email")}
-            autocomplete="username"
+            autocomplete="email"
             required
             phx-mounted={JS.focus()}
+            placeholder={dgettext("account", "Please enter your email address so we can contact you.")}
           />
           <!-- 放个将要成为邀请码的 .iuput 在这里 -->
           <.button
@@ -82,6 +92,16 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   def handle_event("save", %{"member" => member_params}, socket) do
     audit_log = socket.assigns[:audit_log]
 
+    # 如果需要邀请码，这里要在加一组
+    do_register(audit_log, member_params, socket)
+  end
+
+  def handle_event("validate", %{"member" => member_params}, socket) do
+    changeset = Accounts.change_member_email(%Member{}, member_params, validate_unique: false)
+    {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
+  end
+
+  defp do_register(audit_log, member_params, socket) do
     case Accounts.register_member(audit_log, member_params) do
       {:ok, member} ->
         {:ok, _} =
@@ -105,11 +125,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
     end
-  end
-
-  def handle_event("validate", %{"member" => member_params}, socket) do
-    changeset = Accounts.change_member_email(%Member{}, member_params, validate_unique: false)
-    {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
