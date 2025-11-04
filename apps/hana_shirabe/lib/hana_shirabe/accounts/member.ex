@@ -98,7 +98,7 @@ defmodule HanaShirabe.Accounts.Member do
     |> validate_inclusion(
       :prefer_locale,
       Gettext.known_locales(HanaShirabeWeb.Gettext),
-      message: dgettext("account", "Unknown locale.")
+      message: dgettext("account", "Unknown locale")
     )
   end
 

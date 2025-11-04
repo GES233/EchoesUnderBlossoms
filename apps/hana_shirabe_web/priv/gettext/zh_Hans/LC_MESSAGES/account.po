@@ -87,7 +87,7 @@ msgid "A link to confirm your email change has been sent to the new address."
 msgstr "我们已向新邮箱地址发送确认邮件更改的链接"
 
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:14
-#: lib/hana_shirabe_web/live/member_live/settings.ex:43
+#: lib/hana_shirabe_web/live/member_live/settings.ex:44
 #, elixir-autogen, elixir-format
 msgid "Account Sensitive Settings"
 msgstr "账户敏感信息设置"
@@ -151,7 +151,7 @@ msgstr "成功修改密码"
 msgid "Keep me logged in on this device"
 msgstr "让我在此设备保持登录"
 
-#: lib/hana_shirabe_web/components/layouts.ex:68
+#: lib/hana_shirabe_web/components/layouts.ex:71
 #: lib/hana_shirabe_web/live/member_live/login.ex:13
 #: lib/hana_shirabe_web/live/member_live/registration.ex:75
 #, elixir-autogen, elixir-format
@@ -214,7 +214,7 @@ msgstr "没有账号？那就%{sign_up_link}"
 msgid "Log in with email"
 msgstr "通过邮件登录"
 
-#: lib/hana_shirabe_web/components/layouts.ex:55
+#: lib/hana_shirabe_web/components/layouts.ex:58
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr "登出"
@@ -224,12 +224,12 @@ msgstr "登出"
 msgid "Password"
 msgstr "密码"
 
-#: lib/hana_shirabe_web/components/layouts.ex:62
+#: lib/hana_shirabe_web/components/layouts.ex:65
 #, elixir-autogen, elixir-format
 msgid "Register"
 msgstr "注册"
 
-#: lib/hana_shirabe_web/components/layouts.ex:48
+#: lib/hana_shirabe_web/components/layouts.ex:51
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr "设置"

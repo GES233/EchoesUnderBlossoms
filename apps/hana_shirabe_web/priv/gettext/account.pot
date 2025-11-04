@@ -87,7 +87,7 @@ msgid "A link to confirm your email change has been sent to the new address."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:14
-#: lib/hana_shirabe_web/live/member_live/settings.ex:43
+#: lib/hana_shirabe_web/live/member_live/settings.ex:44
 #, elixir-autogen, elixir-format
 msgid "Account Sensitive Settings"
 msgstr ""
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Keep me logged in on this device"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:68
+#: lib/hana_shirabe_web/components/layouts.ex:71
 #: lib/hana_shirabe_web/live/member_live/login.ex:13
 #: lib/hana_shirabe_web/live/member_live/registration.ex:75
 #, elixir-autogen, elixir-format
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Log in with email"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:55
+#: lib/hana_shirabe_web/components/layouts.ex:58
 #, elixir-autogen, elixir-format
 msgid "Log out"
 msgstr ""
@@ -224,12 +224,12 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:62
+#: lib/hana_shirabe_web/components/layouts.ex:65
 #, elixir-autogen, elixir-format
 msgid "Register"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:48
+#: lib/hana_shirabe_web/components/layouts.ex:51
 #, elixir-autogen, elixir-format
 msgid "Settings"
 msgstr ""

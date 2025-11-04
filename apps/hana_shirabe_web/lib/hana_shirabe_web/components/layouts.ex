@@ -81,25 +81,29 @@ defmodule HanaShirabeWeb.Layouts do
 
     <footer class="mt-16 border-t py-8">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p class="text-center text-sm text-gray-500">{copyleft_declaration()}</p>
+        <p class="text-center text-sm text-base-content">{copyleft_declaration(%{})}</p>
       </div>
     </footer>
     """
   end
 
-  defp copyleft_declaration(),
-    # TODO 把这里的版权声明说一下
-    do:
-      "🄯 #{DateTime.utc_now().year} #{gettext("Echoes Under Blossoms")} " <>
-        "站内用户创作的版权归其自身所有"
+  defp copyleft_declaration(assigns) do
+    ~H"""
+    🄯 {DateTime.utc_now().year}
+    <.link class="text-sm font-semibold" href="https://github.com/GES233/EchoesUnderBlossoms">
+      {gettext("Echoes Under Blossoms")}
+    </.link> {gettext(
+      "The copyright of user-generated content on this site belongs to the individual user."
+    )}
+    """
+  end
 
   @doc """
   用于统一 flash 组内标题和内容的显示。
 
-  ## Examples
-
-      <.flash_group flash={@flash} />
+  ## Examples <.flash_group flash={@flash} />
   """
+
   attr :flash, :map, required: true, doc: "the map of flash messages"
   attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
 
@@ -142,7 +146,7 @@ defmodule HanaShirabeWeb.Layouts do
   def theme_toggle(assigns) do
     ~H"""
     <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
-      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=noctilucent]_&]:left-2/3 transition-[left]" />
+      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=core-cream-soup]_&]:left-1/3 [[data-theme=noctilucent]_&]:left-2/3 transition-[left]" />
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
@@ -153,7 +157,7 @@ defmodule HanaShirabeWeb.Layouts do
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="light"
+        data-phx-theme="core-cream-soup"
       >
         <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
