@@ -19,8 +19,15 @@
 
 /* daisyUI 主题插件。您可以通过以下方式获取最新版本来更新此文件：
     curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js 
-    您可以访问 https://daisyui.com/theme-generator/ 构建自己的主题。 */
-/* Powered by Gemini 2.5 Pro */
+    您可以访问 https://daisyui.com/theme-generator/ 构建自己的主题。
+
+  主要有两个颜色：
+
+  * 奶油玉米（来源于奶油玉米浓汤，选择此方案是因为其和某位故人
+    （〇〇）很爱吃的某食物（〇〇〇〇）的配色相近）
+  * 夜光云（将个人此前推进但目前放弃的项目 < https://github.com/GES233/Noctilucent >
+    的配色方案照搬，交给 Gemini 进行简单处理得到）
+ */
 @plugin "../vendor/daisyui-theme" {
   name: "noctilucent";
   default: false;
@@ -102,7 +109,6 @@
   --depth: 0;
   --noise: 1;
 }
-
 
 /* 根据 LiveView 类添加变体 */
 @custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);
