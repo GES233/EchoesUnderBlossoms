@@ -67,4 +67,4 @@ msgstr "施工中..."
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Welcome to %{site_name}"
-msgstr "欢迎来到%{site_name}"
+msgstr "欢迎来到「%{site_name}」"

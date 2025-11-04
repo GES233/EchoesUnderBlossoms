@@ -41,7 +41,9 @@ defmodule HanaShirabeWeb.Layouts do
           <div class="hidden sm:flex items-center gap-4">
             <%= if @current_scope do %>
               <!-- TODO: 如果可以的话改成下拉列表 -->
-              <span class="text-sm font-medium text-base-content/80">{@current_scope.member.nickname}</span>
+              <span class="text-sm font-medium text-base-content/80">
+                {@current_scope.member.nickname}
+              </span>
               <.link
                 href={~p"/me/settings"}
                 class="text-sm font-semibold leading-6 text-base-content/70"
@@ -140,7 +142,7 @@ defmodule HanaShirabeWeb.Layouts do
   def theme_toggle(assigns) do
     ~H"""
     <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
-      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=dark]_&]:left-2/3 transition-[left]" />
+      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=noctilucent]_&]:left-2/3 transition-[left]" />
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
@@ -158,9 +160,9 @@ defmodule HanaShirabeWeb.Layouts do
       <button
         class="flex p-2 cursor-pointer w-1/3"
         phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="dark"
+        data-phx-theme="noctilucent"
       >
-        <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
+        <.icon name="hero-sparkles-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
     """

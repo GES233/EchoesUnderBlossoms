@@ -26,10 +26,15 @@ defmodule HanaShirabe.Accounts.Member do
     timestamps()
   end
 
+  @doc """
+  注册变更集，主要负责处理用户在注册时提交的信息。
+
+  # TODO 后续增加对昵称的约束
+  """
   def registration_changeset(member, attrs, opts \\ []) do
     member
     |> cast(attrs, [:nickname, :email])
-    |> validate_nickname()
+    |> validate_nickname(opts)
     |> validate_email(opts)
   end
 
@@ -75,6 +80,26 @@ defmodule HanaShirabe.Accounts.Member do
     else
       changeset
     end
+  end
+
+  @doc """
+  更新用户信息时的变更表，主要用于更新成员的【非敏感】信息的情况。
+  """
+  def update_settings_changeset(member, attrs, opts \\ []) do
+    member
+    |> cast(attrs, [:nickname, :prefer_locale, :intro])
+    |> validate_nickname(opts)
+    |> validate_prefer_locale()
+  end
+
+  defp validate_prefer_locale(changeset) do
+    changeset
+    |> validate_required(:prefer_locale)
+    |> validate_inclusion(
+      :prefer_locale,
+      Gettext.known_locales(HanaShirabeWeb.Gettext),
+      message: dgettext("account", "Unknown locale.")
+    )
   end
 
   @doc """
@@ -124,7 +149,7 @@ defmodule HanaShirabe.Accounts.Member do
     end
   end
 
-  defp validate_nickname(changeset) do
+  defp validate_nickname(changeset, _opts) do
     changeset
     |> validate_required([:nickname])
   end

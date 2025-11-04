@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="[--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
+<html lang={Gettext.get_locale()} class="[--scroll-mt:9.875rem] lg:[--scroll-mt:6.3125rem]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,6 +36,7 @@
         if (!document.documentElement.hasAttribute("data-theme")) {
           setTheme(localStorage.getItem("phx:theme") || "system");
         }
+
         window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
 
         window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));

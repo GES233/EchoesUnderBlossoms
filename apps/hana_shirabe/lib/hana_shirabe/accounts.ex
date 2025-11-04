@@ -115,6 +115,26 @@ defmodule HanaShirabe.Accounts do
 
   ## 设置
 
+  # def update_member_settings(audit_log, member_before, attrs) do
+  #   actual_attrs = extract_actual_update(member_before, attrs)
+  #
+  #   Ecto.Multi.new()
+  #   |> Ecto.Multi.update(:member, Member.update_settings_changeset(member_before, attrs))
+  #   # 这里有一个需要注意的地方，一旦返回失败
+  #   # 也需要将 audit_log 存进去
+  #   # 但是是以 :account, "member.update_attempt", update_map_and_reason 的形式
+  #   |> AuditLog.multi(audit_log, :account, "member.update")
+  #   |> Repo.transact()
+  #   |> case do
+  #     {:ok, %{member: update_member}} -> {:ok, update_member}
+  #     {:error, _, _, _} -> nil
+  #   |> end
+  # end
+
+  # defp extract_actual_update(member_before, attrs) do
+  #   ...
+  # end
+
   @doc """
   检查用户是否在 sudo 模式，一般用于需要确认是用户本人操作的敏感事件。
 

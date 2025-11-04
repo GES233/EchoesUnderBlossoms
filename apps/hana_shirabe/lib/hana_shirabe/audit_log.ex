@@ -33,7 +33,9 @@ defmodule HanaShirabe.AuditLog.Context do
       "member.login.via_link" => ~w(account_id),
       "member.logout.in_purpose" => ~w(reason),
       "member.logout.remote" => ~w(target_session_context target_session_id),
-      "member.logout.expire" => ~w(reason)
+      "member.logout.expire" => ~w(reason),
+      "member.update" => ~w(update_map),
+      "member.update_attempt" => ~w(update_map reason)
     },
     member: %{
       "info.update.self" => ~w(item current_value),

@@ -1,8 +1,11 @@
 <Layouts.app flash={@flash} current_scope={@current_scope}>
   <div class="px-4 py-10 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl text-center">
-      <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl [text-shadow:_0_0_2px_rgba(255,255,255,0.8),0_0_5px_rgba(255,255,255,0.6),0_0_9px_rgba(173,216,230,0.5);]">
-        {gettext("Welcome to %{site_name}", site_name: gettext("Echoes Under Blossoms"))}
+      <h1 class="text-2xl font-bold tracking-tight text-color-primary sm:text-6xl [text-shadow:_0_0_2px_rgba(255,255,255,0.8),0_0_5px_rgba(255,255,255,0.6),0_0_9px_rgba(173,216,230,0.5);]">
+        {gettext(
+          "Welcome to %{site_name}",
+          site_name: gettext("Echoes Under Blossoms")
+        )}
       </h1>
 
       <div class="mt-6">

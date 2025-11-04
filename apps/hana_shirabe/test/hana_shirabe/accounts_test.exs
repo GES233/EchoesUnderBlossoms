@@ -427,6 +427,8 @@ defmodule HanaShirabe.AccountsTest do
 
   # describe "测试 logout_member_in_purpose_with_log/2"
 
+  # describe "测试 update_member_settings/3"
+
   describe "测试用于成员结构体的 inspect/2" do
     test "不要显示密码" do
       # 也实现不了，因为 password 是 vitual 字段

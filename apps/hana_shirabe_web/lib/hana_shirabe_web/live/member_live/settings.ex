@@ -17,8 +17,8 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
         </.header>
       </div>
-
-      <!--<.form for={@form} id="settings_form" phx-submit="update_info" phx-change="validate"></.form>-->
+      
+    <!--<.form for={@form} id="settings_form" phx-submit="update_info" phx-change="validate"></.form>-->
 
       <div class="divider">{dgettext("account", "Dangerours Zone")}</div>
 
@@ -27,7 +27,8 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
           "account",
           "If you want to update your email address or password, please enter %{sensitive_settings}.",
           sensitive_settings: translate_senaitive_settings(%{url: ~p"/me/sensitive-settings"})
-        ) |> raw()}
+        )
+        |> raw()}
       </div>
     </Layouts.app>
     """
