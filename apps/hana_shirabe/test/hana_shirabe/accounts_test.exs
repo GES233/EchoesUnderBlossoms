@@ -358,10 +358,6 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  # 用
-  # describe "测试 log_in_by_magic_link_and_log/2"
-  # 重写
-  # 再把 login_member_by_magic_link/1 删掉
   # TODO: 添加可以记录 AuditLog 的辅助函数
   describe "测试 log_in_by_magic_link_and_log/2" do
     setup do

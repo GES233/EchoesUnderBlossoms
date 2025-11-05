@@ -7,8 +7,8 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
 
   use Gettext, backend: HanaShirabeWeb.Gettext
 
-  describe "成员设置页面" do
-    test "渲染设置页面", %{conn: conn} do
+  describe "成员敏感设置页面" do
+    test "渲染敏感设置页面", %{conn: conn} do
       {:ok, _lv, html} =
         conn
         |> log_in_member(member_fixture())
