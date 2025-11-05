@@ -87,7 +87,7 @@ msgid "A link to confirm your email change has been sent to the new address."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:14
-#: lib/hana_shirabe_web/live/member_live/settings.ex:44
+#: lib/hana_shirabe_web/live/member_live/settings.ex:74
 #, elixir-autogen, elixir-format
 msgid "Account Sensitive Settings"
 msgstr ""
@@ -261,6 +261,7 @@ msgid "You must re-authenticate to access this page."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:36
+#: lib/hana_shirabe_web/live/member_live/settings.ex:26
 #, elixir-autogen, elixir-format
 msgid "Nickname"
 msgstr ""
@@ -275,22 +276,37 @@ msgstr ""
 msgid "Please enter your email address so we can contact you."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:16
+#: lib/hana_shirabe_web/live/member_live/settings.ex:18
 #, elixir-autogen, elixir-format
 msgid "Account Settings"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:17
+#: lib/hana_shirabe_web/live/member_live/settings.ex:19
 #, elixir-autogen, elixir-format
 msgid "Manage your your basic information."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:23
+#: lib/hana_shirabe_web/live/member_live/settings.ex:52
 #, elixir-autogen, elixir-format
 msgid "Dangerours Zone"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:26
+#: lib/hana_shirabe_web/live/member_live/settings.ex:55
 #, elixir-autogen, elixir-format
 msgid "If you want to update your email address or password, please enter %{sensitive_settings}."
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/settings.ex:43
+#, elixir-autogen, elixir-format
+msgid "Introduction"
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/settings.ex:48
+#, elixir-autogen, elixir-format
+msgid "Update Profile"
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/settings.ex:47
+#, elixir-autogen, elixir-format
+msgid "Updating..."
 msgstr ""

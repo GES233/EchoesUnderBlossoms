@@ -4,31 +4,64 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
   use HanaShirabeWeb, :live_view
 
   on_mount {HanaShirabeWeb.MemberAuth, :require_authenticated}
+  on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
 
-  # alias HanaShirabe.Accounts
+  alias HanaShirabe.Accounts
 
   @impl true
   def render(assigns) do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <div class="text-center">
-        <.header>
-          {dgettext("account", "Account Settings")}
-          <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
-        </.header>
-      </div>
-      
-    <!--<.form for={@form} id="settings_form" phx-submit="update_info" phx-change="validate"></.form>-->
+      <div class="mx-auto max-w-sm space-y-4">
+        <div class="text-center">
+          <.header>
+            {dgettext("account", "Account Settings")}
+            <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
+          </.header>
+        </div>
 
-      <div class="divider">{dgettext("account", "Dangerours Zone")}</div>
+        <.form :let={f} for={@form} id="settings_form" phx-submit="update_info" phx-change="validate">
+          <.input
+            field={f[:nickname]}
+            label={dgettext("account", "Nickname")}
+            autocomplete="username"
+            phx-mounted={JS.focus()}
+          />
+          <.input
+            type="select"
+            field={f[:prefer_locale]}
+            label={gettext("Locale Preference")}
+            options={[
+              {"English", "en"},
+              {"日本語", "ja"},
+              {"简体中文", "zh_Hans"}
+            ]}
+          />
+          <.input
+            field={f[:intro]}
+            type="textarea"
+            label={dgettext("account", "Introduction")}
+            autocomplete=""
+            phx-mounted={JS.focus()}
+          />
+          <.button
+            class="btn btn-primary w-full"
+            phx-disable-with={dgettext("account", "Updating...")}
+          >
+            {dgettext("account", "Update Profile")}
+          </.button>
+        </.form>
 
-      <div class="text-center">
-        {dgettext(
-          "account",
-          "If you want to update your email address or password, please enter %{sensitive_settings}.",
-          sensitive_settings: translate_senaitive_settings(%{url: ~p"/me/sensitive-settings"})
-        )
-        |> raw()}
+        <div class="divider">{dgettext("account", "Dangerours Zone")}</div>
+
+        <div class="text-center">
+          {dgettext(
+            "account",
+            "If you want to update your email address or password, please enter %{sensitive_settings}.",
+            sensitive_settings: translate_senaitive_settings(%{url: ~p"/me/sensitive-settings"})
+          )
+          |> raw()}
+        </div>
       </div>
     </Layouts.app>
     """
@@ -49,8 +82,12 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
 
   @impl true
   def mount(_params, _session, socket) do
-    # 把现有的数据挂上去
-    {:ok, socket}
+    current_member = socket.assigns.current_scope.member
+
+    {:ok,
+     assign(socket,
+       form: to_form(Accounts.Member.profile_changeset(current_member, %{}), as: "settings_form")
+     )}
   end
 
   @impl true

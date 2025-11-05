@@ -2,10 +2,10 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   @moduledoc """
   注册用户。
 
-  为什么要写这个文档？是因为后续要考虑邀请注册。
-  将要讨论如何整合其到 `mix phx.gen.auth` 生成的代码中。
+  TODO：
 
-  作为一种提高准入门槛以确保整体素质下限的手段，邀请注册是一种不错的方式。
+  * 考虑语言选择
+  * 考虑邀请制
   """
   use HanaShirabeWeb, :live_view
 

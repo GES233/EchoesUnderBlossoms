@@ -115,25 +115,62 @@ defmodule HanaShirabe.Accounts do
 
   ## 设置
 
-  # def update_member_settings(audit_log, member_before, attrs) do
-  #   actual_attrs = extract_actual_update(member_before, attrs)
-  #
-  #   Ecto.Multi.new()
-  #   |> Ecto.Multi.update(:member, Member.update_settings_changeset(member_before, attrs))
-  #   # 这里有一个需要注意的地方，一旦返回失败
-  #   # 也需要将 audit_log 存进去
-  #   # 但是是以 :account, "member.update_attempt", update_map_and_reason 的形式
-  #   |> AuditLog.multi(audit_log, :account, "member.update")
-  #   |> Repo.transact()
-  #   |> case do
-  #     {:ok, %{member: update_member}} -> {:ok, update_member}
-  #     {:error, _, _, _} -> nil
-  #   |> end
-  # end
+  @doc """
+  更新成员信息。
 
-  # defp extract_actual_update(member_before, attrs) do
-  #   ...
-  # end
+  ## Options
+
+  * `error_update_audit` - 一旦是真，遇到错误也会将错误信息上传至日志。
+  """
+  def update_member_settings(audit_log, member_before, attrs, opts \\ []) do
+    actual_attrs = extract_actual_update(member_before, attrs)
+
+    if map_size(actual_attrs) == 0 do
+      {:ok, member_before}
+    else
+      Ecto.Multi.new()
+      |> Ecto.Multi.update(:member, Member.profile_changeset(member_before, attrs))
+      |> AuditLog.multi(audit_log, :account, "member.update", %{update_map: actual_attrs})
+      |> Repo.transaction()
+      |> case do
+        {:ok, %{member: updated_member}} ->
+          {:ok, updated_member}
+
+        {:error, :member, changeset, _changes} ->
+          if Keyword.get(opts, :error_update_audit, true) do
+            AuditLog.audit!(audit_log, :account, "member.update_attempt", %{
+              update_map: actual_attrs,
+              # 不需要过 Gettext 来翻译
+              reason:
+                Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+                  Regex.replace(~r"%{(\w+)}", msg, fn _, key ->
+                    opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
+                  end)
+                end)
+            })
+          end
+
+          {:error, changeset}
+      end
+    end
+  end
+
+  defp extract_actual_update(member_before, attrs) do
+    attrs
+    |> Enum.reduce(%{}, fn {key, value}, acc ->
+      key_atom = String.to_atom(key)
+
+      # 因为 Ecto.Schema 的结构体里有数据
+      # 直接用 Map.get 即可
+      # 但这里需要确定的是用户数据源于数据库
+      # 有的兄弟有的
+      if Map.get(member_before, key_atom) != value and !is_nil(Map.get(member_before, key_atom)) do
+        Map.put(acc, key, value)
+      else
+        acc
+      end
+    end)
+  end
 
   @doc """
   检查用户是否在 sudo 模式，一般用于需要确认是用户本人操作的敏感事件。
@@ -253,50 +290,6 @@ defmodule HanaShirabe.Accounts do
     end
   end
 
-  @doc """
-  通过 magic link 返回成员，
-
-  需要注意的是三个用例：
-
-  1. 成员已经确认了邮件。他们登录进来并且 magic link 过期。
-
-  2. 成员已经确认了他们的邮件但是没有设置密码。
-     早这个案例中，成员确认了、登录了，而且所有的令牌——
-     包括会话——都过期了。在这种情况，没有任何现存令牌，因此我们为最佳安全实践
-     删除了所有这些。
-
-  3. 成员没有确认邮件，但是已经设置密码了。
-     这默认情况下不可能发生，但是可能因为安全隐患。
-     参见 "mix help phx.gen.auth" 中的 "Mixing magic link and password registration"（） 一节。
-  """
-  def login_member_by_magic_link(token) do
-    {:ok, query} = MemberToken.verify_magic_link_token_query(token)
-
-    case Repo.one(query) do
-      # 预防会话固定攻击，通过不允许未确认用户使用密码的 magic link 来实现
-      {%Member{confirmed_at: nil, hashed_password: hash}, _token} when not is_nil(hash) ->
-        raise """
-        magic link log in is not allowed for unconfirmed users with a password set!
-
-        This cannot happen with the default implementation, which indicates that you
-        might have adapted the code to a different use case. Please make sure to read the
-        "Mixing magic link and password registration" section of `mix help phx.gen.auth`.
-        """
-
-      {%Member{confirmed_at: nil} = member, _token} ->
-        member
-        |> Member.confirm_changeset()
-        |> update_member_and_delete_all_tokens()
-
-      {member, token} ->
-        Repo.delete!(token)
-        {:ok, {member, []}}
-
-      nil ->
-        {:error, :not_found}
-    end
-  end
-
   @doc ~S"""
   将更新邮件指令发送给指定的成员。
 
@@ -347,13 +340,13 @@ defmodule HanaShirabe.Accounts do
          {member, token} <- Repo.one(query) do
       # 验证是否存在安全风险
       if is_nil(member.confirmed_at) && member.hashed_password do
-        Logger.error("""
+        raise """
         magic link log in is not allowed for unconfirmed users with a password set!
 
         This cannot happen with the default implementation, which indicates that you
         might have adapted the code to a different use case. Please make sure to read the
         "Mixing magic link and password registration" section of `mix help phx.gen.auth`.
-        """)
+        """
 
         {:error, :unconfirmed_with_password}
       else
@@ -542,10 +535,24 @@ defmodule HanaShirabe.Accounts do
   使用 magic link 登录成员，并在此过程中记录审计日志。
 
   这是一个高级事务函数，它会：
+
   1. 验证 token 的有效性。
   2. 根据用户的状态（是否已确认）记录相应的审计日志。
   3. 执行确认邮箱或删除 token 的操作。
   4. 返回成员和需要断开的旧会话列表。
+
+  需要注意的是三个用例：
+
+  1. 成员已经确认了邮件。他们登录进来并且 magic link 过期。
+
+  2. 成员已经确认了他们的邮件但是没有设置密码。
+     早这个案例中，成员确认了、登录了，而且所有的令牌——
+     包括会话——都过期了。在这种情况，没有任何现存令牌，因此我们为最佳安全实践
+     删除了所有这些。
+
+  3. 成员没有确认邮件，但是已经设置密码了。
+     这默认情况下不可能发生，但是可能存在安全隐患。
+     参见 "mix help phx.gen.auth" 中的 "Mixing magic link and password registration" 一节。
   """
   def log_in_by_magic_link_and_log(audit_context, token) do
     # 首先，在事务之外进行查询和验证

@@ -85,7 +85,7 @@ defmodule HanaShirabe.Accounts.Member do
   @doc """
   更新用户信息时的变更表，主要用于更新成员的【非敏感】信息的情况。
   """
-  def update_settings_changeset(member, attrs, opts \\ []) do
+  def profile_changeset(member, attrs, opts \\ []) do
     member
     |> cast(attrs, [:nickname, :prefer_locale, :intro])
     |> validate_nickname(opts)

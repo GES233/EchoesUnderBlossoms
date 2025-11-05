@@ -358,39 +358,47 @@ defmodule HanaShirabe.AccountsTest do
     end
   end
 
-  # TODO
   # 用
   # describe "测试 log_in_by_magic_link_and_log/2"
   # 重写
   # 再把 login_member_by_magic_link/1 删掉
-  describe "测试 login_member_by_magic_link/1" do
-    test "确认成员使旧令牌过期" do
+  # TODO: 添加可以记录 AuditLog 的辅助函数
+  describe "测试 log_in_by_magic_link_and_log/2" do
+    setup do
+      %{audit_log: create_audit_log()}
+    end
+
+    test "确认成员使旧令牌过期", %{audit_log: audit_log} do
       member = unconfirmed_member_fixture()
       refute member.confirmed_at
       {encoded_token, hashed_token} = generate_member_magic_link_token(member)
 
       assert {:ok, {member, [%{token: ^hashed_token}]}} =
-               Accounts.login_member_by_magic_link(encoded_token)
+               Accounts.log_in_by_magic_link_and_log(audit_log, encoded_token)
 
       assert member.confirmed_at
     end
 
-    test "返回已确认成员的成员结构体与待删除令牌" do
+    test "返回已确认成员的成员结构体与待删除令牌", %{audit_log: audit_log} do
       member = member_fixture()
       assert member.confirmed_at
       {encoded_token, _hashed_token} = generate_member_magic_link_token(member)
-      assert {:ok, {^member, []}} = Accounts.login_member_by_magic_link(encoded_token)
+
+      assert {:ok, {^member, []}} =
+               Accounts.log_in_by_magic_link_and_log(audit_log, encoded_token)
+
       # one time use only
-      assert {:error, :not_found} = Accounts.login_member_by_magic_link(encoded_token)
+      assert {:error, :not_found} =
+               Accounts.log_in_by_magic_link_and_log(audit_log, encoded_token)
     end
 
-    test "设置密码的未确认成员会报错" do
+    test "设置密码的未确认成员会报错", %{audit_log: audit_log} do
       member = unconfirmed_member_fixture()
       {1, nil} = Repo.update_all(Member, set: [hashed_password: "hashed"])
       {encoded_token, _hashed_token} = generate_member_magic_link_token(member)
 
       assert_raise RuntimeError, ~r/magic link log in is not allowed/, fn ->
-        Accounts.login_member_by_magic_link(encoded_token)
+        Accounts.log_in_by_magic_link_and_log(audit_log, encoded_token)
       end
     end
   end
