@@ -124,7 +124,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettings do
         Accounts.deliver_member_update_email_instructions(
           Ecto.Changeset.apply_action!(changeset, :insert),
           member.email,
-          &url(~p"/me/settings/confirm-email/#{&1}")
+          &url(~p"/me/sensitive-settings/confirm-email/#{&1}")
         )
 
         info =

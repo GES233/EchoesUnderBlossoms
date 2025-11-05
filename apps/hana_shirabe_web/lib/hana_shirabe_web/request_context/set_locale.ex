@@ -8,7 +8,7 @@ defmodule HanaShirabeWeb.SetLocale do
 
   def get_locale_cookie(), do: @locale_cookie
 
-  def on_mount(:default, _params, session, socket) do
+  def on_mount(:assign_locale, _params, session, socket) do
     locale = session["locale"] || Gettext.get_locale(HanaShirabeWeb.Gettext)
 
     Gettext.put_locale(HanaShirabeWeb.Gettext, locale)
@@ -42,11 +42,16 @@ defmodule HanaShirabeWeb.SetLocale do
   end
 
   defp fetch_locale_from_sources(conn) do
+    locale_from_user =
+      if !is_nil(conn.assigns.current_scope),
+        do: conn.assigns.current_scope.member.prefer_locale,
+        else: nil
+
     [
       # 1. URL 参数优先级最高，用于用户主动切换
       conn.params["locale"],
       # 2. 已登录用户的数据库偏好
-      conn.assigns.current_scope && conn.assigns.current_scope.member.prefer_locale,
+      locale_from_user,
       # 3. Cookie 中的持久化选择
       conn.req_cookies[@locale_cookie],
       # 4. 浏览器 Accept-Language 头

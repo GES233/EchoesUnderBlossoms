@@ -37,18 +37,38 @@ defmodule HanaShirabeWeb.Router do
 
   ## 认证路由
 
+  @member_with_audit [
+    {HanaShirabeWeb.MemberAuth, :require_authenticated_member},
+    {HanaShirabeWeb.SetLocale, :assign_locale},
+    {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
+  ]
+
+  @with_audit [
+    {HanaShirabeWeb.MemberAuth, :mount_current_scope},
+    {HanaShirabeWeb.SetLocale, :assign_locale},
+    {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
+  ]
+
   scope "/", HanaShirabeWeb do
     pipe_through [:browser, :require_authenticated_member]
 
-    live "/me/settings", MemberLive.Settings
+    live_session :require_member_with_locale,
+      on_mount: @member_with_audit do
+      # live "/me/, MemberLive.Page, :me
+      live "/me/settings", MemberLive.Settings
+    end
+
+    # Implement follow, unfollow, etc.
+    # By HanaShirabeWeb.SocialController
 
     live_session :require_authenticated_member,
-      on_mount: [
-        {HanaShirabeWeb.MemberAuth, :require_authenticated},
-        {HanaShirabeWeb.SetLocale, :default}
-      ] do
+      on_mount: @member_with_audit do
       live "/me/sensitive-settings", MemberLive.SensitiveSettings, :edit
-      live "/me/settings/confirm-email/:token", MemberLive.SensitiveSettings, :confirm_account
+
+      live "/me/sensitive-settings/confirm-email/:token",
+           MemberLive.SensitiveSettings,
+           :confirm_account
+
       # live "/me/sessions", MemberLive.Sessions, :edit
     end
 
@@ -58,21 +78,21 @@ defmodule HanaShirabeWeb.Router do
   scope "/", HanaShirabeWeb do
     pipe_through [:browser]
 
+    # 因为 SetLocale 的关系
+    # ?locale=(...) 也可以实现
+    post "/set-locale/:locale", LocaleController, :update
+
     live_session :current_member,
-      on_mount: [
-        {HanaShirabeWeb.MemberAuth, :mount_current_scope},
-        {HanaShirabeWeb.SetLocale, :default},
-        {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
-      ] do
+      on_mount: @with_audit do
       live "/sign_up", MemberLive.Registration, :new
       live "/login", MemberLive.Login, :new
       live "/login/:token", MemberLive.Confirmation, :new
+
+      # live "/m/:id", MemberLive.Page, :other
     end
 
     post "/login", MemberSessionController, :create
     delete "/logout", MemberSessionController, :delete
-
-    post "/set-locale/:locale", LocaleController, :update
   end
 
   # 在开发中启用 LiveDashboard 和 Swoosh 邮箱预览

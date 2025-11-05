@@ -3,10 +3,6 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
   # 和原来的 Settings （现在的 SensitiveSettings 分开）
   use HanaShirabeWeb, :live_view
 
-  on_mount {HanaShirabeWeb.MemberAuth, :require_authenticated}
-  on_mount {HanaShirabeWeb.SetLocale, :default}
-  on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
-
   alias HanaShirabe.Accounts
 
   @impl true

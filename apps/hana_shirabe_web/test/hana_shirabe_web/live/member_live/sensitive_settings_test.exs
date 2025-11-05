@@ -200,7 +200,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
     end
 
     test "更新一次邮件", %{conn: conn, member: member, token: token, email: email} do
-      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/sensitive-settings/confirm-email/#{token}")
 
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/sensitive-settings"
@@ -210,7 +210,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
       assert Accounts.get_member_by_email(email)
 
       # use confirm token again
-      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/sensitive-settings/confirm-email/#{token}")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/sensitive-settings"
       assert %{"error" => message} = flash
@@ -218,7 +218,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
     end
 
     test "令牌不合法不要更新邮件", %{conn: conn, member: member} do
-      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/oops")
+      {:error, redirect} = live(conn, ~p"/me/sensitive-settings/confirm-email/oops")
       assert {:live_redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/me/sensitive-settings"
       assert %{"error" => message} = flash
@@ -228,7 +228,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
 
     test "成员未登录将会跳转", %{token: token} do
       conn = build_conn()
-      {:error, redirect} = live(conn, ~p"/me/settings/confirm-email/#{token}")
+      {:error, redirect} = live(conn, ~p"/me/sensitive-settings/confirm-email/#{token}")
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
       assert %{"error" => message} = flash
