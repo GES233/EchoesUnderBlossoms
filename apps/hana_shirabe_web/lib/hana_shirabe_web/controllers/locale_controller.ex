@@ -1,7 +1,9 @@
 defmodule HanaShirabeWeb.LocaleController do
   use HanaShirabeWeb, :controller
 
+  # 需要确定的是
+  # Cookie 的优先级低于 ?locale=(...) 以及用户设置
   def update(conn, %{"locale" => locale}) do
-    conn |> put_resp_cookie("_hana_shirabe_web_locale", locale) |> send_resp(204, "")
+    conn |> HanaShirabeWeb.SetLocale.persist(locale) |> send_resp(204, "")
   end
 end

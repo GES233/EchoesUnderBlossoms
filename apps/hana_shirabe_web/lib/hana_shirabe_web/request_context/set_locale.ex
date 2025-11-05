@@ -29,6 +29,12 @@ defmodule HanaShirabeWeb.SetLocale do
     |> put_resp_cookie(@locale_cookie, locale, max_age: 365 * 24 * 60 * 60, signed: true)
   end
 
+  def persist(conn, locale) do
+    conn
+    |> put_session(:locale, locale)
+    |> put_resp_cookie(@locale_cookie, locale, max_age: 365 * 24 * 60 * 60, signed: true)
+  end
+
   defp determine_locale(conn) do
     conn
     |> fetch_locale_from_sources()
