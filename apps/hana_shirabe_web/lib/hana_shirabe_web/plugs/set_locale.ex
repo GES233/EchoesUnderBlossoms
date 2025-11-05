@@ -22,7 +22,7 @@ defmodule HanaShirabeWeb.Plugs.SetLocale do
     [
       conn.params["locale"],
       # TODO: 实现用户偏好
-      # conn.assigns.current_scope && conn.assigns.current_scope.member.prefer_lang,
+      conn.assigns.current_scope && conn.assigns.current_scope.member.prefer_locale,
       conn.req_cookies[@locale_cookie],
       get_req_header(conn, "Accept-Language") |> parse_accept_language()
     ]
