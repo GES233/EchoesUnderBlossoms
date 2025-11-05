@@ -55,7 +55,7 @@ msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:37
-#: lib/hana_shirabe_web/live/member_live/settings.ex:34
+#: lib/hana_shirabe_web/live/member_live/settings.ex:30
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr ""

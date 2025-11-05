@@ -91,3 +91,19 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+## From HanaShirabe.Accounts.Member.validate_email/2
+msgid "must have the @ sign and no spaces"
+msgstr ""
+
+## From HanaShirabe.Accounts.Member.validate_email_changed/1
+msgid "did not change"
+msgstr ""
+
+## From HanaShirabe.Accounts.Member.password_changeset/3
+msgid "does not match password"
+msgstr ""
+
+## From HanaShirabe.Accounts.Member.validate_prefer_locale/1
+msgid "unknown locale"
+msgstr ""

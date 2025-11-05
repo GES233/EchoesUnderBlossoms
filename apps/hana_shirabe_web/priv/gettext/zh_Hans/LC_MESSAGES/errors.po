@@ -91,3 +91,19 @@ msgstr "必须大于等于 %{number}"
 
 msgid "must be equal to %{number}"
 msgstr "必须是 %{number}"
+
+## From HanaShirabe.Accounts.Member.validate_email/2
+msgid "must have the @ sign and no spaces"
+msgstr "必须有 @ 且无空格"
+
+## From HanaShirabe.Accounts.Member.validate_email_changed/1
+msgid "did not change"
+msgstr "未改变"
+
+## From HanaShirabe.Accounts.Member.password_changeset/3
+msgid "does not match password"
+msgstr "密码不匹配"
+
+## From HanaShirabe.Accounts.Member.validate_prefer_locale/1
+msgid "unknown locale"
+msgstr "未知地域"

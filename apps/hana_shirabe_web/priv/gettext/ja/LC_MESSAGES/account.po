@@ -87,7 +87,7 @@ msgid "A link to confirm your email change has been sent to the new address."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:14
-#: lib/hana_shirabe_web/live/member_live/settings.ex:78
+#: lib/hana_shirabe_web/live/member_live/settings.ex:74
 #, elixir-autogen, elixir-format
 msgid "Account Sensitive Settings"
 msgstr ""
@@ -261,7 +261,7 @@ msgid "You must re-authenticate to access this page."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:71
-#: lib/hana_shirabe_web/live/member_live/settings.ex:27
+#: lib/hana_shirabe_web/live/member_live/settings.ex:23
 #, elixir-autogen, elixir-format
 msgid "Nickname"
 msgstr ""
@@ -276,37 +276,37 @@ msgstr ""
 msgid "Please enter your email address so we can contact you."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:19
+#: lib/hana_shirabe_web/live/member_live/settings.ex:15
 #, elixir-autogen, elixir-format
 msgid "Account Settings"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:20
+#: lib/hana_shirabe_web/live/member_live/settings.ex:16
 #, elixir-autogen, elixir-format
 msgid "Manage your your basic information."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:56
+#: lib/hana_shirabe_web/live/member_live/settings.ex:52
 #, elixir-autogen, elixir-format
 msgid "Dangerours Zone"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:59
+#: lib/hana_shirabe_web/live/member_live/settings.ex:55
 #, elixir-autogen, elixir-format
 msgid "If you want to update your email address or password, please enter %{sensitive_settings}."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:44
+#: lib/hana_shirabe_web/live/member_live/settings.ex:40
 #, elixir-autogen, elixir-format
 msgid "Introduction"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:52
+#: lib/hana_shirabe_web/live/member_live/settings.ex:48
 #, elixir-autogen, elixir-format
 msgid "Update Profile"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/settings.ex:50
+#: lib/hana_shirabe_web/live/member_live/settings.ex:46
 #, elixir-autogen, elixir-format
 msgid "Updating..."
 msgstr ""

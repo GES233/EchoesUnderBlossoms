@@ -38,7 +38,7 @@ defmodule HanaShirabeWeb.Router do
   ## 认证路由
 
   @member_with_audit [
-    {HanaShirabeWeb.MemberAuth, :require_authenticated_member},
+    {HanaShirabeWeb.MemberAuth, :require_authenticated},
     {HanaShirabeWeb.SetLocale, :assign_locale},
     {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]

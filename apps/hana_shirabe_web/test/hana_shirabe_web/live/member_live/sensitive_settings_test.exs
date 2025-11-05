@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         })
 
       title = dgettext("account", "Change Email")
-      msg = "must have the @ sign and no spaces"
+      msg = dgettext("errors", "must have the @ sign and no spaces")
       assert result =~ title
       assert result =~ msg
     end
@@ -96,7 +96,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         |> render_submit()
 
       title = dgettext("account", "Change Email")
-      msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "did not change")
+      msg = dgettext("errors", "did not change")
       assert result =~ title
       assert result =~ msg
     end
@@ -152,7 +152,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
 
       button_msg = dgettext("account", "Save Password")
       too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
-      notmatch_msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "does not match password")
+      notmatch_msg = dgettext("errors", "does not match password")
 
       assert result =~ button_msg
       assert result =~ too_less_msg
@@ -174,7 +174,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
 
       button_msg = dgettext("account", "Save Password")
       too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
-      notmatch_msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "does not match password")
+      notmatch_msg = dgettext("errors", "does not match password")
 
       assert result =~ button_msg
       assert result =~ too_less_msg
