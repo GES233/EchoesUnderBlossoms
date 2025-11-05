@@ -71,9 +71,10 @@ defmodule HanaShirabe.Umbrella.MixProject do
   defp deps do
     [
       # 需要运行 "mix format" 来针对位于伞项目根目录其他的 ~H 或 .heex 文件进行格式化
-      {:phoenix_live_view, ">= 0.0.0"}
+      {:phoenix_live_view, ">= 0.0.0"},
       # 不需要加上 gettext ，只需要在所用到的应用下面写入
       # 否则通不过编译
+      {:tzdata, "~> 1.1"}
     ]
   end
 

@@ -83,6 +83,9 @@ config :gettext,
   default_locale: "zh_Hans",
   locales: ~w(en zh_Hans ja)
 
+# 时区数据库
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
+
 # 依据环境导入不同的配置。这一行必须在文件的最后
 # 因此其可以覆写上面所有的默认配置。
 import_config "#{config_env()}.exs"
