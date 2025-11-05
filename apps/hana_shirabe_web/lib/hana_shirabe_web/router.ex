@@ -13,13 +13,13 @@ defmodule HanaShirabeWeb.Router do
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_member
     plug :put_audit_context
-    plug HanaShirabeWeb.Plugs.SetLocale
+    plug HanaShirabeWeb.SetLocale
   end
 
   pipeline :api do
     plug :accepts, ["json"]
     # TODO: 实现通过 API 的登录
-    plug HanaShirabeWeb.Plugs.SetLocale
+    plug HanaShirabeWeb.SetLocale
   end
 
   scope "/", HanaShirabeWeb do
@@ -43,7 +43,10 @@ defmodule HanaShirabeWeb.Router do
     live "/me/settings", MemberLive.Settings
 
     live_session :require_authenticated_member,
-      on_mount: [{HanaShirabeWeb.MemberAuth, :require_authenticated}] do
+      on_mount: [
+        {HanaShirabeWeb.MemberAuth, :require_authenticated},
+        {HanaShirabeWeb.SetLocale, :default}
+      ] do
       live "/me/sensitive-settings", MemberLive.SensitiveSettings, :edit
       live "/me/settings/confirm-email/:token", MemberLive.SensitiveSettings, :confirm_account
       # live "/me/sessions", MemberLive.Sessions, :edit
@@ -58,6 +61,7 @@ defmodule HanaShirabeWeb.Router do
     live_session :current_member,
       on_mount: [
         {HanaShirabeWeb.MemberAuth, :mount_current_scope},
+        {HanaShirabeWeb.SetLocale, :default},
         {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
       ] do
       live "/sign_up", MemberLive.Registration, :new
@@ -67,6 +71,8 @@ defmodule HanaShirabeWeb.Router do
 
     post "/login", MemberSessionController, :create
     delete "/logout", MemberSessionController, :delete
+
+    post "/set-locale/:locale", LocaleController, :update
   end
 
   # 在开发中启用 LiveDashboard 和 Swoosh 邮箱预览

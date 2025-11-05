@@ -92,9 +92,8 @@ defmodule HanaShirabeWeb.Layouts do
     🄯 {DateTime.utc_now().year}
     <.link class="text-sm font-semibold" href="https://github.com/GES233/EchoesUnderBlossoms">
       {gettext("Echoes Under Blossoms")}
-    </.link> {gettext(
-      "The copyright of user-generated content on this site belongs to the individual user."
-    )}
+    </.link>
+    {gettext("The copyright of user-generated content on this site belongs to the individual user.")}
     """
   end
 
@@ -169,18 +168,6 @@ defmodule HanaShirabeWeb.Layouts do
         <.icon name="hero-sparkles-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
-    """
-  end
-
-  @doc """
-  实现语言选择。
-  """
-  # TODO
-  def locale_select(assigns) do
-    ~H"""
-    <span>{gettext("Locale Preference")}</span>
-    <%= for locale <- Gettext.known_locales(HanaShirabeWeb.Gettext) do %>
-    <% end %>
     """
   end
 end

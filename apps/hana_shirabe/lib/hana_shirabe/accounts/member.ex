@@ -33,9 +33,10 @@ defmodule HanaShirabe.Accounts.Member do
   """
   def registration_changeset(member, attrs, opts \\ []) do
     member
-    |> cast(attrs, [:nickname, :email])
+    |> cast(attrs, [:nickname, :email, :prefer_locale])
     |> validate_nickname(opts)
     |> validate_email(opts)
+    |> validate_prefer_locale()
   end
 
   @doc """
@@ -59,7 +60,8 @@ defmodule HanaShirabe.Accounts.Member do
       changeset
       |> validate_required([:email])
       |> validate_format(:email, ~r/^[^@,;\s]+@[^@,;\s]+$/,
-        message: dgettext("account", "must have the @ sign and no spaces")
+        # TODO: 确定一个问题——走 account 还是 translate_errors ？
+        message: "must have the @ sign and no spaces"
       )
       |> validate_length(:email, max: 160)
 

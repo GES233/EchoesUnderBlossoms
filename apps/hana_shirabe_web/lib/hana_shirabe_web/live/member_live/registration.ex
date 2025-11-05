@@ -30,6 +30,41 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
         </div>
 
         <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
+          <div phx-hook=".LocaleFormInput" id="locale-toggle">
+            <.input
+              field={@form[:prefer_locale]}
+              type="select"
+              label={gettext("Locale Preference")}
+              options={[
+                {"English", "en"},
+                {"日本語", "ja"},
+                {"简体中文", "zh_Hans"}
+              ]}
+              phx-change={JS.push("locale_changed")}
+            />
+
+            <script :type={Phoenix.LiveView.ColocatedHook} name=".LocaleFormInput">
+              export default {
+                mounted() {
+                  const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+                  this.handleEvent("set_locale_cookie", ({ locale }) => {
+                    fetch(`/set-locale/${locale}`, {
+                      method: "POST",
+                      headers: {
+                        "x-csrf-token": csrfToken
+                      }
+                    }).then(response => {
+                      if (response.ok) {
+                        this.pushEvent("locale_cookie_updated", {locale: locale});
+                    }}).catch(error => {
+                      console.error(`Failed to set locale cookie to '${locale}':`, error)
+                    });
+                  });
+                }
+              }
+            </script>
+          </div>
           <.input
             field={@form[:nickname]}
             type="text"
@@ -85,12 +120,43 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   end
 
   def mount(_params, _session, socket) do
-    changeset = Accounts.change_member_email(%Member{}, %{}, validate_unique: false)
+    changeset = Accounts.Member.registration_changeset(%Member{}, %{}, validate_unique: false)
 
     {:ok, assign_form(socket, changeset), temporary_assigns: [form: nil]}
   end
 
   @impl true
+  def handle_event(
+        "locale_changed",
+        %{
+          "_target" => ["member", "prefer_locale"],
+          "member" => %{"prefer_locale" => locale}
+        },
+        socket
+      ) do
+    Gettext.put_locale(HanaShirabeWeb.Gettext, locale)
+
+    # 此功能的测试代码仅需要考虑 Cookie 的更新就可以了
+    socket = push_event(socket, "set_locale_cookie", %{locale: locale})
+
+    {:noreply, socket}
+  end
+
+  # 因为 LiveWiew 底层 Socket 的属性
+  # 以及更换语言这么一种「全局」的动作
+  # 就意味着没有办法通过 Phoenix.LiveView 的方式解决
+  # 只能用一个这种很不优雅的形式实现
+  # 私密马赛
+  def handle_event("locale_cookie_updated", %{"locale" => locale}, socket) do
+    # 为了那条 flash 消息
+    Gettext.put_locale(locale)
+
+    {:noreply,
+     socket
+     |> put_flash(:info, gettext("Locale Updated!"))
+     |> redirect(to: ~p"/sign_up", replace: true)}
+  end
+
   def handle_event("save", %{"member" => member_params}, socket) do
     audit_log = socket.assigns[:audit_log]
 
@@ -99,7 +165,9 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   end
 
   def handle_event("validate", %{"member" => member_params}, socket) do
-    changeset = Accounts.change_member_email(%Member{}, member_params, validate_unique: false)
+    changeset =
+      Accounts.Member.registration_changeset(%Member{}, member_params, validate_unique: false)
+
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 
@@ -130,7 +198,14 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    form = to_form(changeset, as: "member")
+    form =
+      if locale = socket.assigns[:locale] do
+        Ecto.Changeset.put_change(changeset, :prefer_locale, locale)
+      else
+        changeset
+      end
+      |> to_form(as: "member")
+
     assign(socket, form: form)
   end
 end

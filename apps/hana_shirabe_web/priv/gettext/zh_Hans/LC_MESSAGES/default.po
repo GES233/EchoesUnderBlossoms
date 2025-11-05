@@ -16,18 +16,18 @@ msgstr ""
 msgid "Actions"
 msgstr "操作"
 
-#: lib/hana_shirabe_web/components/layouts.ex:122
-#: lib/hana_shirabe_web/components/layouts.ex:134
+#: lib/hana_shirabe_web/components/layouts.ex:121
+#: lib/hana_shirabe_web/components/layouts.ex:133
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr "试图重新连接"
 
-#: lib/hana_shirabe_web/components/layouts.ex:129
+#: lib/hana_shirabe_web/components/layouts.ex:128
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr "有东西出问题了！"
 
-#: lib/hana_shirabe_web/components/layouts.ex:117
+#: lib/hana_shirabe_web/components/layouts.ex:116
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr "连不上蓝牙了"
@@ -54,8 +54,8 @@ msgstr "%{title} - 花影下的音符"
 msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr "花影下的音符 :: %{role_as_title}"
 
-#: lib/hana_shirabe_web/components/layouts.ex:181
-#: lib/hana_shirabe_web/live/member_live/settings.ex:33
+#: lib/hana_shirabe_web/live/member_live/registration.ex:37
+#: lib/hana_shirabe_web/live/member_live/settings.ex:34
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr "语言偏好"
@@ -70,7 +70,12 @@ msgstr "施工中..."
 msgid "Welcome to %{site_name}"
 msgstr "欢迎来到「%{site_name}」"
 
-#: lib/hana_shirabe_web/components/layouts.ex:95
+#: lib/hana_shirabe_web/components/layouts.ex:96
 #, elixir-autogen, elixir-format
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr "站内用户创作内容的版权归其自身所有"
+
+#: lib/hana_shirabe_web/live/member_live/registration.ex:156
+#, elixir-autogen, elixir-format
+msgid "Locale Updated!"
+msgstr "语言已更新！"

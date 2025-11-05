@@ -11,22 +11,17 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe/accounts/member.ex:79
+#: lib/hana_shirabe/accounts/member.ex:81
 #, elixir-autogen, elixir-format
 msgid "did not change"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member.ex:120
+#: lib/hana_shirabe/accounts/member.ex:122
 #, elixir-autogen, elixir-format
 msgid "does not match password"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member.ex:62
-#, elixir-autogen, elixir-format
-msgid "must have the @ sign and no spaces"
-msgstr ""
-
-#: lib/hana_shirabe/accounts/member.ex:101
+#: lib/hana_shirabe/accounts/member.ex:103
 #, elixir-autogen, elixir-format
 msgid "Unknown locale"
 msgstr ""

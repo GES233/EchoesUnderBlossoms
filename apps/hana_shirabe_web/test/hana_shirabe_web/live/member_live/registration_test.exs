@@ -39,8 +39,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
 
       # 因为这是来自另一个应用（HanaShirabe）的信息
       # 因此这里需要显式声明来源
-      info =
-        Gettext.dgettext(HanaShirabe.Gettext, "account", "must have the @ sign and no spaces")
+      info = "must have the @ sign and no spaces"
 
       assert result =~ title
       assert result =~ info

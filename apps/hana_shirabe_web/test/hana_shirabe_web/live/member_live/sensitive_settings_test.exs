@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         })
 
       title = dgettext("account", "Change Email")
-      msg = Gettext.dgettext(HanaShirabe.Gettext, "account", "must have the @ sign and no spaces")
+      msg = "must have the @ sign and no spaces"
       assert result =~ title
       assert result =~ msg
     end

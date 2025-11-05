@@ -1,5 +1,9 @@
-/* 请参阅 Tailwind 配置指南以了解高级用法
-   https://tailwindcss.com/docs/configuration */
+/* 
+    如果使用编辑器发现本文件存在大量报错，请安装您所用编辑器的
+    TailwindCSS 插件并完成配置。
+
+    另外可参阅 Tailwind 配置指南以了解高级用法
+    https://tailwindcss.com/docs/configuration */
 
 @import "tailwindcss" source(none);
 @source "../css";
@@ -21,7 +25,7 @@
     curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js 
     您可以访问 https://daisyui.com/theme-generator/ 构建自己的主题。
 
-  主要有两个颜色：
+  目前有两个颜色主题：
 
   * 奶油玉米（来源于奶油玉米浓汤，选择此方案是因为其和某位故人
     （〇〇）很爱吃的某食物（〇〇〇〇）的配色相近）

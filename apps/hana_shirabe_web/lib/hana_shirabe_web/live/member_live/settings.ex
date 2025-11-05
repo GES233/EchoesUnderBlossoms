@@ -4,6 +4,7 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
   use HanaShirabeWeb, :live_view
 
   on_mount {HanaShirabeWeb.MemberAuth, :require_authenticated}
+  on_mount {HanaShirabeWeb.SetLocale, :default}
   on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
 
   alias HanaShirabe.Accounts

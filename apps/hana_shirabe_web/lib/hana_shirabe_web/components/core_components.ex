@@ -437,7 +437,7 @@ defmodule HanaShirabeWeb.CoreComponents do
   通过 gettext 翻译某条错误。
   """
   def translate_error({msg, opts}) do
-    # 当使用 gettext 时，我们一般吧那些我们想要翻译的字符串当成静态参数传递过去：
+    # 当使用 gettext 时，我们一般把那些我们想要翻译的字符串当成静态参数传递过去：
     #
     #     # 翻译复数（是 plural 而非 conplex num.）形式的文件
     #     dngettext("errors", "1 file", "%{count} files", count)

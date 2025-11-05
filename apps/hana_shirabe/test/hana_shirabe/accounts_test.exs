@@ -57,14 +57,14 @@ defmodule HanaShirabe.AccountsTest do
       {:error, changeset} = Accounts.register_member(audit_log, %{})
       %{email: [error_msg]} = errors_on(changeset)
 
-      assert error_msg == dgettext("account", "can't be blank")
+      assert error_msg == "can't be blank"
     end
 
     test "检验给定邮件", %{audit_log: audit_log} do
       {:error, changeset} = Accounts.register_member(audit_log, %{email: "not valid"})
       %{email: [error_msg]} = errors_on(changeset)
 
-      assert error_msg == dgettext("account", "must have the @ sign and no spaces")
+      assert error_msg == "must have the @ sign and no spaces"
     end
 
     test "验证邮件地址的最大值", %{audit_log: audit_log} do
