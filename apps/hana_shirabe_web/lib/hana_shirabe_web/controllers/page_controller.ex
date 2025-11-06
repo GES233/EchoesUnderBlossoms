@@ -8,4 +8,6 @@ defmodule HanaShirabeWeb.PageController do
   def show(conn, _params) do
     render(conn, :show)
   end
+
+  def license(conn, _params), do: render(conn, :license)
 end

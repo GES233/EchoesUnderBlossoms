@@ -26,6 +26,7 @@ defmodule HanaShirabeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/license", PageController, :license
 
     live "/playground", ContentLiveRender
   end
