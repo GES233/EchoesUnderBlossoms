@@ -34,7 +34,7 @@ defmodule HanaShirabeWeb.Layouts do
     <header class="bg-base-100/80 backdrop-blur-sm sticky top-0 z-10">
       <nav class="navbar px-4 sm:px-6 lg:px-8">
         <div class="navbar-start">
-          <a href={~p"/"} class="btn btn-ghost text-xl"><HanaShirabeWeb.HanaIcon.hana_icon /></a>
+          <a href={~p"/"} class="btn btn-ghost text-xl">⍼</a>
         </div>
 
         <div class="navbar-end">
