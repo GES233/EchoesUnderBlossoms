@@ -111,6 +111,8 @@ defmodule HanaShirabeWeb.Router do
     scope "/dev" do
       pipe_through :browser
 
+      get "/show", HanaShirabeWeb.PageController, :show
+
       live_dashboard "/dashboard", metrics: HanaShirabeWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end

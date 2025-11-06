@@ -4,4 +4,8 @@ defmodule HanaShirabeWeb.PageController do
   def home(conn, _params) do
     render(conn, :home)
   end
+
+  def show(conn, _params) do
+    render(conn, :show)
+  end
 end
