@@ -9,7 +9,7 @@ defmodule HanaShirabe.Umbrella.MixProject do
   def project do
     [
       apps_path: "apps",
-      version: "0.0.3",
+      version: "0.0.4",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
