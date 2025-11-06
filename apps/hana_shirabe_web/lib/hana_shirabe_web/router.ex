@@ -43,8 +43,14 @@ defmodule HanaShirabeWeb.Router do
     {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]
 
-  @with_audit [
-    {HanaShirabeWeb.MemberAuth, :mount_current_scope},
+  # @with_audit [
+  #   {HanaShirabeWeb.MemberAuth, :mount_current_scope},
+  #   {HanaShirabeWeb.SetLocale, :assign_locale},
+  #   {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
+  # ]
+
+  @guest_with_audit [
+    {HanaShirabeWeb.MemberAuth, :required_guests},
     {HanaShirabeWeb.SetLocale, :assign_locale},
     {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]
@@ -83,7 +89,7 @@ defmodule HanaShirabeWeb.Router do
     post "/set-locale/:locale", LocaleController, :update
 
     live_session :current_member,
-      on_mount: @with_audit do
+      on_mount: @guest_with_audit do
       live "/sign_up", MemberLive.Registration, :new
       live "/login", MemberLive.Login, :new
       live "/login/:token", MemberLive.Confirmation, :new
