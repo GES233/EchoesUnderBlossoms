@@ -122,7 +122,7 @@ defmodule HanaShirabe.Accounts do
 
   * `error_update_audit` - 一旦是真，遇到错误也会将错误信息上传至日志。
   """
-  def update_member_settings(audit_log, member_before, attrs, opts \\ []) do
+  def update_member_profile(audit_log, member_before, attrs, opts \\ []) do
     actual_attrs = extract_actual_update(member_before, attrs)
 
     if map_size(actual_attrs) == 0 do
@@ -164,7 +164,7 @@ defmodule HanaShirabe.Accounts do
       # 直接用 Map.get 即可
       # 但这里需要确定的是用户数据源于数据库
       # 有的兄弟有的
-      if Map.get(member_before, key_atom) != value and !is_nil(Map.get(member_before, key_atom)) do
+      if Map.get(member_before, key_atom) != value do
         Map.put(acc, key, value)
       else
         acc

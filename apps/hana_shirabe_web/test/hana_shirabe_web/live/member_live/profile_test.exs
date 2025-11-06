@@ -1,4 +1,4 @@
-defmodule HanaShirabeWeb.MemberLive.SettingsTest do
+defmodule HanaShirabeWeb.MemberLive.ProfileTest do
   use HanaShirabeWeb.ConnCase
 
   alias HanaShirabe.Accounts
@@ -12,13 +12,13 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
       {:ok, _lv, html} =
         conn
         |> log_in_member(member_fixture())
-        |> live(~p"/me/settings")
+        |> live(~p"/me/profile")
 
-      assert html =~ dgettext("account", "Account Settings")
+      assert html =~ dgettext("account", "Account Profile")
     end
 
     test "成员未登录会被重定向", %{conn: conn} do
-      assert {:error, redirect} = live(conn, ~p"/me/settings")
+      assert {:error, redirect} = live(conn, ~p"/me/profile")
 
       assert {:redirect, %{to: path, flash: flash}} = redirect
       assert path == ~p"/login"
@@ -32,9 +32,9 @@ defmodule HanaShirabeWeb.MemberLive.SettingsTest do
         |> log_in_member(member_fixture(),
           token_authenticated_at: NaiveDateTime.add(NaiveDateTime.utc_now(:second), -11, :minute)
         )
-        |> live(~p"/me/settings")
+        |> live(~p"/me/profile")
 
-      assert html =~ dgettext("account", "Account Settings")
+      assert html =~ dgettext("account", "Account Profile")
     end
   end
 

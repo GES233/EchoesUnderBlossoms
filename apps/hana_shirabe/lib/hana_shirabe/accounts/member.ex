@@ -15,7 +15,6 @@ defmodule HanaShirabe.Accounts.Member do
     field :authenticated_at, :naive_datetime, virtual: true
     # 其他信息
     field :nickname, :string
-    # def validate_nickname/2
     field :status, Ecto.Enum, values: [:normal, :frozen, :blocked, :deleted], default: :normal
     # defp status_changeset/2
     # implement namy_status_transform_function

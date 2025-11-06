@@ -129,8 +129,8 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   def handle_event(
         "locale_changed",
         %{
-          "_target" => ["member", "prefer_locale"],
-          "member" => %{"prefer_locale" => locale}
+          "_target" => ["registration_form", "prefer_locale"],
+          "registration_form" => %{"prefer_locale" => locale}
         },
         socket
       ) do
@@ -153,18 +153,18 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
 
     {:noreply,
      socket
-     |> put_flash(:info, gettext("Locale Updated!"))
+     |> put_flash(:info, gettext("Locale updated!"))
      |> redirect(to: ~p"/sign_up", replace: true)}
   end
 
-  def handle_event("save", %{"member" => member_params}, socket) do
+  def handle_event("save", %{"registration_form" => member_params}, socket) do
     audit_log = socket.assigns[:audit_log]
 
     # 如果需要邀请码，这里要在加一组
     do_register(audit_log, member_params, socket)
   end
 
-  def handle_event("validate", %{"member" => member_params}, socket) do
+  def handle_event("validate", %{"registration_form" => member_params}, socket) do
     changeset =
       Accounts.Member.registration_changeset(%Member{}, member_params, validate_unique: false)
 
@@ -204,7 +204,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
       else
         changeset
       end
-      |> to_form(as: "member")
+      |> to_form(as: "registration_form")
 
     assign(socket, form: form)
   end

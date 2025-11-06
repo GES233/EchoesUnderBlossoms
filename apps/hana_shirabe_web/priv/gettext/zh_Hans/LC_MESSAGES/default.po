@@ -16,18 +16,18 @@ msgstr ""
 msgid "Actions"
 msgstr "操作"
 
-#: lib/hana_shirabe_web/components/layouts.ex:121
-#: lib/hana_shirabe_web/components/layouts.ex:133
+#: lib/hana_shirabe_web/components/layouts.ex:140
+#: lib/hana_shirabe_web/components/layouts.ex:152
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr "试图重新连接"
 
-#: lib/hana_shirabe_web/components/layouts.ex:128
+#: lib/hana_shirabe_web/components/layouts.ex:147
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr "有东西出问题了！"
 
-#: lib/hana_shirabe_web/components/layouts.ex:116
+#: lib/hana_shirabe_web/components/layouts.ex:135
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr "连不上蓝牙了"
@@ -37,7 +37,7 @@ msgstr "连不上蓝牙了"
 msgid "close"
 msgstr "关闭"
 
-#: lib/hana_shirabe_web/components/layouts.ex:94
+#: lib/hana_shirabe_web/components/layouts.ex:112
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:7
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:7
 #, elixir-autogen, elixir-format
@@ -54,8 +54,8 @@ msgstr "%{title} - 花影下的音符"
 msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr "花影下的音符 :: %{role_as_title}"
 
+#: lib/hana_shirabe_web/live/member_live/profile.ex:30
 #: lib/hana_shirabe_web/live/member_live/registration.ex:37
-#: lib/hana_shirabe_web/live/member_live/settings.ex:30
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr "语言偏好"
@@ -70,12 +70,17 @@ msgstr "施工中..."
 msgid "Welcome to %{site_name}"
 msgstr "欢迎来到「%{site_name}」"
 
-#: lib/hana_shirabe_web/components/layouts.ex:96
+#: lib/hana_shirabe_web/components/layouts.ex:114
 #, elixir-autogen, elixir-format
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr "站内用户创作内容的版权归其自身所有"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:156
 #, elixir-autogen, elixir-format
-msgid "Locale Updated!"
+msgid "Locale updated!"
 msgstr "语言已更新！"
+
+#: lib/hana_shirabe_web/live/member_live/profile.ex:115
+#, elixir-autogen, elixir-format
+msgid "Profile updated!"
+msgstr "个人信息已更新！"

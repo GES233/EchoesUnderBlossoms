@@ -54,10 +54,10 @@ defmodule HanaShirabeWeb.Layouts do
                 </li>
                 <li>
                   <.link
-                    href={~p"/me/settings"}
+                    href={~p"/me/profile"}
                     class="text-sm font-semibold leading-6 text-base-content/70"
                   >
-                    {dgettext("account", "Settings")}
+                    {dgettext("account", "Profile")}
                   </.link>
                 </li>
                 <li>

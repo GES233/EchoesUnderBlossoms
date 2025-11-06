@@ -265,7 +265,7 @@ defmodule HanaShirabeWeb.MemberAuth do
       socket =
         socket
         |> Phoenix.LiveView.put_flash(:error, require_guest_msg)
-        |> Phoenix.LiveView.redirect(to: ~p"/me/settings")
+        |> Phoenix.LiveView.redirect(to: ~p"/me/profile")
 
       {:halt, socket}
     end
@@ -285,7 +285,7 @@ defmodule HanaShirabeWeb.MemberAuth do
   @doc "返回登陆后的重定向路径。"
   # 成员已经登录了，重定向到设置页面
   def signed_in_path(%Plug.Conn{assigns: %{current_scope: %Scope{member: %Accounts.Member{}}}}) do
-    ~p"/me/settings"
+    ~p"/me/profile"
   end
 
   def signed_in_path(_), do: ~p"/"

@@ -1,4 +1,4 @@
-defmodule HanaShirabeWeb.MemberLive.Settings do
+defmodule HanaShirabeWeb.MemberLive.Profile do
   # 主要是修改昵称、简介等不敏感信息
   # 和原来的 Settings （现在的 SensitiveSettings 分开）
   use HanaShirabeWeb, :live_view
@@ -12,12 +12,12 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
       <div class="mx-auto max-w-sm space-y-4">
         <div class="text-center">
           <.header>
-            {dgettext("account", "Account Settings")}
+            {dgettext("account", "Account Profile")}
             <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
           </.header>
         </div>
 
-        <.form :let={f} for={@form} id="settings_form" phx-submit="update_info" phx-change="validate">
+        <.form :let={f} for={@form} id="profile_form" phx-submit="update_info" phx-change="validate">
           <.input
             field={f[:nickname]}
             label={dgettext("account", "Nickname")}
@@ -83,22 +83,40 @@ defmodule HanaShirabeWeb.MemberLive.Settings do
 
     {:ok,
      assign(socket,
-       form: to_form(Accounts.Member.profile_changeset(current_member, %{}), as: "settings_form")
+       form: to_form(Accounts.Member.profile_changeset(current_member, %{}), as: "profile_form")
      )}
   end
 
   @impl true
   def handle_event("validate", unsigned_params, socket) do
-    unsigned_params |> IO.inspect(label: :validate)
+    current_member = socket.assigns.current_scope.member
 
-    {:noreply, socket}
+    form =
+      current_member
+      |> Accounts.Member.profile_changeset(unsigned_params)
+      |> to_form(as: "profile_form")
+
+    {:noreply, assign(socket, form: form)}
   end
 
-  def handle_event("update_info", unsigned_params, socket) do
-    # audit_log = socket.assigns[:audit_log]
+  def handle_event("update_info", %{"profile_form" => unsigned_params}, socket) do
+    audit_log = socket.assigns[:audit_log]
+    current_member = socket.assigns.current_scope.member
 
-    unsigned_params |> IO.inspect(label: :update_info)
+    unsigned_params |> IO.inspect(label: :rawParams)
 
-    {:noreply, socket}
+    {:noreply, do_update_profile(audit_log, current_member, unsigned_params, socket)}
+  end
+
+  defp do_update_profile(audit_log, member_before_update, unsigned_params, socket) do
+    case Accounts.update_member_profile(audit_log, member_before_update, unsigned_params) do
+      {:ok, _new_member} ->
+        socket
+        |> put_flash(:info, gettext("Profile updated!"))
+        |> redirect(to: ~p"/me/profile", replace: true)
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        changeset |> to_form(as: "profile_form") |> then(&assign(socket, form: &1))
+    end
   end
 end

@@ -61,7 +61,7 @@ defmodule HanaShirabeWeb.Router do
     live_session :require_member_with_locale,
       on_mount: @member_with_audit do
       # live "/me/, MemberLive.Page, :me
-      live "/me/settings", MemberLive.Settings
+      live "/me/profile", MemberLive.Profile
     end
 
     # Implement follow, unfollow, etc.
