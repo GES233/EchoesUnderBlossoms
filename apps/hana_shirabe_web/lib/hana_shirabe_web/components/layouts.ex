@@ -76,8 +76,9 @@ defmodule HanaShirabeWeb.Layouts do
         </div>
       </nav>
     </header>
+    <div class="sticky top-16 z-20 px-4 sm:px-6 lg:px-8"><.flash_group flash={@flash} /></div>
 
-    <main class="relative isolate"><.flash_group flash={@flash} /> {render_slot(@inner_block)}</main>
+    <main class="relative isolate">{render_slot(@inner_block)}</main>
 
     <footer class="mt-16 border-t py-8">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -109,7 +110,8 @@ defmodule HanaShirabeWeb.Layouts do
   def flash_group(assigns) do
     ~H"""
     <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} /> <.flash kind={:error} flash={@flash} />
+      <.flash kind={:info} flash={@flash} />
+      <.flash kind={:error} flash={@flash} />
       <.flash
         id="client-error"
         kind={:error}

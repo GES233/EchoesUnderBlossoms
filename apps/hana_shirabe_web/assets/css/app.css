@@ -39,44 +39,40 @@
   color-scheme: "dark";
 
   /* 天空 - The Night Sky */
-  --color-base-100: #12193d; /* ncl_bg */
-  --color-base-200: #141121; /* ncl_bg_dark */
-  --color-base-300: #110f1c; /* A slightly darker variant of ncl_bg_dark */
+  --color-base-100: oklch(23.04% 0.069 271.65); /* ncl_bg */
+  --color-base-200: oklch(19.00% 0.032 291.65); /* ncl_bg_dark */
+  --color-base-300: oklch(17.79% 0.027 290.48); /* A slightly darker variant of ncl_bg_dark */
 
   /* 云辉 - The Glowing Cloud (Content) */
-  --color-base-content: #f1efda; /* ncl_twi_cl */
+  --color-base-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
 
   /* 彩云 - The Iridescent Cloud (Primary Actions) */
-  --color-primary: #c4abe2; /* ncl_cl_pr */
-  --color-primary-content: #141121; /* ncl_bg_dark for contrast */
+  --color-primary: oklch(78.14% 0.081 305.29); /* ncl_cl_pr */
+  --color-primary-content: oklch(19.00% 0.032 291.65); /* ncl_bg_dark for contrast */
 
   /* 云体 - The Cloud Body (Secondary Actions) */
-  --color-secondary: #7f8aa6; /* ncl_cl */
-  --color-secondary-content: #f1efda; /* ncl_twi_cl */
+  --color-secondary: oklch(63.44% 0.044 268.26); /* ncl_cl */
+  --color-secondary-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
 
   /* 暮光 - The Twilight Glow (Accent) */
-  --color-accent: #f1c376; /* ncl_twi */
-  --color-accent-content: #141121; /* ncl_bg_dark */
+  --color-accent: oklch(84.16% 0.109 79.34); /* ncl_twi */
+  --color-accent-content: oklch(19.00% 0.032 291.65); /* ncl_bg_dark */
 
   /* 云霭 - The Haze (Neutral Elements) */
-  --color-neutral: #7f8aa6; /* ncl_cl */
-  --color-neutral-content: #f1efda; /* ncl_twi_cl */
+  --color-neutral: oklch(63.44% 0.044 268.26); /* ncl_cl */
+  --color-neutral-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
 
-  /* Status colors - can be kept from default dark or adjusted */
-  --color-info: #3abff8;
-  --color-success: #36d399;
-  --color-warning: #fbbd23;
-  --color-error: #f87272;
+  /* Status colors - Adjusted on https://daisyui.com/theme-generator */
+  --color-info: oklch(88% 0.059 254.128);
+  --color-info-content: oklch(35% 0.144 278.697);
+  --color-success: oklch(93% 0.127 124.321);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(85% 0.199 91.936);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(88.8% 0.151 53.4);
+  --color-error-content: oklch(27% 0.105 12.094);
 
-  /* You can keep the radius and other settings from your default dark theme
-  --radius-selector: 0.25rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
-  --size-selector: 0.21875rem;
-  --size-field: 0.21875rem;
-  --border: 1.5px;
-  --depth: 1;
-  --noise: 0; */
+  /* You can keep the radius and other settings from your default dark theme */
   --radius-selector: 0.5rem;
   --radius-field: 0.5rem;
   --radius-box: 1rem;
@@ -87,6 +83,7 @@
   --noise: 1;
 }
 
+/* 这组方案随机生成的，但是 base 系列真好 */
 @plugin "../vendor/daisyui-theme" {
   name: "core-cream-soup";
   default: false;
@@ -96,22 +93,22 @@
   --color-base-200: oklch(97% 0.071 103.193);
   --color-base-300: oklch(94% 0.129 101.54);
   --color-base-content: oklch(42% 0.095 57.708);
-  --color-primary: oklch(87% 0.15 154.449);
-  --color-primary-content: oklch(26% 0.065 152.934);
-  --color-secondary: oklch(80% 0.114 19.571);
-  --color-secondary-content: oklch(25% 0.092 26.042);
-  --color-accent: oklch(87% 0 0);
-  --color-accent-content: oklch(14% 0 0);
-  --color-neutral: oklch(68% 0.162 75.834);
-  --color-neutral-content: oklch(98% 0.026 102.212);
-  --color-info: oklch(62% 0.214 259.815);
-  --color-info-content: oklch(97% 0.014 254.604);
-  --color-success: oklch(69% 0.17 162.48);
-  --color-success-content: oklch(97% 0.021 166.113);
-  --color-warning: oklch(76% 0.188 70.08);
-  --color-warning-content: oklch(98% 0.022 95.277);
-  --color-error: oklch(64% 0.246 16.439);
-  --color-error-content: oklch(96% 0.015 12.422);
+  --color-primary: oklch(84.16% 0.109 79.34);
+  --color-primary-content: oklch(22.3% 0.120 51.0);
+  --color-secondary: oklch(94.5% 0.150 93.6);
+  --color-secondary-content: oklch(43.1% 0.126 102.1);
+  --color-accent: oklch(55% 0.135 66.442);
+  --color-accent-content: oklch(89.0% 0.038 81.8);
+  --color-neutral: oklch(83.8% 0.089 97.4);
+  --color-neutral-content: oklch(40.9% 0.037 26.9);
+  --color-info: oklch(86.7% 0.059 282.4);
+  --color-info-content: oklch(40.1% 0.088 301.3);
+  --color-success: oklch(78.4% 0.076 124.3);
+  --color-success-content: oklch(37% 0.077 168.94);
+  --color-warning: oklch(78.6% 0.255 91.9);
+  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-error: oklch(86.1% 0.210 23.1);
+  --color-error-content: oklch(38.6% 0.213 15.0);
   --radius-selector: 0.5rem;
   --radius-field: 0.5rem;
   --radius-box: 1rem;
