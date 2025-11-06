@@ -33,7 +33,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       result =
         lv
         |> element("#registration_form")
-        |> render_change(member: %{"email" => "with spaces"})
+        |> render_change(registration_form: %{"email" => "with spaces"})
 
       title = dgettext("account", "Register")
 
@@ -51,7 +51,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       email = unique_member_email()
-      form = form(lv, "#registration_form", member: valid_member_attributes(email: email))
+      form = form(lv, "#registration_form", registration_form: valid_member_attributes(email: email))
 
       {:ok, _lv, html} =
         render_submit(form)
@@ -76,7 +76,7 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       result =
         lv
         |> form("#registration_form",
-          member: %{"email" => member.email}
+          registration_form: %{"email" => member.email}
         )
         |> render_submit()
 

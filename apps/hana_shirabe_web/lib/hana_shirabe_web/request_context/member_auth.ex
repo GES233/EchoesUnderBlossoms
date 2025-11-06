@@ -254,22 +254,22 @@ defmodule HanaShirabeWeb.MemberAuth do
     end
   end
 
-  def on_mount(:required_guests, _params, session, socket) do
-    socket = mount_current_scope(socket, session)
+  # def on_mount(:required_guests, _params, session, socket) do
+  #   socket = mount_current_scope(socket, session)
 
-    if !(socket.assigns.current_scope && socket.assigns.current_scope.member) do
-      {:cont, socket}
-    else
-      require_guest_msg = dgettext("account", "You are already logged in. You can log out if you really want.")
+  #   if !(socket.assigns.current_scope && socket.assigns.current_scope.member) do
+  #     {:cont, socket}
+  #   else
+  #     require_guest_msg = dgettext("account", "You are already logged in. You can log out if you really want.")
 
-      socket =
-        socket
-        |> Phoenix.LiveView.put_flash(:error, require_guest_msg)
-        |> Phoenix.LiveView.redirect(to: ~p"/me/profile")
+  #     socket =
+  #       socket
+  #       |> Phoenix.LiveView.put_flash(:error, require_guest_msg)
+  #       |> Phoenix.LiveView.redirect(to: ~p"/me/profile")
 
-      {:halt, socket}
-    end
-  end
+  #     {:halt, socket}
+  #   end
+  # end
 
   def mount_current_scope(socket, session) do
     Phoenix.Component.assign_new(socket, :current_scope, fn ->
