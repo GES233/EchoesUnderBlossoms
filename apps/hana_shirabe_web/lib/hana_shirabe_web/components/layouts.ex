@@ -38,39 +38,56 @@ defmodule HanaShirabeWeb.Layouts do
         </div>
 
         <div class="navbar-end">
-          <div class="hidden sm:flex items-center gap-4">
-            <%= if @current_scope do %>
-              <!-- TODO: 如果可以的话改成下拉列表 -->
-              <span class="text-sm font-medium text-base-content/80">
-                {@current_scope.member.nickname}
-              </span>
-              <.link
-                href={~p"/me/settings"}
-                class="text-sm font-semibold leading-6 text-base-content/70"
-              >
-                {dgettext("account", "Settings")}
-              </.link>
-              <.link
-                href={~p"/logout"}
-                method="delete"
-                class="text-sm font-semibold leading-6 text-base-content/70"
-              >
-                {dgettext("account", "Log out")}
-              </.link>
-            <% else %>
-              <.link
-                href={~p"/sign_up"}
-                class="text-sm font-semibold leading-6 text-base-content/70"
-              >
-                {dgettext("account", "Register")}
-              </.link>
-              <.link
-                href={~p"/login"}
-                class="text-sm font-semibold leading-6 text-base-content/70"
-              >
-                {dgettext("account", "Log in")}
-              </.link>
-            <% end %>
+          <div class="dropdown dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+                <.icon name="hero-user-circle" class="size-10 hover:opacity-100" />
+            </div>
+            <ul
+              tabindex="-1"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-32 p-2 shadow"
+            >
+              <%= if @current_scope do %>
+                <li>
+                  <span class="text-sm font-medium text-base-content/80">
+                    {@current_scope.member.nickname}
+                  </span>
+                </li>
+                <li>
+                  <.link
+                    href={~p"/me/settings"}
+                    class="text-sm font-semibold leading-6 text-base-content/70"
+                  >
+                    {dgettext("account", "Settings")}
+                  </.link>
+                </li>
+                <li>
+                  <.link
+                    href={~p"/logout"}
+                    method="delete"
+                    class="text-sm font-semibold leading-6 text-base-content/70"
+                  >
+                    {dgettext("account", "Log out")}
+                  </.link>
+                </li>
+              <% else %>
+                <li>
+                  <.link
+                    href={~p"/sign_up"}
+                    class="text-sm font-semibold leading-6 text-base-content/70"
+                  >
+                    {dgettext("account", "Register")}
+                  </.link>
+                </li>
+                <li>
+                  <.link
+                    href={~p"/login"}
+                    class="text-sm font-semibold leading-6 text-base-content/70"
+                  >
+                    {dgettext("account", "Log in")}
+                  </.link>
+                </li>
+              <% end %>
+            </ul>
           </div>
           <.theme_toggle />
         </div>
