@@ -13,6 +13,9 @@ config :hana_shirabe, HanaShirabe.Repo,
   pool_size: 5,
   pool: Ecto.Adapters.SQL.Sandbox
 
+config :hana_shirabe, HanaShirabe.Accounts,
+  totp_secret_key_salt: "lWYpML2HI6PwfDMAx2PJnrpGDVV6v2HSARTXY5Lp/bRUOWyMJlyio8yWIlM7dduc"
+
 # 我们不需要在测试时运行服务器。
 # 如果需要的话，可以启用下面的 `server` 选项。
 config :hana_shirabe_web, HanaShirabeWeb.Endpoint,

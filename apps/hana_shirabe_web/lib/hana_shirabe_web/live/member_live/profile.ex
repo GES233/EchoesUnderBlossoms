@@ -16,7 +16,7 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
             <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
           </.header>
         </div>
-
+        
         <.form :let={f} for={@form} id="profile_form" phx-submit="update_info" phx-change="validate">
           <.input
             field={f[:nickname]}
@@ -48,9 +48,9 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
             {dgettext("account", "Update Profile")}
           </.button>
         </.form>
-
+        
         <div class="divider">{dgettext("account", "Dangerours Zone")}</div>
-
+        
         <div class="text-center">
           {dgettext(
             "account",

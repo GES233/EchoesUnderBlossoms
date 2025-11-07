@@ -7,6 +7,10 @@ config :hana_shirabe, HanaShirabe.Repo,
   stacktrace: true,
   show_sensitive_data_on_connection_error: true
 
+# TOTP 盐
+config :hana_shirabe, HanaShirabe.Accounts,
+  totp_secret_key_salt: "2Y7rK+zes0FKMaq9rB33qIPUTTzXnrhuCYvoBMB5FGhP3PCiog6Trtr7JclzVJH+"
+
 # 我们在开发时禁用缓存，并且启用 debug 以及代码重载。
 #
 # 观察者配置可用于运行应用程序的外部观察者。例如，我们可以用它来捆绑 .js 和 .css 源。

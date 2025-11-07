@@ -38,80 +38,80 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             </.header>
           <% end %>
         </div>
-
-      <%= if !@member_email do %>
-        <.form
-          :let={f}
-          :if={!@member_email}
-          for={@sign_up_form}
-          id="registration_form"
-          phx-submit="save"
-          phx-change="validate"
-        >
-          <div phx-hook=".LocaleFormInput" id="locale-toggle">
-            <.input
-              field={f[:prefer_locale]}
-              type="select"
-              label={gettext("Locale Preference")}
-              options={[
-                {"English", "en"},
-                {"日本語", "ja"},
-                {"简体中文", "zh_Hans"}
-              ]}
-              phx-change={JS.push("locale_changed")}
-            />
-            <script :type={Phoenix.LiveView.ColocatedHook} name=".LocaleFormInput">
-              export default {
-                mounted() {
-                  const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-
-                  this.handleEvent("set_locale_cookie", ({ locale }) => {
-                    fetch(`/set-locale/${locale}`, {
-                      method: "POST",
-                      headers: {
-                        "x-csrf-token": csrfToken
-                      }
-                    }).then(response => {
-                      if (response.ok) {
-                        this.pushEvent("locale_cookie_updated", {locale: locale});
-                    }}).catch(error => {
-                      console.error(`Failed to set locale cookie to '${locale}':`, error)
-                    });
-                  });
-                }
-              }
-            </script>
-          </div>
-
-          <.input
-            field={f[:nickname]}
-            type="text"
-            label={dgettext("account", "Nickname")}
-            autocomplete="username"
-            required
-            phx-mounted={JS.focus()}
-            placeholder={dgettext("account", "Tell us how we should address you.")}
-          />
-          <.input
-            field={f[:email]}
-            type="email"
-            label={dgettext("account", "Email")}
-            autocomplete="email"
-            required
-            phx-mounted={JS.focus()}
-            placeholder={
-              dgettext("account", "Please enter your email address so we can contact you.")
-            }
-          />
-          <!-- 放个将要成为邀请码的 .iuput 在这里 -->
-          <.button
-            phx-disable-with={dgettext("account", "Creating account...")}
-            class="btn btn-primary w-full"
+        
+        <%= if !@member_email do %>
+          <.form
+            :let={f}
+            :if={!@member_email}
+            for={@sign_up_form}
+            id="registration_form"
+            phx-submit="save"
+            phx-change="validate"
           >
-            {dgettext("account", "Create an account")}
-          </.button>
-        </.form>
-      <% end %>
+            <div phx-hook=".LocaleFormInput" id="locale-toggle">
+              <.input
+                field={f[:prefer_locale]}
+                type="select"
+                label={gettext("Locale Preference")}
+                options={[
+                  {"English", "en"},
+                  {"日本語", "ja"},
+                  {"简体中文", "zh_Hans"}
+                ]}
+                phx-change={JS.push("locale_changed")}
+              />
+              <script :type={Phoenix.LiveView.ColocatedHook} name=".LocaleFormInput">
+                export default {
+                  mounted() {
+                    const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+
+                    this.handleEvent("set_locale_cookie", ({ locale }) => {
+                      fetch(`/set-locale/${locale}`, {
+                        method: "POST",
+                        headers: {
+                          "x-csrf-token": csrfToken
+                        }
+                      }).then(response => {
+                        if (response.ok) {
+                          this.pushEvent("locale_cookie_updated", {locale: locale});
+                      }}).catch(error => {
+                        console.error(`Failed to set locale cookie to '${locale}':`, error)
+                      });
+                    });
+                  }
+                }
+              </script>
+            </div>
+            
+            <.input
+              field={f[:nickname]}
+              type="text"
+              label={dgettext("account", "Nickname")}
+              autocomplete="username"
+              required
+              phx-mounted={JS.focus()}
+              placeholder={dgettext("account", "Tell us how we should address you.")}
+            />
+            <.input
+              field={f[:email]}
+              type="email"
+              label={dgettext("account", "Email")}
+              autocomplete="email"
+              required
+              phx-mounted={JS.focus()}
+              placeholder={
+                dgettext("account", "Please enter your email address so we can contact you.")
+              }
+            />
+            <!-- 放个将要成为邀请码的 .iuput 在这里 -->
+            <.button
+              phx-disable-with={dgettext("account", "Creating account...")}
+              class="btn btn-primary w-full"
+            >
+              {dgettext("account", "Create an account")}
+            </.button>
+          </.form>
+        <% end %>
       </div>
     </Layouts.app>
     """

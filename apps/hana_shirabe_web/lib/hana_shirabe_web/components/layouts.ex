@@ -40,7 +40,7 @@ defmodule HanaShirabeWeb.Layouts do
         <div class="navbar-end">
           <div class="dropdown dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-                <.icon name="hero-user-circle" class="size-10 hover:opacity-100" />
+              <.icon name="hero-user-circle" class="size-10 hover:opacity-100" />
             </div>
             <ul
               tabindex="-1"

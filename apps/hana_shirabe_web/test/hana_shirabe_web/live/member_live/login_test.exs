@@ -83,7 +83,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       form =
-        form(lv, "#login_form_password", login_form_password: %{email: "test@email.com", password: "123456"})
+        form(lv, "#login_form_password",
+          login_form_password: %{email: "test@email.com", password: "123456"}
+        )
 
       render_submit(form, %{user: %{remember_me: true}})
 

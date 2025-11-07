@@ -14,17 +14,17 @@ msgstr ""
 #: lib/hana_shirabe/accounts/member_notifier.ex:112
 #, elixir-autogen, elixir-format
 msgid "Confirmation instructions"
-msgstr ""
+msgstr "確認手順"
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:78
 #, elixir-autogen, elixir-format
 msgid "Log in instructions"
-msgstr ""
+msgstr "ログイン手順"
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:36
 #, elixir-autogen, elixir-format
 msgid "Update email instructions"
-msgstr ""
+msgstr "メールアドレス更新手順"
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:37
 #, elixir-autogen, elixir-format
@@ -47,6 +47,23 @@ msgid ""
 "==============================\n"
 ""
 msgstr ""
+"==============================\n"
+"\n"
+"%{member_email} 様、\n"
+"\n"
+"「花影下の音符」へようこそ。\n"
+"\n"
+"メールアドレスを変更するには、以下の確認コードをご利用ください：\n"
+"\n"
+"%{code}\n"
+"\n"
+"または、以下のリンクにアクセスして手続きを完了することもできます：\n"
+"\n"
+"%{url}\n"
+"\n"
+"このリクエストは15分間有効です。このリクエストに心当たりがない場合は、このメールを無視してください。\n"
+"==============================\n"
+""
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:79
 #, elixir-autogen, elixir-format
@@ -70,6 +87,24 @@ msgid ""
 "==============================\n"
 ""
 msgstr ""
+"==============================\n"
+"\n"
+"%{member_email} 様、\n"
+"\n"
+"「花影下の音符」へようこそ。\n"
+"\n"
+"ログインを完了するには、以下の確認コードをご利用ください：\n"
+"\n"
+"%{code}\n"
+"\n"
+"または、以下のリンクにアクセスしてサインインすることもできます：\n"
+"\n"
+"%{url}\n"
+"\n"
+"このリクエストは15分間有効です。このリクエストに心当たりがない場合は、このメールを無視してください。\n"
+"\n"
+"==============================\n"
+""
 
 #: lib/hana_shirabe/accounts/member_notifier.ex:113
 #, elixir-autogen, elixir-format
@@ -89,3 +124,17 @@ msgid ""
 "==============================\n"
 ""
 msgstr ""
+"==============================\n"
+"\n"
+"%{member_email} 様、\n"
+"\n"
+"「花影下の音符」へようこそ。\n"
+"\n"
+"手続きを完了するには、以下のリンクにアクセスしてください：\n"
+"\n"
+"%{url}\n"
+"\n"
+"このリクエストは15分間有効です。このリクエストに心当たりがない場合は、このメールを無視してください。\n"
+"\n"
+"==============================\n"
+""

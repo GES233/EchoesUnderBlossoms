@@ -307,10 +307,11 @@ defmodule HanaShirabe.Accounts do
           NimbleTOTP.valid?(get_secret_from_token(token), code,
             time: current,
             period: 60 * 15
-          ) or NimbleTOTP.valid?(token.token, code,
-            time: current - 30,
-            period: 60 * 15
-          )
+          ) or
+            NimbleTOTP.valid?(token.token, code,
+              time: current - 30,
+              period: 60 * 15
+            )
         end)
 
       _ ->
@@ -409,15 +410,19 @@ defmodule HanaShirabe.Accounts do
   end
 
   defp get_code_from_inserted_token(token_with_time) do
-    # TODO: 加盐，这个数据存储在服务器的其他地方而非数据库里
     NimbleTOTP.verification_code(get_secret_from_token(token_with_time),
       time: token_with_time.inserted_at,
       period: 60 * 15
     )
   end
 
+  @totp_hash_algorithm :sha256
+
   def get_secret_from_token(token_with_time) do
-    token_with_time.token
+    salt = Application.get_env(:hana_shirabe, HanaShirabe.Accounts)[:totp_secret_key_salt]
+
+    (token_with_time.token <> salt)
+    |> then(&:crypto.hash(@totp_hash_algorithm, &1))
   end
 
   ## 对会话的处理（用于多设备显示操作）

@@ -128,7 +128,7 @@ defmodule HanaShirabe.Accounts.MemberToken do
   """
   def verify_magic_code_via_email_query(email) do
     query =
-        from token in by_context_query("login"),
+      from token in by_context_query("login"),
         join: member in assoc(token, :member),
         where: token.inserted_at > ago(^@magic_link_validity_in_minutes, "minute"),
         where: token.sent_to == member.email,

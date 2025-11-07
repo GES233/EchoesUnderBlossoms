@@ -26,6 +26,9 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  config :hana_shirabe, HanaShirabe.Accounts,
+    totp_secret_key_salt: secret_key_base
+
   config :hana_shirabe_web, HanaShirabeWeb.Endpoint,
     http: [
       # 启用 IPv6 且绑定所有接口。

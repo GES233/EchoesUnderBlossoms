@@ -51,7 +51,9 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       {:ok, lv, _html} = live(conn, ~p"/sign_up")
 
       email = unique_member_email()
-      form = form(lv, "#registration_form", registration_form: valid_member_attributes(email: email))
+
+      form =
+        form(lv, "#registration_form", registration_form: valid_member_attributes(email: email))
 
       html =
         render_submit(form)

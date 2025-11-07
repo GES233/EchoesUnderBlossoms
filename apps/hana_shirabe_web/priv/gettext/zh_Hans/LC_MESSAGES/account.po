@@ -322,19 +322,19 @@ msgstr "确认"
 #: lib/hana_shirabe_web/live/member_live/login.ex:75
 #, elixir-autogen, elixir-format
 msgid "Send code"
-msgstr ""
+msgstr "发送验证码"
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:66
 #, elixir-autogen, elixir-format
 msgid "Verification Code"
-msgstr ""
+msgstr "验证码"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:36
 #, elixir-autogen, elixir-format
 msgid "You can use magic link to comfirm and login you account."
-msgstr ""
+msgstr "您可以使用链接去确认并登录您的账号。"
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:132
 #, elixir-autogen, elixir-format
 msgid "the mailbox page"
-msgstr ""
+msgstr "邮箱页（私人版）"
