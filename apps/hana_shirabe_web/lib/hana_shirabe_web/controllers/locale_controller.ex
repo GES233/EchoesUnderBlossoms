@@ -1,4 +1,7 @@
 defmodule HanaShirabeWeb.LocaleController do
+  @moduledoc """
+  这其实就是一个 Plug ，实现注册表单更改语言即刻更新页面语言所设。
+  """
   use HanaShirabeWeb, :controller
 
   # 需要确定的是
