@@ -19,7 +19,7 @@ defmodule HanaShirabe.Accounts.Member do
     # defp status_changeset/2
     # implement namy_status_transform_function
     field :prefer_locale, :string, default: Gettext.get_locale()
-    field :avatar, :string, default: ""
+    field :avatar, :string
     field :intro, :string
 
     timestamps()
@@ -69,7 +69,6 @@ defmodule HanaShirabe.Accounts.Member do
       |> unique_constraint(:email)
       |> validate_email_changed()
     else
-      # coveralls-ignore-next-line
       changeset
     end
   end
@@ -102,6 +101,13 @@ defmodule HanaShirabe.Accounts.Member do
     )
   end
 
+  defp validate_nickname(changeset, _opts) do
+    changeset
+    |> validate_required([:nickname])
+    # 不允许 Unicode 隐形字符
+    # 不允许空格与回车
+  end
+
   @doc """
   用于更换成员密码的更换集。
 
@@ -126,7 +132,7 @@ defmodule HanaShirabe.Accounts.Member do
     |> validate_required([:password])
     # TODO: 将错误提醒的字符串显式的通过 :message 参数表明以便实现翻译
     # 需要再看一下代码
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 8, max: 72)
     # 其他可以使用的：
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
@@ -147,11 +153,6 @@ defmodule HanaShirabe.Accounts.Member do
     else
       changeset
     end
-  end
-
-  defp validate_nickname(changeset, _opts) do
-    changeset
-    |> validate_required([:nickname])
   end
 
   @doc """

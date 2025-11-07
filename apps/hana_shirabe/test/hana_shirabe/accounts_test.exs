@@ -231,7 +231,7 @@ defmodule HanaShirabe.AccountsTest do
         })
 
       %{
-        # "should be at least 12 character(s)"
+        # "should be at least 8 character(s)"
         password: [should_be_at_least_count_characters],
         # "does not match password"
         password_confirmation: [does_not_match_password]
@@ -240,7 +240,7 @@ defmodule HanaShirabe.AccountsTest do
       assert does_not_match_password == dgettext("account", "does not match password")
 
       assert should_be_at_least_count_characters ==
-               dgettext("account", "should be at least %{count} character(s)", count: 12)
+               dgettext("account", "should be at least %{count} character(s)", count: 8)
     end
 
     test "validates maximum values for password for security", %{member: member} do
@@ -436,7 +436,7 @@ defmodule HanaShirabe.AccountsTest do
   describe "测试用于成员结构体的 inspect/2" do
     test "不要显示密码" do
       # 也实现不了，因为 password 是 vitual 字段
-      refute inspect(%Member{password: "123456"}) =~ "password: \"123456\""
+      refute inspect(%Member{password: "83456"}) =~ "password: \"83456\""
     end
   end
 end
