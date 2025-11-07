@@ -55,7 +55,7 @@ msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:30
-#: lib/hana_shirabe_web/live/member_live/registration.ex:37
+#: lib/hana_shirabe_web/live/member_live/registration.ex:55
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr ""
@@ -75,7 +75,7 @@ msgstr ""
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:156
+#: lib/hana_shirabe_web/live/member_live/registration.ex:176
 #, elixir-autogen, elixir-format
 msgid "Locale updated!"
 msgstr ""

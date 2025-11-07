@@ -99,7 +99,7 @@ defmodule HanaShirabe.AuditLog do
 
   ### 格式说明
 
-  主体（用户或系统）在 `insert_at` 时执行了有关 `scope` 领域的
+  主体（用户或系统）在 `inserted_at` 时执行了有关 `scope` 领域的
   `verb` 行动，其上下文为 `context` 。
 
   上下文主要是被操作的对象（比方说管理员动用权限删除推文或封禁用户）

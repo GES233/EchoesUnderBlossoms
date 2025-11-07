@@ -18,21 +18,39 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm">
         <div class="text-center">
-          <.header>
-            {dgettext("account", "Register for an account")}
-            <:subtitle>
-              {dgettext("account", "Already registered? %{login_link} to your account now.",
-                login_link: translate_with_link(%{url: ~p"/login"})
-              )
-              |> raw()}
-            </:subtitle>
-          </.header>
+          <%= if !@member_email do %>
+            <.header>
+              {dgettext("account", "Register for an account")}
+              <:subtitle>
+                {dgettext("account", "Already registered? %{login_link} to your account now.",
+                  login_link: translate_with_link(%{url: ~p"/login"})
+                )
+                |> raw()}
+              </:subtitle>
+            </.header>
+          <% else %>
+            <.header>
+              {dgettext("account", "Confirm")}
+              <:subtitle>
+                <!---->
+                {dgettext("account", "You can use magic link to comfirm and login you account.")}
+              </:subtitle>
+            </.header>
+          <% end %>
         </div>
 
-        <.form for={@form} id="registration_form" phx-submit="save" phx-change="validate">
+      <%= if !@member_email do %>
+        <.form
+          :let={f}
+          :if={!@member_email}
+          for={@sign_up_form}
+          id="registration_form"
+          phx-submit="save"
+          phx-change="validate"
+        >
           <div phx-hook=".LocaleFormInput" id="locale-toggle">
             <.input
-              field={@form[:prefer_locale]}
+              field={f[:prefer_locale]}
               type="select"
               label={gettext("Locale Preference")}
               options={[
@@ -42,7 +60,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
               ]}
               phx-change={JS.push("locale_changed")}
             />
-
             <script :type={Phoenix.LiveView.ColocatedHook} name=".LocaleFormInput">
               export default {
                 mounted() {
@@ -65,8 +82,9 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
               }
             </script>
           </div>
+
           <.input
-            field={@form[:nickname]}
+            field={f[:nickname]}
             type="text"
             label={dgettext("account", "Nickname")}
             autocomplete="username"
@@ -75,7 +93,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             placeholder={dgettext("account", "Tell us how we should address you.")}
           />
           <.input
-            field={@form[:email]}
+            field={f[:email]}
             type="email"
             label={dgettext("account", "Email")}
             autocomplete="email"
@@ -93,6 +111,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             {dgettext("account", "Create an account")}
           </.button>
         </.form>
+      <% end %>
       </div>
     </Layouts.app>
     """
@@ -122,7 +141,8 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   def mount(_params, _session, socket) do
     changeset = Accounts.Member.registration_changeset(%Member{}, %{}, validate_unique: false)
 
-    {:ok, assign_form(socket, changeset), temporary_assigns: [form: nil]}
+    {:ok, assign_form(socket, changeset) |> assign(member_email: nil),
+     temporary_assigns: [form: nil]}
   end
 
   @impl true
@@ -171,6 +191,10 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
     {:noreply, assign_form(socket, Map.put(changeset, :action, :validate))}
   end
 
+  def handle_event("submit_code", _params, socket) do
+    {:noreply, assign(socket, trigger_submit: true)}
+  end
+
   defp do_register(audit_log, member_params, socket) do
     case Accounts.register_member(audit_log, member_params) do
       {:ok, member} ->
@@ -180,17 +204,19 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             &url(~p"/login/#{&1}")
           )
 
-        {:noreply,
-         socket
-         |> put_flash(
-           :info,
-           dgettext(
-             "account",
-             "An email was sent to %{member_email}, please access it to confirm your account.",
-             member_email: member.email
-           )
-         )
-         |> push_navigate(to: ~p"/login")}
+        {
+          :noreply,
+          socket
+          |> put_flash(
+            :info,
+            dgettext(
+              "account",
+              "An email was sent to %{member_email}, please access it to confirm your account.",
+              member_email: member.email
+            )
+          )
+          |> assign(member_email: member.email)
+        }
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
@@ -206,6 +232,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
       end
       |> to_form(as: "registration_form")
 
-    assign(socket, form: form)
+    assign(socket, sign_up_form: form)
   end
 end

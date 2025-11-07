@@ -30,7 +30,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   @doc """
   使成员更新邮件的指示。
   """
-  def deliver_update_email_instructions(member, url) do
+  def deliver_update_email_instructions(member, code, url) do
     deliver(
       member.email,
       dgettext("deliver", "Update email instructions"),
@@ -42,15 +42,21 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
 
         Hi %{member_email},
 
-        You can change your email by visiting the URL below:
+        Welcome to Echoes Under Blossoms.
+
+        Please use the following code to change your email:
+
+        %{code}
+
+        Alternatively, you can sign in by visiting the link below:
 
         %{url}
 
-        If you didn't request this change, please ignore this.
-
+        This request is valid for 15 minutes. If you did not request this, please ignore this email.
         ==============================
         """,
         member_email: member.email,
+        code: code,
         url: url
       )
     )
@@ -59,14 +65,14 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   @doc """
   通过链接登录的指示。
   """
-  def deliver_login_instructions(member, url) do
+  def deliver_login_instructions(member, code, url) do
     case member do
-      %Member{confirmed_at: nil} -> deliver_confirmation_instructions(member, url)
-      _ -> deliver_magic_link_instructions(member, url)
+      %Member{confirmed_at: nil} -> deliver_confirmation_instructions(member, code, url)
+      _ -> deliver_magic_link_instructions(member, code, url)
     end
   end
 
-  defp deliver_magic_link_instructions(member, url) do
+  defp deliver_magic_link_instructions(member, code, url) do
     deliver(
       member.email,
       dgettext("deliver", "Log in instructions"),
@@ -78,21 +84,29 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
 
         Hi %{member_email},
 
-        You can log into your account by visiting the URL below:
+        Welcome to Echoes Under Blossoms.
+
+        Please use the following code to complete your log in:
+
+        %{code}
+
+        Alternatively, you can sign in by visiting the link below:
 
         %{url}
 
-        If you didn't request this email, please ignore this.
+        This request is valid for 15 minutes. If you did not request this, please ignore this email.
 
         ==============================
         """,
         member_email: member.email,
+        code: code,
         url: url
       )
     )
   end
 
-  defp deliver_confirmation_instructions(member, url) do
+  # 注册就别用 Code 了吧。
+  defp deliver_confirmation_instructions(member, _code, url) do
     deliver(
       member.email,
       dgettext("deliver", "Confirmation instructions"),
@@ -104,11 +118,13 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
 
         Hi %{member_email},
 
-        You can confirm your account by visiting the URL below:
+        Welcome to Echoes Under Blossoms.
+
+        Please visit the link below:
 
         %{url}
 
-        If you didn't create an account with us, please ignore this.
+        This request is valid for 15 minutes. If you did not request this, please ignore this email.
 
         ==============================
         """,

@@ -41,23 +41,61 @@ defmodule HanaShirabeWeb.MemberSessionController do
   defp create(conn, %{"member" => member_params}, info) do
     audit_context = conn.assigns[:audit_log]
 
-    %{"email" => email, "password" => password} = member_params
+    do_check_and_log(conn, audit_context, member_params, info)
+  end
 
+  defp create(conn, %{"login_form_password" => member_params}, info) do
+    audit_context = conn.assigns[:audit_log]
+
+    do_check_and_log(conn, audit_context, member_params, info)
+  end
+
+  defp create(conn, %{"login_form_magic" => member_params}, info) do
+    audit_context = conn.assigns[:audit_log]
+
+    do_check_and_log(conn, audit_context, member_params, info)
+  end
+
+  defp do_check_and_log(
+         conn,
+         audit_context,
+         %{"email" => email, "password" => password} = member_params,
+         info
+       ) do
     if member = Accounts.authenticate_and_log_via_password(audit_context, email, password) do
       conn
       |> put_flash(:info, info)
       |> MemberAuth.log_in_member(member, member_params)
     else
-      # 为防止邮件地址枚举攻击
-      # （for mail <- 1000000000...2999999999, mail |> Integer.to_string() <> "@qq.com", do: blabla）
-      # 不要透露邮件地址是否已注册。
-      err_msg = dgettext("account", "Invalid email or password")
-
-      conn
-      |> put_flash(:error, err_msg)
-      |> put_flash(:email, String.slice(email, 0, 160))
-      |> redirect(to: ~p"/login")
+      redirect_when_failed(conn, email)
     end
+  end
+
+  defp do_check_and_log(
+         conn,
+         audit_context,
+         %{"email" => email, "code" => code} = member_params,
+         info
+       ) do
+    if member = Accounts.authenticate_and_log_via_code(audit_context, email, code) do
+      conn
+      |> put_flash(:info, info)
+      |> MemberAuth.log_in_member(member, member_params)
+    else
+      redirect_when_failed(conn, email)
+    end
+  end
+
+  defp redirect_when_failed(conn, email) do
+    # 为防止邮件地址枚举攻击
+    # （for mail <- 1000000000...2999999999, mail |> Integer.to_string() <> "@qq.com", do: blabla）
+    # 不要透露邮件地址是否已注册。
+    err_msg = dgettext("account", "Invalid email or password")
+
+    conn
+    |> put_flash(:error, err_msg)
+    |> put_flash(:email, String.slice(email, 0, 160))
+    |> redirect(to: ~p"/login")
   end
 
   def update_password(conn, %{"member" => member_params} = params) do

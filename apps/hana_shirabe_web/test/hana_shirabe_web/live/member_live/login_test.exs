@@ -12,7 +12,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
 
       login = dgettext("account", "Log in")
       register = dgettext("account", "Register")
-      login_with_email = dgettext("account", "Log in with email")
+      login_with_email = dgettext("account", "Send code")
 
       assert html =~ login
       assert html =~ register
@@ -26,10 +26,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
 
       {:ok, lv, _html} = live(conn, ~p"/login")
 
-      {:ok, _lv, html} =
-        form(lv, "#login_form_magic", member: %{email: member.email})
+      html =
+        form(lv, "#login_form_magic", login_form_magic: %{email: member.email})
         |> render_submit()
-        |> follow_redirect(conn, ~p"/login")
 
       msg =
         dgettext(
@@ -46,10 +45,9 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     test "不会泄露某个邮箱地址是否已被注册", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
-      {:ok, _lv, html} =
-        form(lv, "#login_form_magic", member: %{email: "idonotexist@example.com"})
+      html =
+        form(lv, "#login_form_magic", login_form_magic: %{email: "idonotexist@example.com"})
         |> render_submit()
-        |> follow_redirect(conn, ~p"/login")
 
       msg =
         dgettext(
@@ -60,6 +58,8 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       assert html =~ msg
     end
   end
+
+  # describe "通过邮件邀请码登录成员"
 
   describe "通过密码登录成员" do
     test "输入合法凭证将会跳转", %{conn: conn} do
@@ -83,7 +83,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       form =
-        form(lv, "#login_form_password", member: %{email: "test@email.com", password: "123456"})
+        form(lv, "#login_form_password", login_form_password: %{email: "test@email.com", password: "123456"})
 
       render_submit(form, %{user: %{remember_me: true}})
 
@@ -128,14 +128,14 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
         )
 
       title = dgettext("account", "Register")
-      button = dgettext("account", "Log in with email")
+      button = dgettext("account", "Send code")
 
       assert html =~ info
       refute html =~ title
       assert html =~ button
 
       assert html =~
-               ~s(<input type="email" name="member[email]" id="login_form_magic_email" value="#{member.email}")
+               ~s(<input type="email" name="login_form_magic[email]" id="login_form_magic_email" value="#{member.email}")
     end
   end
 end

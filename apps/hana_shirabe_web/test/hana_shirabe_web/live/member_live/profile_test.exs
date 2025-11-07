@@ -1,7 +1,7 @@
 defmodule HanaShirabeWeb.MemberLive.ProfileTest do
   use HanaShirabeWeb.ConnCase
 
-  alias HanaShirabe.Accounts
+  # alias HanaShirabe.Accounts
   import Phoenix.LiveViewTest
   import HanaShirabe.AccountsFixtures
 

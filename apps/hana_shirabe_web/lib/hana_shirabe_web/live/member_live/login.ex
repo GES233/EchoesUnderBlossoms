@@ -44,22 +44,39 @@ defmodule HanaShirabeWeb.MemberLive.Login do
 
         <.form
           :let={f}
-          for={@form}
+          for={@magic_form}
           id="login_form_magic"
           action={~p"/login"}
-          phx-submit="submit_magic"
+          phx-submit={if !@enter_code, do: "submit_mail", else: "submit_code"}
+          phx-trigger-action={@trigger_submit_code}
         >
           <.input
-            readonly={!!@current_scope}
-            field={f[:email]}
+            readonly={!!@current_scope || @enter_code}
+            field={f[:email] || @email}
             type="email"
             label={dgettext("account", "Email")}
             autocomplete="username"
             required
             phx-mounted={JS.focus()}
           />
+          <.input
+            :if={@enter_code}
+            field={f[:code]}
+            type="text"
+            label={dgettext("account", "Verification Code")}
+            autocomplete="one-time-code"
+            required
+            inputmode="numeric"
+            pattern="[0-9]*"
+            phx-mounted={JS.focus()}
+          />
           <.button class="btn btn-primary w-full">
-            {dgettext("account", "Log in with email")} <span aria-hidden="true">→</span>
+            <%= if !@enter_code do %>
+              {dgettext("account", "Send code")}
+            <% else %>
+              {dgettext("account", "Log in with email")}
+            <% end %>
+             <span aria-hidden="true">→</span>
           </.button>
         </.form>
 
@@ -67,7 +84,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
 
         <.form
           :let={f}
-          for={@form}
+          for={@password_form}
           id="login_form_password"
           action={~p"/login"}
           phx-submit="submit_password"
@@ -82,12 +99,12 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             required
           />
           <.input
-            field={@form[:password]}
+            field={f[:password]}
             type="password"
             label={dgettext("account", "Password")}
             autocomplete="current-password"
           />
-          <.button class="btn btn-primary w-full" name={@form[:remember_me].name} value="true">
+          <.button class="btn btn-primary w-full" name={f[:remember_me].name} value="true">
             {dgettext("account", "Log in and stay logged in")} <span aria-hidden="true">→</span>
           </.button>
           <.button class="btn btn-primary btn-soft w-full mt-2">
@@ -112,7 +129,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
 
   defp translate_email_instructions(assigns) do
     ~H"""
-    <.link href="/dev/mailbox" class="underline">the mailbox page</.link>.
+    <.link href="/dev/mailbox" class="underline">{dgettext("account", "the mailbox page")}</.link>.
     """
   end
 
@@ -122,9 +139,17 @@ defmodule HanaShirabeWeb.MemberLive.Login do
       Phoenix.Flash.get(socket.assigns.flash, :email) ||
         get_in(socket.assigns, [:current_scope, Access.key(:member), Access.key(:email)])
 
-    form = to_form(%{"email" => email}, as: "member")
+    socket =
+      socket
+      |> assign(
+        enter_code: nil,
+        magic_form: to_form(%{"email" => email, "code" => nil}, as: "login_form_magic"),
+        password_form: to_form(%{"email" => email, "password" => nil}, as: "login_form_password"),
+        trigger_submit: false,
+        trigger_submit_code: false
+      )
 
-    {:ok, assign(socket, form: form, trigger_submit: false)}
+    {:ok, socket}
   end
 
   @impl true
@@ -132,7 +157,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
     {:noreply, assign(socket, :trigger_submit, true)}
   end
 
-  def handle_event("submit_magic", %{"member" => %{"email" => email}}, socket) do
+  def handle_event("submit_mail", %{"login_form_magic" => %{"email" => email}}, socket) do
     if member = Accounts.get_member_by_email(email) do
       Accounts.deliver_login_instructions(
         member,
@@ -146,10 +171,40 @@ defmodule HanaShirabeWeb.MemberLive.Login do
         "If your email is in our system, you will receive instructions for logging in shortly."
       )
 
-    {:noreply,
-     socket
-     |> put_flash(:info, info)
-     |> push_navigate(to: ~p"/login")}
+    {
+      :noreply,
+      socket
+      |> put_flash(:info, info)
+      |> assign(
+        email: email,
+        enter_code: true,
+        magic_form: to_form(%{"email" => email, "code" => ""}, as: "login_form_magic"),
+        password_form: to_form(%{"email" => email, "password" => nil}, as: "login_form_password")
+      )
+    }
+  end
+
+  def handle_event(
+        "submit_code",
+        %{"login_form_magic" => %{"code" => code, "email" => email}},
+        socket
+      ) do
+    member =
+      case Accounts.get_member_by_email_magic_link_code(email, code) do
+        {member, _} -> member
+        _ -> nil
+      end
+
+    if is_struct(member) and member.email == email do
+      {:noreply, socket |> assign(:trigger_submit_code, true)}
+    else
+      err_msg = dgettext("account", "Magic link is invalid or it has expired.")
+
+      {:noreply,
+       socket
+       |> put_flash(:error, err_msg)
+       |> push_navigate(to: ~p"/login")}
+    end
   end
 
   defp local_mail_adapter? do

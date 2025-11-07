@@ -12,8 +12,11 @@ defmodule HanaShirabe.Accounts.MemberToken do
   @change_email_validity_in_days 7
   @session_validity_in_days 14
 
+  def get_expire(), do: {15, "minutes"}
+
   schema "members_tokens" do
     field :token, :binary
+    field :code, :string, virtual: true
     field :context, :string
     field :sent_to, :string
     field :authenticated_at, :naive_datetime
@@ -119,6 +122,25 @@ defmodule HanaShirabe.Accounts.MemberToken do
   end
 
   @doc """
+  用于验证码注册的辅助函数。
+
+  返回所有用户
+  """
+  def verify_magic_code_via_email_query(email) do
+    query =
+        from token in by_context_query("login"),
+        join: member in assoc(token, :member),
+        where: token.inserted_at > ago(^@magic_link_validity_in_minutes, "minute"),
+        where: token.sent_to == member.email,
+        where: token.sent_to == ^email,
+        select: {member, token},
+        order_by: [desc: token.inserted_at],
+        limit: 10
+
+    query
+  end
+
+  @doc """
   检查令牌是否合法并返回其底层查询。
 
   一旦通过令牌找到，查询将返回 member_token 。
@@ -144,7 +166,21 @@ defmodule HanaShirabe.Accounts.MemberToken do
     end
   end
 
+  # 这个功能先不留了
+  # 但还是注释一下
+  # def verify_change_email_code_query(code, "change:" <> _ = context) do
+  #   query =
+  #     from token in by_code_and_context_query(context),
+  #       where: token.inserted_at > ago(@change_email_validity_in_days, "day")
+
+  #   {:ok, query}
+  # end
+
   defp by_token_and_context_query(token, context) do
     from MemberToken, where: [token: ^token, context: ^context]
+  end
+
+  defp by_context_query(context) do
+    from MemberToken, where: [context: ^context]
   end
 end

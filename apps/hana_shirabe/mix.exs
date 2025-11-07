@@ -49,7 +49,8 @@ defmodule HanaShirabe.MixProject do
       # （这里就是使用 Umbrella Application 的特点了）
       # 至于我什么要选择 Umbrella 是因为后续应用的复杂度
       # 肯定可以用得上（只要社区可以正常运营下去的话）
-      {:gettext, "~> 1.0"}
+      {:gettext, "~> 1.0"},
+      {:nimble_totp, "~> 1.0"}
     ]
   end
 

@@ -53,9 +53,8 @@ defmodule HanaShirabeWeb.MemberLive.RegistrationTest do
       email = unique_member_email()
       form = form(lv, "#registration_form", registration_form: valid_member_attributes(email: email))
 
-      {:ok, _lv, html} =
+      html =
         render_submit(form)
-        |> follow_redirect(conn, ~p"/login")
 
       {:ok, check_regex} =
         dgettext(

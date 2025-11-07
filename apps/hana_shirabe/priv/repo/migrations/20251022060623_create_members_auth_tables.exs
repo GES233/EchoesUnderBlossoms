@@ -20,6 +20,7 @@ defmodule HanaShirabe.Repo.Migrations.CreateMembersAuthTables do
     create table(:members_tokens) do
       add :member_id, references(:members, on_delete: :delete_all), null: false
       add :token, :binary, null: false, size: 32
+      # add :code, :string
       add :context, :string, null: false
       add :sent_to, :string
       add :authenticated_at, :naive_datetime

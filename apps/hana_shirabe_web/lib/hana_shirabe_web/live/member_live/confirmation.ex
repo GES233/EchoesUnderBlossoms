@@ -55,7 +55,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
               phx-disable-with={dgettext("account", "Logging in...")}
               class="btn btn-primary w-full"
             >
-              Log in
+              {dgettext("account", "Log in")}
             </.button>
           <% else %>
             <.button
@@ -97,6 +97,26 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
        socket
        |> put_flash(:error, err_msg)
        |> push_navigate(to: ~p"/login")}
+    end
+  end
+
+  # 只要这个接口一开，一定会一窝蜂的来扫
+  # 所以肯定要把邮件也考虑进去
+  def mount(%{"code" => code, "email" => url_email}, _session, socket) do
+    with {:ok, email} <- Base.url_decode64(url_email, padding: false),
+         {member, token} <- Accounts.get_member_by_email_magic_link_code(email, code) do
+      form = to_form(%{"token" => token}, as: "member")
+
+      {:ok, assign(socket, member: member, form: form, trigger_submit: false),
+       temporary_assigns: [form: nil]}
+    else
+      _ ->
+        err_msg = dgettext("account", "Magic link is invalid or it has expired.")
+
+        {:ok,
+         socket
+         |> put_flash(:error, err_msg)
+         |> push_navigate(to: ~p"/login")}
     end
   end
 

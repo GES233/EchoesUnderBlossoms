@@ -290,6 +290,34 @@ defmodule HanaShirabe.Accounts do
     end
   end
 
+  @doc """
+  根据邮件以及确认码返回成员。
+  """
+  def get_member_by_email_magic_link_code(email, code) do
+    query = MemberToken.verify_magic_code_via_email_query(email)
+
+    current = System.os_time(:second)
+
+    # 因为这里的限定条件更松（只限定了 context 以及邮件）
+    # 所以需要考虑用户因网络条件差无法访问最新 token 的情况
+    # 因此不能用 Repo.one/1
+    case Repo.all(query) do
+      [_ | _] = tokens ->
+        Enum.find(tokens, fn {_member, token} ->
+          NimbleTOTP.valid?(get_secret_from_token(token), code,
+            time: current,
+            period: 60 * 15
+          ) or NimbleTOTP.valid?(token.token, code,
+            time: current - 30,
+            period: 60 * 15
+          )
+        end)
+
+      _ ->
+        nil
+    end
+  end
+
   @doc ~S"""
   将更新邮件指令发送给指定的成员。
 
@@ -308,8 +336,14 @@ defmodule HanaShirabe.Accounts do
     {encoded_token, member_token} =
       MemberToken.build_email_token(member, "change:#{current_email}")
 
-    Repo.insert!(member_token)
-    MemberNotifier.deliver_update_email_instructions(member, update_email_url_fun.(encoded_token))
+    token_with_time = Repo.insert!(member_token)
+    code = get_code_from_inserted_token(token_with_time)
+
+    MemberNotifier.deliver_update_email_instructions(
+      member,
+      code,
+      update_email_url_fun.(encoded_token)
+    )
   end
 
   @doc """
@@ -318,8 +352,11 @@ defmodule HanaShirabe.Accounts do
   def deliver_login_instructions(%Member{} = member, magic_link_url_fun)
       when is_function(magic_link_url_fun, 1) do
     {encoded_token, member_token} = MemberToken.build_email_token(member, "login")
-    Repo.insert!(member_token)
-    MemberNotifier.deliver_login_instructions(member, magic_link_url_fun.(encoded_token))
+
+    token_with_time = Repo.insert!(member_token)
+    code = get_code_from_inserted_token(token_with_time)
+
+    MemberNotifier.deliver_login_instructions(member, code, magic_link_url_fun.(encoded_token))
   end
 
   @doc """
@@ -369,6 +406,18 @@ defmodule HanaShirabe.Accounts do
         {:ok, {member, tokens_to_expire}}
       end
     end)
+  end
+
+  defp get_code_from_inserted_token(token_with_time) do
+    # TODO: 加盐，这个数据存储在服务器的其他地方而非数据库里
+    NimbleTOTP.verification_code(get_secret_from_token(token_with_time),
+      time: token_with_time.inserted_at,
+      period: 60 * 15
+    )
+  end
+
+  def get_secret_from_token(token_with_time) do
+    token_with_time.token
   end
 
   ## 对会话的处理（用于多设备显示操作）
@@ -424,6 +473,20 @@ defmodule HanaShirabe.Accounts do
     )
   end
 
+  def authenticate_and_log_via_code(audit_context, email, code) do
+    case get_member_by_email_magic_link_code(email, code) do
+      {member, _} -> member
+      _ -> nil
+    end
+    |> then(
+      &authenticate_and_log(
+        audit_context,
+        &1,
+        {:email, email}
+      )
+    )
+  end
+
   @doc "通过链接认证，记入日志。"
   def authenticate_and_log_via_magic_link_token(audit_context, token) do
     authenticate_and_log(audit_context, get_member_by_magic_link_token(token), :magic_link)
@@ -457,7 +520,7 @@ defmodule HanaShirabe.Accounts do
             :magic_link -> "member.login.via_link"
           end
 
-        AuditLog.audit!(audit_context, :account, verb, %{
+        AuditLog.audit!(%{audit_context | member: member}, :account, verb, %{
           "account_id" => member.id
         })
 

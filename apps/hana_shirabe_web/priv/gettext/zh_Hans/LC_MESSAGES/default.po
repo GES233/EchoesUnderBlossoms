@@ -55,7 +55,7 @@ msgid "Echoes Under Blossoms :: %{role_as_title}"
 msgstr "花影下的音符 :: %{role_as_title}"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:30
-#: lib/hana_shirabe_web/live/member_live/registration.ex:37
+#: lib/hana_shirabe_web/live/member_live/registration.ex:55
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr "语言偏好"
@@ -75,7 +75,7 @@ msgstr "欢迎来到「%{site_name}」"
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr "站内用户创作内容的版权归其自身所有"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:156
+#: lib/hana_shirabe_web/live/member_live/registration.ex:176
 #, elixir-autogen, elixir-format
 msgid "Locale updated!"
 msgstr "语言已更新！"
