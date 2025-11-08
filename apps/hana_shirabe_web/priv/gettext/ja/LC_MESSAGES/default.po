@@ -14,73 +14,73 @@ msgstr ""
 #: lib/hana_shirabe_web/components/core_components.ex:330
 #, elixir-autogen, elixir-format
 msgid "Actions"
-msgstr ""
+msgstr "操作"
 
 #: lib/hana_shirabe_web/components/layouts.ex:140
 #: lib/hana_shirabe_web/components/layouts.ex:152
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
-msgstr ""
+msgstr "再接続試行中"
 
 #: lib/hana_shirabe_web/components/layouts.ex:147
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
-msgstr ""
+msgstr "エラーが発生しました"
 
 #: lib/hana_shirabe_web/components/layouts.ex:135
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
-msgstr ""
+msgstr "インターネット接続が見つかりません"
 
 #: lib/hana_shirabe_web/components/core_components.ex:71
 #, elixir-autogen, elixir-format
 msgid "close"
-msgstr ""
+msgstr "閉じる"
 
 #: lib/hana_shirabe_web/components/layouts.ex:112
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:7
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Echoes Under Blossoms"
-msgstr ""
+msgstr "花隠れの調べ"
 
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:16
 #, elixir-autogen, elixir-format
 msgid "%{title} - Echoes Under Blossoms"
-msgstr ""
+msgstr "%{title} - 花隠れの調べ"
 
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:12
 #, elixir-autogen, elixir-format
 msgid "Echoes Under Blossoms :: %{role}"
-msgstr ""
+msgstr "花隠れの調べ :: %{role}"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:30
 #: lib/hana_shirabe_web/live/member_live/registration.ex:55
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
-msgstr ""
+msgstr "言語設定"
 
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:13
 #, elixir-autogen, elixir-format
 msgid "Under construction..."
-msgstr ""
+msgstr "サイト構築中..."
 
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:5
 #, elixir-autogen, elixir-format
 msgid "Welcome to %{site_name}"
-msgstr ""
+msgstr "%{site_name} へようこそ"
 
 #: lib/hana_shirabe_web/components/layouts.ex:114
 #, elixir-autogen, elixir-format
 msgid "The copyright of user-generated content on this site belongs to the individual user."
-msgstr ""
+msgstr "本サイトのユーザー生成コンテンツの著作権は各ユーザーに帰属します。"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:176
 #, elixir-autogen, elixir-format
 msgid "Locale updated!"
-msgstr ""
+msgstr "言語設定を更新しました"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:115
 #, elixir-autogen, elixir-format
 msgid "Profile updated!"
-msgstr ""
+msgstr "プロフィールを更新しました"

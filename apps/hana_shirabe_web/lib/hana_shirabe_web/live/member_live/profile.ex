@@ -49,7 +49,7 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
           </.button>
         </.form>
 
-        <div class="divider">{dgettext("account", "Dangerours Zone")}</div>
+        <div class="divider">{dgettext("account", "Danger Zone")}</div>
 
         <div class="text-center">
           {dgettext(

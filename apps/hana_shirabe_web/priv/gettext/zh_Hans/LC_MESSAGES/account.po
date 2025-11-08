@@ -180,7 +180,7 @@ msgstr "登录链接不正确或已过期"
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:17
 #, elixir-autogen, elixir-format
 msgid "Manage your account email address and password settings"
-msgstr "管理你的邮件地址和密码设置"
+msgstr "管理您的邮件地址和密码设置"
 
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:54
 #, elixir-autogen, elixir-format
@@ -195,7 +195,7 @@ msgstr "保存密码"
 #: lib/hana_shirabe_web/live/member_live/confirmation.ex:76
 #, elixir-autogen, elixir-format
 msgid "Tip: If you prefer passwords, you can enable them in the member settings."
-msgstr "小提示：如果你更喜欢密码，可以在成员设置里启用噢~"
+msgstr "小提示：如果更喜欢密码，可以在成员设置里启用噢~"
 
 #: lib/hana_shirabe_web/live/member_live/confirmation.ex:13
 #, elixir-autogen, elixir-format
@@ -272,11 +272,11 @@ msgstr "昵称"
 #: lib/hana_shirabe_web/live/member_live/registration.ex:93
 #, elixir-autogen, elixir-format
 msgid "Tell us how we should address you."
-msgstr "告诉我们该怎么称呼你"
+msgstr "告诉我们该怎么称呼您"
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:103
 #, elixir-autogen, elixir-format
-msgid "Please enter your email address so we can contact you."
+msgid "Please enter your email so we can contact you."
 msgstr "请输入邮件地址，以便我们联系你"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:15
@@ -291,7 +291,7 @@ msgstr "管理您的基本信息"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:52
 #, elixir-autogen, elixir-format
-msgid "Dangerours Zone"
+msgid "Danger Zone"
 msgstr "危险区域"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:55

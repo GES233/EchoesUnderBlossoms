@@ -12,98 +12,98 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "can't be blank"
-msgstr ""
+msgstr "入力必須です"
 
 msgid "has already been taken"
-msgstr ""
+msgstr "既に使用されています"
 
 msgid "is invalid"
-msgstr ""
+msgstr "無効な値です"
 
 msgid "must be accepted"
-msgstr ""
+msgstr "同意が必要です"
 
 msgid "has invalid format"
-msgstr ""
+msgstr "形式が正しくありません"
 
 msgid "has an invalid entry"
-msgstr ""
+msgstr "無効な入力があります"
 
 msgid "is reserved"
-msgstr ""
+msgstr "予約済みです"
 
 msgid "does not match confirmation"
-msgstr ""
+msgstr "確認入力と一致しません"
 
 msgid "is still associated with this entry"
-msgstr ""
+msgstr "このエントリに関連付けられています"
 
 msgid "are still associated with this entry"
-msgstr ""
+msgstr "このエントリに関連付けられています"
 
 msgid "should have %{count} item(s)"
 msgid_plural "should have %{count} item(s)"
-msgstr[0] ""
+msgstr[0] "%{count}個の項目が必要です"
 
 msgid "should be %{count} character(s)"
 msgid_plural "should be %{count} character(s)"
-msgstr[0] ""
+msgstr[0] "%{count}文字である必要があります"
 
 msgid "should be %{count} byte(s)"
 msgid_plural "should be %{count} byte(s)"
-msgstr[0] ""
+msgstr[0] "%{count}バイトである必要があります"
 
 msgid "should have at least %{count} item(s)"
 msgid_plural "should have at least %{count} item(s)"
-msgstr[0] ""
+msgstr[0] "少なくとも%{count}個の項目が必要です"
 
 msgid "should be at least %{count} character(s)"
 msgid_plural "should be at least %{count} character(s)"
-msgstr[0] ""
+msgstr[0] "少なくとも%{count}文字以上である必要があります"
 
 msgid "should be at least %{count} byte(s)"
 msgid_plural "should be at least %{count} byte(s)"
-msgstr[0] ""
+msgstr[0] "少なくとも%{count}バイト以上である必要があります"
 
 msgid "should have at most %{count} item(s)"
 msgid_plural "should have at most %{count} item(s)"
-msgstr[0] ""
+msgstr[0] "最大%{count}個までの項目です"
 
 msgid "should be at most %{count} character(s)"
 msgid_plural "should be at most %{count} character(s)"
-msgstr[0] ""
+msgstr[0] "最大%{count}文字までです"
 
 msgid "should be at most %{count} byte(s)"
 msgid_plural "should be at most %{count} byte(s)"
-msgstr[0] ""
+msgstr[0] "最大%{count}バイトまでです"
 
 msgid "must be less than %{number}"
-msgstr ""
+msgstr "%{number}未満である必要があります"
 
 msgid "must be greater than %{number}"
-msgstr ""
+msgstr "%{number}より大きい必要があります"
 
 msgid "must be less than or equal to %{number}"
-msgstr ""
+msgstr "%{number}以下である必要があります"
 
 msgid "must be greater than or equal to %{number}"
-msgstr ""
+msgstr "%{number}以上である必要があります"
 
 msgid "must be equal to %{number}"
-msgstr ""
+msgstr "%{number}と等しい必要があります"
 
 ## From HanaShirabe.Accounts.Member.validate_email/2
 msgid "must have the @ sign and no spaces"
-msgstr ""
+msgstr "@を含み、スペースがない必要があります"
 
 ## From HanaShirabe.Accounts.Member.validate_email_changed/1
 msgid "did not change"
-msgstr ""
+msgstr "変更されていません"
 
 ## From HanaShirabe.Accounts.Member.password_changeset/3
 msgid "does not match password"
-msgstr ""
+msgstr "パスワードと一致しません"
 
 ## From HanaShirabe.Accounts.Member.validate_prefer_locale/1
 msgid "unknown locale"
-msgstr ""
+msgstr "不明なロケールです"

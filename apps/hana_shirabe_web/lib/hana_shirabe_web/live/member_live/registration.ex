@@ -100,7 +100,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
               required
               phx-mounted={JS.focus()}
               placeholder={
-                dgettext("account", "Please enter your email address so we can contact you.")
+                dgettext("account", "Please enter your email so we can contact you.")
               }
             />
             <!-- 放个将要成为邀请码的 .iuput 在这里 -->

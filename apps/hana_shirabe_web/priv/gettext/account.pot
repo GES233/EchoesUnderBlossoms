@@ -276,7 +276,7 @@ msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/registration.ex:103
 #, elixir-autogen, elixir-format
-msgid "Please enter your email address so we can contact you."
+msgid "Please enter your email so we can contact you."
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:15
@@ -291,7 +291,7 @@ msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:52
 #, elixir-autogen, elixir-format
-msgid "Dangerours Zone"
+msgid "Danger Zone"
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:55
