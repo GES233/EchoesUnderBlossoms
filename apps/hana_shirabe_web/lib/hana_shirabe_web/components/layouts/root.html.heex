@@ -5,17 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <.live_title default={gettext("Echoes Under Blossoms")}>
-      <%= cond do %>
-        <% is_nil(assigns[:page_title]) -> %>
+      <%= case assigns[:page_title] do %>
+        <% nil -> %>
           {}
-        <% is_atom(@page_title) and !is_nil(@page_title) -> %>
-          {gettext("Echoes Under Blossoms :: %{role_as_title}",
-            role_as_title: @page_title |> Atom.to_string()
-          )}
-        <% is_binary(@page_title) -> %>
+        <% {:role, role} -> %>
+          {gettext("Echoes Under Blossoms :: %{role}", role: role)}
+        <% _ -> %>
           {gettext("%{title} - Echoes Under Blossoms", title: @page_title)}
-        <% true -> %>
-          {}
       <% end %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />

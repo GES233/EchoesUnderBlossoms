@@ -51,7 +51,7 @@ msgstr ""
 
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:12
 #, elixir-autogen, elixir-format
-msgid "Echoes Under Blossoms :: %{role_as_title}"
+msgid "Echoes Under Blossoms :: %{role}"
 msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:30

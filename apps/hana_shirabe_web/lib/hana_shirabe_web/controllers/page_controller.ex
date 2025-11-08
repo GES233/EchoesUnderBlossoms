@@ -13,7 +13,7 @@ defmodule HanaShirabeWeb.PageController do
   end
 
   def show(conn, _params) do
-    render(conn, :show)
+    render(conn, :show, page_title: {:role, "页面展示"})
   end
 
   def license(conn, _params) do

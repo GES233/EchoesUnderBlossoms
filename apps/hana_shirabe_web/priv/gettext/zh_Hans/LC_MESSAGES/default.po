@@ -51,8 +51,8 @@ msgstr "%{title} - 花影下的音符"
 
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:12
 #, elixir-autogen, elixir-format
-msgid "Echoes Under Blossoms :: %{role_as_title}"
-msgstr "花影下的音符 :: %{role_as_title}"
+msgid "Echoes Under Blossoms :: %{role}"
+msgstr "花影下的音符 :: %{role}"
 
 #: lib/hana_shirabe_web/live/member_live/profile.ex:30
 #: lib/hana_shirabe_web/live/member_live/registration.ex:55
