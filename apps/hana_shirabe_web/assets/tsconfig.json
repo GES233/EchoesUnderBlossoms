@@ -17,9 +17,10 @@
 // 按照需求随便改吧
 {
   "compilerOptions": {
+    // https://github.com/microsoft/TypeScript/issues/62207
     // "baseUrl": ".",
     "paths": {
-      "*": ["../deps/*"]
+      "*": ["./../deps/*"]
     },
     "allowJs": true,
     "noEmit": true
