@@ -104,6 +104,7 @@ defmodule HanaShirabe.Accounts.Member do
   defp validate_nickname(changeset, _opts) do
     changeset
     |> validate_required([:nickname])
+
     # 不允许 Unicode 隐形字符
     # 不允许空格与回车
   end

@@ -55,7 +55,6 @@ defmodule HanaShirabeWeb.Layouts do
     """
   end
 
-
   @doc """
   渲染应用的整体布局，但是没有用户。
 

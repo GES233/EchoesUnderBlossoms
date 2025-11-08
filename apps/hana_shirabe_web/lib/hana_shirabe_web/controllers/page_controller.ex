@@ -17,7 +17,6 @@ defmodule HanaShirabeWeb.PageController do
   end
 
   def license(conn, _params) do
-
     render(conn, :license)
   end
 

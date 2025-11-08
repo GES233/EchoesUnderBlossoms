@@ -13,7 +13,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             {dgettext("account", "Welcome %{member_nickname}", member_nickname: @member.nickname)}
           </.header>
         </div>
-        
+
         <.form
           :if={!@member.confirmed_at}
           for={@form}
@@ -39,7 +39,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             {dgettext("account", "Confirm and log in only this time")}
           </.button>
         </.form>
-        
+
         <.form
           :if={@member.confirmed_at}
           for={@form}
@@ -71,7 +71,7 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
             </.button>
           <% end %>
         </.form>
-        
+
         <p :if={!@member.confirmed_at} class="alert alert-outline mt-8">
           {dgettext(
             "account",
