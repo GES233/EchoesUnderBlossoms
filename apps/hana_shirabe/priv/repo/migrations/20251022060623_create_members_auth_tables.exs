@@ -9,7 +9,7 @@ defmodule HanaShirabe.Repo.Migrations.CreateMembersAuthTables do
       add :nickname, :string
       add :status, :string
       add :prefer_locale, :string
-      add :avatar, :string, default: ""
+      add :avatar, :string
       add :intro, :string
 
       timestamps()
