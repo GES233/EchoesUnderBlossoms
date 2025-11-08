@@ -129,8 +129,9 @@ defmodule HanaShirabeWeb.MemberLive.Login do
 
   defp translate_email_instructions(assigns) do
     ~H"""
-    <.link href="/dev/mailbox" class="underline">{dgettext("account", "the mailbox page")}</.link>.
+    <.link href="/dev/mailbox" class="underline">{dgettext("account", "the mailbox page.")}</.link>
     """
+    |> Phoenix.HTML.Safe.to_iodata()
   end
 
   @impl true
@@ -208,6 +209,6 @@ defmodule HanaShirabeWeb.MemberLive.Login do
   end
 
   defp local_mail_adapter? do
-    Application.get_env(:hana_shirabe_web, HanaShirabe.Mailer)[:adapter] == Swoosh.Adapters.Local
+    Application.get_env(:hana_shirabe, HanaShirabe.Mailer)[:adapter] == Swoosh.Adapters.Local
   end
 end

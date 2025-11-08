@@ -336,5 +336,5 @@ msgstr ""
 
 #: lib/hana_shirabe_web/live/member_live/login.ex:132
 #, elixir-autogen, elixir-format
-msgid "the mailbox page"
+msgid "the mailbox page."
 msgstr ""
