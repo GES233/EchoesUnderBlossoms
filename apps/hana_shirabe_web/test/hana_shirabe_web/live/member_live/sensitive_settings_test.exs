@@ -145,13 +145,13 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         |> element("#password_form")
         |> render_change(%{
           "member" => %{
-            "password" => "too short",
+            "password" => "short",
             "password_confirmation" => "does not match"
           }
         })
 
       button_msg = dgettext("account", "Save Password")
-      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
+      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 8)
       notmatch_msg = dgettext("errors", "does not match password")
 
       assert result =~ button_msg
@@ -166,14 +166,14 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettingsTest do
         lv
         |> form("#password_form", %{
           "member" => %{
-            "password" => "too short",
+            "password" => "short",
             "password_confirmation" => "does not match"
           }
         })
         |> render_submit()
 
       button_msg = dgettext("account", "Save Password")
-      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 12)
+      too_less_msg = dgettext("errors", "should be at least %{count} character(s)", count: 8)
       notmatch_msg = dgettext("errors", "does not match password")
 
       assert result =~ button_msg

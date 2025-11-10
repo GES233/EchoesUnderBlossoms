@@ -226,9 +226,11 @@ defmodule HanaShirabe.AccountsTest do
     test "检查密码", %{member: member} do
       {:error, changeset} =
         Accounts.update_member_password(member, %{
-          password: "not valid",
+          password: "invalid",
           password_confirmation: "another"
         })
+      errors_on(changeset)
+      
 
       %{
         # "should be at least 8 character(s)"
