@@ -49,7 +49,7 @@ defmodule HanaShirabeWeb.PageController do
       |> HSContent.from_domain()
       |> HSContent.to_html()
 
-    render(conn, :page, markdown: markdown, machine_translate: machine_translate?)
+    render(conn, :page, markdown: markdown, page_title: {:role, "About"}, machine_translate: !machine_translate?)
   end
 
   def about(conn, _params), do: render_static_page(conn, @static_page_and_meta[:about])

@@ -2,13 +2,33 @@
   <main class="w-full bg-base-200 py-12 px-4">
     <div class="mx-auto max-w-4xl bg-base-100 rounded-lg shadow-sm p-8 sm:p-12">
       <%= if @machine_translate do %>
-        <div class="card bg-base-200 rounded my-4">
-          <h3 class="text-2xl font-bold text-color-primary">title</h3>
-          <p class="text-center">TODO: mechine learning declaration.</p>
+        <div class="alert alert-info my-8 alert-outline">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="stroke-current shrink-0 w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            >
+            </path>
+          </svg>
+          <div>
+            <h3 class="font-bold">{gettext("Content translated by machine")}</h3>
+            <div class="text-xs">
+              {gettext(
+                "This content has been automatically translated and may contain errors. Please refer to the original version for accuracy."
+              )}
+            </div>
+          </div>
         </div>
       <% end %>
       <article class="prose sm:prose-xl">
-        <%= @markdown |> raw() %>
+        {@markdown |> raw()}
       </article>
     </div>
   </main>

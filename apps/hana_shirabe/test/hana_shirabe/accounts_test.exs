@@ -229,8 +229,8 @@ defmodule HanaShirabe.AccountsTest do
           password: "invalid",
           password_confirmation: "another"
         })
+
       errors_on(changeset)
-      
 
       %{
         # "should be at least 8 character(s)"

@@ -40,7 +40,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             </.header>
           <% end %>
         </div>
-
+        
         <%= if !@member_email do %>
           <.form
             :let={f}
@@ -84,7 +84,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
                 }
               </script>
             </div>
-
+            
             <.input
               field={f[:nickname]}
               type="text"
@@ -101,9 +101,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
               autocomplete="email"
               required
               phx-mounted={JS.focus()}
-              placeholder={
-                dgettext("account", "Please enter your email so we can contact you.")
-              }
+              placeholder={dgettext("account", "Please enter your email so we can contact you.")}
             />
             <!-- 放个将要成为邀请码的 .iuput 在这里 -->
             <.button

@@ -11,40 +11,40 @@
 msgid ""
 msgstr ""
 
-#: lib/hana_shirabe_web/components/core_components.ex:330
+#: lib/hana_shirabe_web/components/core_components.ex:332
 #, elixir-autogen, elixir-format
 msgid "Actions"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:140
-#: lib/hana_shirabe_web/components/layouts.ex:152
+#: lib/hana_shirabe_web/components/layouts.ex:119
+#: lib/hana_shirabe_web/components/layouts.ex:131
 #, elixir-autogen, elixir-format
 msgid "Attempting to reconnect"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:147
+#: lib/hana_shirabe_web/components/layouts.ex:126
 #, elixir-autogen, elixir-format
 msgid "Something went wrong!"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:135
+#: lib/hana_shirabe_web/components/layouts.ex:114
 #, elixir-autogen, elixir-format
 msgid "We can't find the internet"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/core_components.ex:71
+#: lib/hana_shirabe_web/components/core_components.ex:73
 #, elixir-autogen, elixir-format
 msgid "close"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:112
+#: lib/hana_shirabe_web/components/layouts.ex:182
 #: lib/hana_shirabe_web/components/layouts/root.html.heex:7
 #: lib/hana_shirabe_web/controllers/page_html/home.html.heex:7
 #, elixir-autogen, elixir-format
 msgid "Echoes Under Blossoms"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts/root.html.heex:16
+#: lib/hana_shirabe_web/components/layouts/root.html.heex:14
 #, elixir-autogen, elixir-format
 msgid "%{title} - Echoes Under Blossoms"
 msgstr ""
@@ -54,8 +54,8 @@ msgstr ""
 msgid "Echoes Under Blossoms :: %{role}"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:30
-#: lib/hana_shirabe_web/live/member_live/registration.ex:55
+#: lib/hana_shirabe_web/live/member_live/profile.ex:50
+#: lib/hana_shirabe_web/live/member_live/registration.ex:57
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
 msgstr ""
@@ -70,17 +70,27 @@ msgstr ""
 msgid "Welcome to %{site_name}"
 msgstr ""
 
-#: lib/hana_shirabe_web/components/layouts.ex:114
+#: lib/hana_shirabe_web/components/layouts.ex:184
 #, elixir-autogen, elixir-format
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:176
+#: lib/hana_shirabe_web/live/member_live/registration.ex:178
 #, elixir-autogen, elixir-format
 msgid "Locale updated!"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:115
+#: lib/hana_shirabe_web/live/member_live/profile.ex:135
 #, elixir-autogen, elixir-format
 msgid "Profile updated!"
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/page_html/page.html.heex:21
+#, elixir-autogen, elixir-format
+msgid "Content translated by machine"
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/page_html/page.html.heex:23
+#, elixir-autogen, elixir-format
+msgid "This content has been automatically translated and may contain errors. Please refer to the original version for accuracy."
 msgstr ""
