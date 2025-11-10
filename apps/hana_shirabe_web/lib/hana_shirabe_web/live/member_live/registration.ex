@@ -4,8 +4,11 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
 
   TODO：
 
-  * 考虑语言选择
   * 考虑邀请制
+
+  ## 功能
+
+  ## 界面
   """
   use HanaShirabeWeb, :live_view
 
@@ -32,7 +35,6 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             <.header>
               {dgettext("account", "Confirm")}
               <:subtitle>
-                <!---->
                 {dgettext("account", "You can use magic link to comfirm and login you account.")}
               </:subtitle>
             </.header>

@@ -1,9 +1,6 @@
 defmodule HanaShirabeWeb.ContentLiveRender do
   use HanaShirabeWeb, :live_view
 
-  # on_mount {HanaShirabeWeb.MemberAuth, :mount_current_scope}
-  # on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
-
   def render(assigns) do
     ~H"""
     <Layouts.flash_group flash={@flash} />

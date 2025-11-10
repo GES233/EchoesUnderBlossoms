@@ -1,4 +1,13 @@
 defmodule HanaShirabeWeb.MemberLive.Confirmation do
+  @moduledoc """
+  确认账户或登录，支持魔法链接以及验证码。
+
+  为什么请求会来这里？因为表单发送是通过 POST
+  方法访问，而路由将这里被设置为 `post "/login" ...`
+  才可以到达。
+
+  所以可以说来到这里的都是 login/confirm 发送的表单。
+  """
   use HanaShirabeWeb, :live_view
 
   alias HanaShirabe.Accounts
@@ -100,8 +109,6 @@ defmodule HanaShirabeWeb.MemberLive.Confirmation do
     end
   end
 
-  # 只要这个接口一开，一定会一窝蜂的来扫
-  # 所以肯定要把邮件也考虑进去
   def mount(%{"code" => code, "email" => url_email}, _session, socket) do
     with {:ok, email} <- Base.url_decode64(url_email, padding: false),
          {member, token} <- Accounts.get_member_by_email_magic_link_code(email, code) do

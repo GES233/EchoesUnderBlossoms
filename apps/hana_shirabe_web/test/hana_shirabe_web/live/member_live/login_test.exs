@@ -27,7 +27,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       html =
-        form(lv, "#login_form_magic", login_form_magic: %{email: member.email})
+        form(lv, "#email_login_form", email_login_form: %{email: member.email})
         |> render_submit()
 
       msg =
@@ -46,7 +46,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       html =
-        form(lv, "#login_form_magic", login_form_magic: %{email: "idonotexist@example.com"})
+        form(lv, "#email_login_form", email_login_form: %{email: "idonotexist@example.com"})
         |> render_submit()
 
       msg =
@@ -68,7 +68,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       form =
-        form(lv, "#login_form_password",
+        form(lv, "#password_login_form",
           member: %{email: member.email, password: valid_member_password(), remember_me: true}
         )
 
@@ -83,8 +83,8 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
       form =
-        form(lv, "#login_form_password",
-          login_form_password: %{email: "test@email.com", password: "123456"}
+        form(lv, "#password_login_form",
+          password_login_form: %{email: "test@email.com", password: "123456"}
         )
 
       render_submit(form, %{user: %{remember_me: true}})
@@ -137,7 +137,7 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
       assert html =~ button
 
       assert html =~
-               ~s(<input type="email" name="login_form_magic[email]" id="login_form_magic_email" value="#{member.email}")
+               ~s(<input type="email" name="email_login_form[email]" id="email_login_form_email" value="#{member.email}")
     end
   end
 end

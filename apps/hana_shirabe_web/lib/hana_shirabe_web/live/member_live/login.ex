@@ -1,4 +1,24 @@
 defmodule HanaShirabeWeb.MemberLive.Login do
+  @moduledoc """
+  登录页面。
+
+  ## 功能
+
+  实现登录（网页端）。
+
+  ## 页面
+
+  ### 基于邮件的表单（`email_login_form`）
+
+  表单存在两阶段，阶段一只有地址，阶段二存在邮件以及验证码，
+  也可以通过验证码登录。
+
+  ### 基于邮件以及密码的表单（`password_login_form`）
+
+  ### 表单提交
+
+  `trigger_submit_code: true`，数据走 Controller 。
+  """
   use HanaShirabeWeb, :live_view
 
   alias HanaShirabe.Accounts
@@ -45,7 +65,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
         <.form
           :let={f}
           for={@magic_form}
-          id="login_form_magic"
+          id="email_login_form"
           action={~p"/login"}
           phx-submit={if !@enter_code, do: "submit_mail", else: "submit_code"}
           phx-trigger-action={@trigger_submit_code}
@@ -85,7 +105,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
         <.form
           :let={f}
           for={@password_form}
-          id="login_form_password"
+          id="password_login_form"
           action={~p"/login"}
           phx-submit="submit_password"
           phx-trigger-action={@trigger_submit}
@@ -143,9 +163,10 @@ defmodule HanaShirabeWeb.MemberLive.Login do
     socket =
       socket
       |> assign(
+        email: email,
         enter_code: nil,
-        magic_form: to_form(%{"email" => email, "code" => nil}, as: "login_form_magic"),
-        password_form: to_form(%{"email" => email, "password" => nil}, as: "login_form_password"),
+        magic_form: to_form(%{"email" => email, "code" => nil}, as: "email_login_form"),
+        password_form: to_form(%{"email" => email, "password" => nil}, as: "password_login_form"),
         trigger_submit: false,
         trigger_submit_code: false
       )
@@ -158,7 +179,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
     {:noreply, assign(socket, :trigger_submit, true)}
   end
 
-  def handle_event("submit_mail", %{"login_form_magic" => %{"email" => email}}, socket) do
+  def handle_event("submit_mail", %{"email_login_form" => %{"email" => email}}, socket) do
     if member = Accounts.get_member_by_email(email) do
       Accounts.deliver_login_instructions(
         member,
@@ -179,15 +200,15 @@ defmodule HanaShirabeWeb.MemberLive.Login do
       |> assign(
         email: email,
         enter_code: true,
-        magic_form: to_form(%{"email" => email, "code" => ""}, as: "login_form_magic"),
-        password_form: to_form(%{"email" => email, "password" => nil}, as: "login_form_password")
+        magic_form: to_form(%{"email" => email, "code" => ""}, as: "email_login_form"),
+        password_form: to_form(%{"email" => email, "password" => nil}, as: "password_login_form")
       )
     }
   end
 
   def handle_event(
         "submit_code",
-        %{"login_form_magic" => %{"code" => code, "email" => email}},
+        %{"email_login_form" => %{"code" => code, "email" => email}},
         socket
       ) do
     member =

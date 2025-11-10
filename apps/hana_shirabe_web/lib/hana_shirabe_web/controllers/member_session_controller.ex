@@ -44,13 +44,13 @@ defmodule HanaShirabeWeb.MemberSessionController do
     do_check_and_log(conn, audit_context, member_params, info)
   end
 
-  defp create(conn, %{"login_form_password" => member_params}, info) do
+  defp create(conn, %{"password_login_form" => member_params}, info) do
     audit_context = conn.assigns[:audit_log]
 
     do_check_and_log(conn, audit_context, member_params, info)
   end
 
-  defp create(conn, %{"login_form_magic" => member_params}, info) do
+  defp create(conn, %{"email_login_form" => member_params}, info) do
     audit_context = conn.assigns[:audit_log]
 
     do_check_and_log(conn, audit_context, member_params, info)

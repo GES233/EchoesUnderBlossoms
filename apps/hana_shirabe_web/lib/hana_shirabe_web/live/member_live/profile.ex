@@ -1,6 +1,26 @@
 defmodule HanaShirabeWeb.MemberLive.Profile do
-  # 主要是修改昵称、简介等不敏感信息
-  # 和原来的 Settings （现在的 SensitiveSettings 分开）
+  @moduledoc """
+  展示以及修改用户简介。
+
+  ## 功能
+
+  主要是修改昵称、语言偏好、简介等不敏感信息。
+
+  和注册页（`HanaShirabeWeb.MemberLive.Registration`）不同，
+  为保证数据的一致性，并未实现了更换语言的重载。
+
+  ## 页面
+
+  ### `profile_form` 表单
+
+  包含对昵称、语言以及简介的修改。
+
+  修改信息触发 `validate` 事件，提交表单触发 `update_info` 事件。
+
+  ### 跳转链接
+
+  对邮件、密码的修改需要跳转。
+  """
   use HanaShirabeWeb, :live_view
 
   alias HanaShirabe.Accounts
