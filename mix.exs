@@ -14,6 +14,14 @@ defmodule HanaShirabe.Umbrella.MixProject do
       deps: deps(),
       aliases: aliases(),
       listeners: [Phoenix.CodeReloader],
+      releases: [
+        hana_shirabe_umbrella: [
+          applications: [
+            hana_shirabe: :permanent,
+            hana_shirabe_web: :permanent
+          ]
+        ]
+      ],
       dialyzer: [
         # 禁用 Dialyzer 的内联类型检查
         # 要不然 HanaShirabeWeb.Gettext 老是报警告
