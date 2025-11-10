@@ -2,10 +2,12 @@ defmodule HanaShirabeWeb.PageController do
   use HanaShirabeWeb, :controller
 
   # 如果这些页面太多可以在这里列到一起去
-  # @page_dir "apps/hana_shirabe_web/priv/page/"
-  # @static_page_and_meta %{
-  #   about: {@page_dir <> "license", %{"en" => :mannual_checked, "ja" => :not_implemented, "zh_Hans" => :mannual_checked}},
-  # }
+  @page_dir "apps/hana_shirabe_web/priv/pages/"
+  @static_page_and_meta %{
+    about:
+      {@page_dir <> "about",
+       %{"en" => :mannual_checked, "ja" => :not_implemented, "zh_Hans" => :mannual_checked}}
+  }
 
   def home(conn, _params) do
     render(conn, :home)
@@ -47,14 +49,16 @@ defmodule HanaShirabeWeb.PageController do
       |> HSContent.from_domain()
       |> HSContent.to_html()
 
-    render(conn, :static_page, markdown: markdown, machine_translate: machine_translate?)
+    render(conn, :page, markdown: markdown, machine_translate: machine_translate?)
   end
+
+  def about(conn, _params), do: render_static_page(conn, @static_page_and_meta[:about])
 
   # TODO: implement a `for` macro to automatically mount these functions.
   # defmacro def_page(site_and_data) do
   #   Enum.map(site_and_data, fn {site, data} ->
   #     quote bind_quoted: [site: site, data: data] do
-  #       def unquote(site)(conn, unquote(status)) do
+  #       def unquote(site)(conn, _params) do
   #         render_static_page(conn, unquote(status))
   #       end
   #     end
@@ -68,6 +72,4 @@ defmodule HanaShirabeWeb.PageController do
   #     end
   #   end)
   # end
-
-  # def_page @static_page_and_meta
 end

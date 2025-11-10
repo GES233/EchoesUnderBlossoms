@@ -29,6 +29,8 @@ defmodule HanaShirabeWeb.Router do
     get "/license", PageController, :license
 
     live "/playground", ContentLiveRender
+
+    get "/about", PageController, :about
   end
 
   # 其他 scope 可使用自定义的堆栈。
