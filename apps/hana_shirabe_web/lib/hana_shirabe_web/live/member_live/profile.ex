@@ -43,7 +43,7 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
               <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
             </.header>
           </div>
-
+          
           <.form :let={f} for={@form} id="profile_form" phx-submit="update_info" phx-change="validate">
             <.input
               field={f[:nickname]}
@@ -75,16 +75,16 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
               {dgettext("account", "Update Profile")}
             </.button>
           </.form>
+          
           <.button
-              phx-click="toggle_update"
-              phx-disable-with={gettext("Loading...")}
-              class="btn btn-primary"
-            >
-              {gettext("Cancel")}
-            </.button>
-
+            phx-click="toggle_update"
+            phx-disable-with={gettext("Loading...")}
+            class="btn btn-primary"
+          >
+            {gettext("Cancel")}
+          </.button>
           <div class="divider">{dgettext("account", "Danger Zone")}</div>
-
+          
           <div class="text-center">
             {dgettext(
               "account",
@@ -100,7 +100,7 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
               <:subtitle>{dgettext("account", "Your personal profile page.")}</:subtitle>
             </.header>
           </div>
-
+          
           <.show_member member={@current_scope.member}>
             <.button
               phx-click="toggle_update"

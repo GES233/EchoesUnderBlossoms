@@ -37,13 +37,13 @@ defmodule HanaShirabeWeb.ContentLiveRender do
             border-left-color: #abb2bf; /* Cursor color */
           }
         </style>
-        
+
         <h2 class="text-xl font-semibold mb-2">EasyMDE Editor</h2>
-        
+
         <div phx-hook=".EasyMDEditor" id="editor-container" phx-update="ignore">
           <textarea id="markdown-editor"></textarea>
         </div>
-        
+
         <script :type={Phoenix.LiveView.ColocatedHook} name=".EasyMDEditor">
           const EasyMDE = require('@/vendor/easymde.min.js');
           console.log(EasyMDE);
@@ -74,10 +74,10 @@ defmodule HanaShirabeWeb.ContentLiveRender do
           }
         </script>
       </div>
-      
+
       <div>
         <h2 class="text-xl font-semibold mb-2">Live HTML Preview (from MDEx)</h2>
-        
+
         <div class="prose max-w-none p-4 border rounded-md min-h-[400px]">
           {@foo |> MDEx.to_html!(render: [escape: true]) |> raw()}
         </div>
