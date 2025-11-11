@@ -11,6 +11,10 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
 
   ## 页面
 
+  ### 页面（未完成）
+
+  点击按钮就出现更改表单。
+
   ### `profile_form` 表单
 
   包含对昵称、语言以及简介的修改。
@@ -30,55 +34,59 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
     ~H"""
     <Layouts.app flash={@flash} current_scope={@current_scope}>
       <div class="mx-auto max-w-sm space-y-4">
-        <div class="text-center">
-          <.header>
-            {dgettext("account", "Account Profile")}
-            <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
-          </.header>
-        </div>
-        
-        <.form :let={f} for={@form} id="profile_form" phx-submit="update_info" phx-change="validate">
-          <.input
-            field={f[:nickname]}
-            label={dgettext("account", "Nickname")}
-            autocomplete="username"
-            phx-mounted={JS.focus()}
-          />
-          <.input
-            type="select"
-            field={f[:prefer_locale]}
-            label={gettext("Locale Preference")}
-            options={[
-              {"English", "en"},
-              {"日本語", "ja"},
-              {"简体中文", "zh_Hans"}
-            ]}
-          />
-          <.input
-            field={f[:intro]}
-            type="textarea"
-            label={dgettext("account", "Introduction")}
-            autocomplete=""
-            phx-mounted={JS.focus()}
-          />
-          <.button
-            class="btn btn-primary w-full"
-            phx-disable-with={dgettext("account", "Updating...")}
-          >
-            {dgettext("account", "Update Profile")}
-          </.button>
-        </.form>
-        
-        <div class="divider">{dgettext("account", "Danger Zone")}</div>
-        
-        <div class="text-center">
-          {dgettext(
-            "account",
-            "If you want to update your email address or password, please enter %{sensitive_settings}.",
-            sensitive_settings: translate_senaitive_settings(%{url: ~p"/me/sensitive-settings"})
-          )
-          |> raw()}
-        </div>
+        <%= if @update do %>
+          <div class="text-center">
+            <.header>
+              {dgettext("account", "Account Profile")}
+              <:subtitle>{dgettext("account", "Manage your your basic information.")}</:subtitle>
+            </.header>
+          </div>
+
+          <.form :let={f} for={@form} id="profile_form" phx-submit="update_info" phx-change="validate">
+            <.input
+              field={f[:nickname]}
+              label={dgettext("account", "Nickname")}
+              autocomplete="username"
+              phx-mounted={JS.focus()}
+            />
+            <.input
+              type="select"
+              field={f[:prefer_locale]}
+              label={gettext("Locale Preference")}
+              options={[
+                {"English", "en"},
+                {"日本語", "ja"},
+                {"简体中文", "zh_Hans"}
+              ]}
+            />
+            <.input
+              field={f[:intro]}
+              type="textarea"
+              label={dgettext("account", "Introduction")}
+              autocomplete=""
+              phx-mounted={JS.focus()}
+            />
+            <.button
+              class="btn btn-primary w-full"
+              phx-disable-with={dgettext("account", "Updating...")}
+            >
+              {dgettext("account", "Update Profile")}
+            </.button>
+          </.form>
+
+          <div class="divider">{dgettext("account", "Danger Zone")}</div>
+
+          <div class="text-center">
+            {dgettext(
+              "account",
+              "If you want to update your email address or password, please enter %{sensitive_settings}.",
+              sensitive_settings: translate_senaitive_settings(%{url: ~p"/me/sensitive-settings"})
+            )
+            |> raw()}
+          </div>
+        <% else %>
+          <% # TODO: 展示 + 更新按钮 %>
+        <% end %>
       </div>
     </Layouts.app>
     """
@@ -103,6 +111,7 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
 
     {:ok,
      assign(socket,
+       update: true,
        form: to_form(Accounts.Member.profile_changeset(current_member, %{}), as: "profile_form")
      )}
   end
@@ -117,6 +126,10 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
       |> to_form(as: "profile_form")
 
     {:noreply, assign(socket, form: form)}
+  end
+
+  def handle_event("update", _params, socket) do
+    {:noreply, socket |> assign(update: true)}
   end
 
   def handle_event("update_info", %{"profile_form" => unsigned_params}, socket) do
