@@ -4,7 +4,7 @@ defmodule HanaShirabe.MixProject do
   def project do
     [
       app: :hana_shirabe,
-      version: "0.0.7",
+      version: "0.1.2",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
