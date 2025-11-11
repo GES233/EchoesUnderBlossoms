@@ -9,10 +9,51 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
   # alias Phoenix.LiveView.JS
 
   attr :member, HanaShirabe.Accounts.Member, required: true
+  slot :inner_block, required: true
 
   def show_member(assigns) do
     ~H"""
-    <% # 巴拉巴拉 %>
+    <div class="card bg-base-200">
+      <div class="card-body items-center text-center">
+        <div class="avatar placeholder mb-4">
+          <div class="bg-neutral-focus text-neutral-content rounded-full w-24">
+            <span class="text-3xl">{String.at(@member.nickname, 0)}</span>
+          </div>
+        </div>
+
+        <h2 class="card-title text-2xl">{@member.nickname}</h2>
+
+        <div class="prose mt-4 text-left">
+          <blockquote>
+            <%= cond do %>
+              <% is_nil(@member.intro) or
+                (is_binary(@member.intro) and String.trim(@member.intro) == "") -> %>
+              <p class="italic">
+                {dgettext("account", "This member has not yet left an introduction.")}
+              </p>
+              <% true -> %>
+                <p>{@member.intro}</p>
+            <% end %>
+          </blockquote>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="stats stats-vertical lg:stats-horizontal bg-transparent">
+          <div class="stat">
+            <div class="stat-title">{dgettext("account", "Member Since")}</div>
+
+            <div class="stat-value text-base">
+              {Calendar.strftime(@member.inserted_at, "%Y-%m-%d")}
+            </div>
+          </div>
+        </div>
+
+        <div :if={@inner_block != []} class="card-actions justify-end w-full mt-4">
+          {render_slot(@inner_block)}
+        </div>
+      </div>
+    </div>
     """
   end
 end

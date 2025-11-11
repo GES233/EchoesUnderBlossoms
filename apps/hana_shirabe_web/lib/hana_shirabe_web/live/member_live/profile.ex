@@ -7,13 +7,13 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
   主要是修改昵称、语言偏好、简介等不敏感信息。
 
   和注册页（`HanaShirabeWeb.MemberLive.Registration`）不同，
-  为保证数据的一致性，并未实现了更换语言的重载。
+  为保证数据的一致性，并未实现更换语言的重载。
 
   ## 页面
 
-  ### 页面（未完成）
+  ### 页面
 
-  点击按钮就出现更改表单。
+  默认展示用户信息，点击按钮后切换到更改表单。
 
   ### `profile_form` 表单
 
@@ -28,6 +28,8 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
   use HanaShirabeWeb, :live_view
 
   alias HanaShirabe.Accounts
+
+  import HanaShirabeWeb.Hana.MemberProfile, only: [show_member: 1]
 
   @impl true
   def render(assigns) do
@@ -73,6 +75,13 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
               {dgettext("account", "Update Profile")}
             </.button>
           </.form>
+          <.button
+              phx-click="toggle_update"
+              phx-disable-with={gettext("Loading...")}
+              class="btn btn-primary"
+            >
+              {gettext("Cancel")}
+            </.button>
 
           <div class="divider">{dgettext("account", "Danger Zone")}</div>
 
@@ -85,7 +94,22 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
             |> raw()}
           </div>
         <% else %>
-          <% # TODO: 展示 + 更新按钮 %>
+          <div class="text-center">
+            <.header>
+              {dgettext("account", "Account Profile")}
+              <:subtitle>{dgettext("account", "Your personal profile page.")}</:subtitle>
+            </.header>
+          </div>
+
+          <.show_member member={@current_scope.member}>
+            <.button
+              phx-click="toggle_update"
+              phx-disable-with={gettext("Loading...")}
+              class="btn btn-primary"
+            >
+              {dgettext("account", "Edit Profile")}
+            </.button>
+          </.show_member>
         <% end %>
       </div>
     </Layouts.app>
@@ -111,42 +135,60 @@ defmodule HanaShirabeWeb.MemberLive.Profile do
 
     {:ok,
      assign(socket,
-       update: true,
+       update: false,
        form: to_form(Accounts.Member.profile_changeset(current_member, %{}), as: "profile_form")
      )}
   end
 
   @impl true
-  def handle_event("validate", unsigned_params, socket) do
+  def handle_event("validate", %{"profile_form" => unsigned_params}, socket) do
     current_member = socket.assigns.current_scope.member
 
     form =
       current_member
       |> Accounts.Member.profile_changeset(unsigned_params)
+      |> Map.put(:action, :valudate)
       |> to_form(as: "profile_form")
 
     {:noreply, assign(socket, form: form)}
   end
 
-  def handle_event("update", _params, socket) do
-    {:noreply, socket |> assign(update: true)}
+  def handle_event("toggle_update", _params, socket) do
+    # 确保取消编辑时，表单的脏数据不会影响展示
+    current_member = socket.assigns.current_scope.member
+
+    form =
+      current_member
+      |> Accounts.Member.profile_changeset(%{})
+      |> to_form(as: "profile_form")
+
+    {:noreply,
+     socket
+     |> assign(
+       # 进行一个 update 的 tuggle
+       update: !socket.assigns.update,
+       form: form
+     )}
   end
 
   def handle_event("update_info", %{"profile_form" => unsigned_params}, socket) do
     audit_log = socket.assigns[:audit_log]
     current_member = socket.assigns.current_scope.member
 
-    unsigned_params |> IO.inspect(label: :rawParams)
-
     {:noreply, do_update_profile(audit_log, current_member, unsigned_params, socket)}
   end
 
   defp do_update_profile(audit_log, member_before_update, unsigned_params, socket) do
     case Accounts.update_member_profile(audit_log, member_before_update, unsigned_params) do
-      {:ok, _new_member} ->
+      {:ok, new_member} ->
         socket
         |> put_flash(:info, gettext("Profile updated!"))
-        |> redirect(to: ~p"/me/profile", replace: true)
+        # |> redirect(to: ~p"/me/profile", replace: true)
+        |> assign(
+          update: false,
+          # 更新 current_scope 中的 member，让 show_member 组件立刻显示新数据
+          current_scope: %{socket.assigns.current_scope | member: new_member}
+        )
 
       {:error, %Ecto.Changeset{} = changeset} ->
         changeset |> to_form(as: "profile_form") |> then(&assign(socket, form: &1))
