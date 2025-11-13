@@ -98,12 +98,13 @@
 依据 https://clickrweb.com/blog/502 中提到的 `font-family` ，应该先英文再中文。
 
 - 正文 / 平台内容：
-  - [寒蝉德黑体](https://github.com/Warren2060/ChillDIN-ChillDINGothic)
-- 正式正文文本（e.g. 时间线、百科）：
-  -
-  - [京华老宋体](https://zhuanlan.zhihu.com/p/637491623)
+  - [x] [寒蝉德黑体](https://github.com/Warren2060/ChillDIN-ChillDINGothic)
+- 正式用户生产正文文本（e.g. 时间线、百科）：
+  - （引入日式色彩的明体字体）
+  - [x] [京华老宋体](https://zhuanlan.zhihu.com/p/637491623)
     - *本字体字形不符合任何地区的现有文字规范，切勿将本字体用于教育或其他用字讲究的正规场合。*
-  - [Alegreya](https://fonts.google.com/specimen/Alegreya)
+  - [ ] [Alegreya](https://fonts.google.com/specimen/Alegreya)
+- 非正式用户生产正文文本（e.g. 讨论区）
 
 ## 核心业务的梳理、设计与实现
 

@@ -1,0 +1,25 @@
+/**
+ * 字体配置。
+***/
+
+/**
+ * TODO:
+ * 安装且配置好 Alegreya 。
+**
+@import url("https://fonts.googleapis.com/css2?family=Alegreya&display=swap");
+
+@font-face {
+  font-family: 'KingHwa Old Song';
+  src: url('/fonts/KingHwaOldSongV2.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'ChillDIN';
+  src: url('/fonts/ChillDINGothic_Std.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}*/

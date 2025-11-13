@@ -10,10 +10,7 @@
 @source "../js";
 @source "../../lib/hana_shirabe_web";
 
-/* Phoenix 使用的是 TailwindCSS-Standalone，
-  那几十兆中就正好包括了一些常见的插件，引入即可。
- */
-@plugin "@tailwindcss/typography";
+@import "../css/font.css";
 
 /* 用于启用 "hero-#{ICON}" 类的一个 Tailwind 插件。
    heroicons 的安装本身由你的 mix.exs 管理。 */
@@ -92,7 +89,6 @@
   --noise: 1;
 }
 
-/* 这组方案随机生成的，但是 base 系列真好 */
 @plugin "../vendor/daisyui-theme" {
   name: "core-cream-soup";
   default: false;
@@ -135,12 +131,24 @@
  * * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
 **/
 
+/**
+ * 将字体与 Tailwind 建立联系。
+*
+@theme {
+  --font-site-content-sans: "ChillDIN", sans-serif;
+  --font-user-content-serif: "Alegreya", "KingHwa Old Song", serif;
+} */
+
+/* Phoenix 使用的是 TailwindCSS-Standalone，
+  那几十兆中就正好包括了一些常见的插件，引入即可。
+ */
+@plugin "@tailwindcss/typography";
+
 /* 
  * 针对 @tailwindcss/typography 的配置：
  * 参见
   https://github.com/tailwindlabs/tailwindcss-typography/issues/372#issuecomment-2616848354
 */
-
 @utility prose {
   --tw-prose-body: var(--color-primary);
   --tw-prose-headings: var(--color-primary);
