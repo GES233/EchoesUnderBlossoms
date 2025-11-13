@@ -12,6 +12,7 @@ defmodule HanaShirabeWeb do
   【请不要】在下面的 quote 表达式内定义函数。相反，请定义附加模块并在此处导入这些模块。
   """
 
+  # 和 priv/static 直接对应
   def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
 
   def router do
