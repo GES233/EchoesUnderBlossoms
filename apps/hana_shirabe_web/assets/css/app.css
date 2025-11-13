@@ -135,9 +135,9 @@
  * * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
 **/
 
-/* TODO: 针对 @tailwindcss/typography 的配置
-  参见 https://stackoverflow.com/questions/79626704/how-to-configure-tailwindcss-typography-plugin-from-tailwindcss-v4
-
+/* 
+ * 针对 @tailwindcss/typography 的配置：
+ * 参见
   https://github.com/tailwindlabs/tailwindcss-typography/issues/372#issuecomment-2616848354
 */
 
@@ -158,6 +158,23 @@
 
   blockquote {
     font-weight: 400;
+  }
+
+  p {
+    @apply my-2; /* my-3 约等于 0.75rem，比默认值小得多 */
+  }
+
+  /* 标题的间距也需要调整，使其更紧凑 */
+  h2 {
+    @apply mt-8 mb-2;
+  }
+  h3 {
+    @apply mt-6 mb-1;
+  }
+
+  /* 列表项之间也不需要那么大的空隙 */
+  li {
+    @apply my-1;
   }
 }
 

@@ -33,9 +33,32 @@ defmodule HanaShirabeWeb.PageController do
 
       你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
 
+      全民制作人们大家好，我是个人练习两年半的个人练习生…
+
       - 🐔
         - `2.5`
         - *Ctrl*
+
+      ## 代码
+
+      Powered by [MDEx](https://github.com/leandrocp/mdex).
+
+      ```c
+      #include <stdio.h>
+
+      int main () {
+          printf("Hello World!");
+
+          return 0;
+      }
+      ```
+
+      ```elixir
+      receive do
+        {:sended, msg} -> IO.puts msg
+      end
+      ```
+
       """
       |> HSContent.from_domain()
       |> HSContent.to_html()
