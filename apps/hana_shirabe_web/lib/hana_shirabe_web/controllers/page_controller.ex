@@ -14,7 +14,34 @@ defmodule HanaShirabeWeb.PageController do
   end
 
   def show(conn, _params) do
-    render(conn, :show, page_title: {:role, "页面展示"})
+    content =
+      """
+      # 2333
+
+      ## Lorem ipsum
+
+      > Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati
+      > temporibus delectus et eaque non enim, consequatur illum velit sapiente
+      > molestiae soluta voluptatibus omnis quasi dolores maxime officiis at vero!
+
+      **Lorem ipsum**, dolor sit amet consectetur adipisicing elit. _Aut dignissimos
+      quasi pariatur nobis ipsa ullam!_ Commodi modi, saepe eveniet soluta numquam
+      quasi ducimus, corrupti architecto distinctio dignissimos alias nesciunt
+      doloribus?
+
+      ## 中文版本
+
+      你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
+
+      - 🐔
+        - `2.5`
+        - *Ctrl*
+      """
+      |> HSContent.from_domain()
+      |> HSContent.to_html()
+      |> Phoenix.HTML.raw()
+
+    render(conn, :show, page_title: {:role, "页面展示"}, content: content)
   end
 
   def license(conn, _params) do

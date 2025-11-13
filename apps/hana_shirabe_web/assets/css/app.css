@@ -131,7 +131,7 @@
 /**
  * TODO 再加上几类：
  *
- * * 
+ * * 再来个什么旮旯给木的配色（要最典型最经典一眼XX的感觉）
  * * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
 **/
 
@@ -139,33 +139,27 @@
   参见 https://stackoverflow.com/questions/79626704/how-to-configure-tailwindcss-typography-plugin-from-tailwindcss-v4
 
   https://github.com/tailwindlabs/tailwindcss-typography/issues/372#issuecomment-2616848354
-    @utility prose {
-      --tw-prose-body: var(--color-primary);
-      --tw-prose-headings: var(--color-primary);
-      --tw-prose-bold: var(--color-primary);
-      --tw-prose-quote-borders: var(--color-slate-300);
-      --tw-prose-quotes: var(--color-muted-foreground);
-      --tw-prose-code: var(--color-primary);
-
-      code {
-        &::before,
-        &::after {
-          display: none;
-        }
-        text-wrap: nowrap;
-      }
-
-      blockquote {
-        font-weight: 400;
-      }
-    }
-  
-  或者是：
-
-    @plugin "@tailwindcss/typography" {
-      className: wysiwyg;
-    }
 */
+
+@utility prose {
+  --tw-prose-body: var(--color-primary);
+  --tw-prose-headings: var(--color-primary);
+  --tw-prose-bold: var(--color-primary);
+  --tw-prose-quote-borders: var(--color-slate-300);
+  --tw-prose-quotes: var(--color-muted-foreground);
+
+  code {
+    &::before,
+    &::after {
+      display: none;
+    }
+    text-wrap: nowrap;
+  }
+
+  blockquote {
+    font-weight: 400;
+  }
+}
 
 /* 根据 LiveView 类添加变体 */
 @custom-variant phx-click-loading (.phx-click-loading&, .phx-click-loading &);

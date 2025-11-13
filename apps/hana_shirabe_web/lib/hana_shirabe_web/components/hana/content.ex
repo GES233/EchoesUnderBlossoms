@@ -5,6 +5,7 @@ defmodule HanaShirabeWeb.Content do
   # alias Phoenix.LiveView.JS
 
   # TODO: implement options
+  # attr :other_class, :map
   slot :inner, required: true
 
   def render_inner(assigns) do
