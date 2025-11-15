@@ -102,9 +102,11 @@ defmodule HanaShirabeWeb.MemberLive.LoginTest do
     test "注册按钮被点击将重定向至注册页面", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/login")
 
+      element_name = dgettext("account", "Sign up")
+
       {:ok, _login_live, login_html} =
         lv
-        |> element("main a", dgettext("account", "Sign up"))
+        |> element("main a", element_name)
         |> render_click()
         |> follow_redirect(conn, ~p"/sign_up")
 

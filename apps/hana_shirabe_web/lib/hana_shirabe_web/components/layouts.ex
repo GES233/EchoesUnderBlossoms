@@ -195,7 +195,7 @@ defmodule HanaShirabeWeb.Layouts do
         tabindex="-1"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-32 p-2 shadow"
       >
-        <%= if @current_scope do %>
+        <%= if @current_scope.member do %>
           <li>
             <span class="text-sm font-medium text-base-content/80">
               {@current_scope.member.nickname}

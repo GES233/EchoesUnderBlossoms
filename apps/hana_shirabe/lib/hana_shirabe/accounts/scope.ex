@@ -46,7 +46,7 @@ defmodule HanaShirabe.Accounts.Scope do
     %__MODULE__{
       member: audit_context.member,
       audit_context: audit_context,
-      prefer_locale: audit_context.member.prefer_locale
+      prefer_locale: if(audit_context.member, do: audit_context.member.prefer_locale, else: nil)
     }
   end
 
@@ -57,6 +57,12 @@ defmodule HanaShirabe.Accounts.Scope do
       member: member,
       audit_context: audit_context,
       prefer_locale: member.prefer_locale
+    }
+  end
+
+  def for_audit_log(%AuditLog{} = audit_context, nil) do
+    %__MODULE__{
+      audit_context: audit_context
     }
   end
 

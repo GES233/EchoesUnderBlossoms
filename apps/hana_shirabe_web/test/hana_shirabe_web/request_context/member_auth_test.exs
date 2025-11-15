@@ -195,7 +195,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       _ = Accounts.generate_member_session_token(member)
       conn = MemberAuth.fetch_current_scope_for_member(conn, [])
       refute get_session(conn, :member_token)
-      refute conn.assigns.current_scope
+      refute conn.assigns.current_scope.member
     end
 
     test "reissues a new token after a few days and refreshes cookie", %{
@@ -250,7 +250,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       {:cont, updated_socket} =
         MemberAuth.on_mount(:mount_current_scope, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.current_scope == nil
+      assert updated_socket.assigns.current_scope.member == nil
     end
 
     test "assigns nil to current_scope assign if there isn't a member_token", %{conn: conn} do
@@ -259,7 +259,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       {:cont, updated_socket} =
         MemberAuth.on_mount(:mount_current_scope, %{}, session, %LiveView.Socket{})
 
-      assert updated_socket.assigns.current_scope == nil
+      assert updated_socket.assigns.current_scope.member == nil
     end
   end
 
@@ -283,11 +283,16 @@ defmodule HanaShirabeWeb.MemberAuthTest do
 
       socket = %LiveView.Socket{
         endpoint: HanaShirabeWeb.Endpoint,
-        assigns: %{__changed__: %{}, flash: %{}}
+        assigns: %{
+          __changed__: %{},
+          flash: %{},
+          # ip_addr: {127, 0, 0, 1},
+          # user_agent: AccountsFixtures.create_user_agent()
+        }
       }
 
       {:halt, updated_socket} = MemberAuth.on_mount(:require_authenticated, %{}, session, socket)
-      assert updated_socket.assigns.current_scope == nil
+      assert updated_socket.assigns.current_scope.member == nil
     end
 
     test "redirects to login page if there isn't a member_token", %{conn: conn} do
@@ -295,11 +300,16 @@ defmodule HanaShirabeWeb.MemberAuthTest do
 
       socket = %LiveView.Socket{
         endpoint: HanaShirabeWeb.Endpoint,
-        assigns: %{__changed__: %{}, flash: %{}}
+        assigns: %{
+          __changed__: %{},
+          flash: %{},
+          # ip_addr: {127, 0, 0, 1},
+          # user_agent: AccountsFixtures.create_user_agent()
+        }
       }
 
       {:halt, updated_socket} = MemberAuth.on_mount(:require_authenticated, %{}, session, socket)
-      assert updated_socket.assigns.current_scope == nil
+      assert updated_socket.assigns.current_scope.member == nil
     end
   end
 
@@ -313,7 +323,12 @@ defmodule HanaShirabeWeb.MemberAuthTest do
 
       socket = %LiveView.Socket{
         endpoint: HanaShirabeWeb.Endpoint,
-        assigns: %{__changed__: %{}, flash: %{}}
+        assigns: %{
+          __changed__: %{},
+          flash: %{},
+          # ip_addr: {127, 0, 0, 1},
+          # user_agent: AccountsFixtures.create_user_agent()
+        }
       }
 
       assert {:cont, _updated_socket} =
@@ -330,7 +345,12 @@ defmodule HanaShirabeWeb.MemberAuthTest do
 
       socket = %LiveView.Socket{
         endpoint: HanaShirabeWeb.Endpoint,
-        assigns: %{__changed__: %{}, flash: %{}}
+        assigns: %{
+          __changed__: %{},
+          flash: %{},
+          # ip_addr: {127, 0, 0, 1},
+          # user_agent: AccountsFixtures.create_user_agent()
+        }
       }
 
       assert {:halt, _updated_socket} =

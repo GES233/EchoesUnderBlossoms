@@ -41,12 +41,14 @@ defmodule HanaShirabeWeb.Router do
   ## 认证路由
 
   @member_with_audit [
+    {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :require_authenticated},
     {HanaShirabeWeb.SetLocale, :assign_locale},
     {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]
 
   @with_audit [
+    {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :mount_current_scope},
     {HanaShirabeWeb.SetLocale, :assign_locale},
     {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}

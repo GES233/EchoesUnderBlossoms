@@ -76,7 +76,7 @@ defmodule HanaShirabeWeb.MemberAuth do
       |> assign(:current_scope, Scope.for_audit_log(fetch_audit_log(conn, member)))
       |> maybe_reissue_member_session_token(member, token_inserted_at)
     else
-      nil -> assign(conn, :current_scope, Scope.for_audit_log(nil))
+      nil -> assign(conn, :current_scope, Scope.for_audit_log(fetch_audit_log(conn, nil), nil))
     end
   end
 
@@ -101,8 +101,10 @@ defmodule HanaShirabeWeb.MemberAuth do
   end
 
   defp fetch_audit_log(%Phoenix.LiveView.Socket{} = socket, member) do
-    %{address: ip} = Phoenix.LiveView.get_connect_info(socket, :peer_data)
-    user_agent = Phoenix.LiveView.get_connect_info(socket, :user_agent)
+    # %{address: ip} = Phoenix.LiveView.get_connect_info(socket, :peer_data)
+    # Phoenix.LiveView.get_connect_info(socket, :user_agent)
+    ip = socket.assigns[:ip_addr]
+    user_agent = socket.assigns[:user_agent]
 
     struct!(
       HanaShirabe.AuditLog,
@@ -288,23 +290,6 @@ defmodule HanaShirabeWeb.MemberAuth do
       {:halt, socket}
     end
   end
-
-  # def on_mount(:required_guests, _params, session, socket) do
-  #   socket = mount_current_scope(socket, session)
-
-  #   if !(socket.assigns.current_scope && socket.assigns.current_scope.member) do
-  #     {:cont, socket}
-  #   else
-  #     require_guest_msg = dgettext("account", "You are already logged in. You can log out if you really want.")
-
-  #     socket =
-  #       socket
-  #       |> Phoenix.LiveView.put_flash(:error, require_guest_msg)
-  #       |> Phoenix.LiveView.redirect(to: ~p"/me/profile")
-
-  #     {:halt, socket}
-  #   end
-  # end
 
   def mount_current_scope(socket, session) do
     Phoenix.Component.assign_new(socket, :current_scope, fn ->

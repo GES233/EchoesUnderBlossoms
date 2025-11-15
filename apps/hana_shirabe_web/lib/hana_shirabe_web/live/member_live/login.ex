@@ -33,7 +33,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             <p>{dgettext("account", "Log in")}</p>
 
             <:subtitle>
-              <%= if @current_scope do %>
+              <%= if @current_scope.member do %>
                 {dgettext(
                   "account",
                   "You need to reauthenticate to perform sensitive actions on your account."

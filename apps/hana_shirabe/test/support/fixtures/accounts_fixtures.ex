@@ -30,16 +30,18 @@ defmodule HanaShirabe.AccountsFixtures do
   end
 
   def create_audit_log() do
+    struct!(AuditLog, %{
+      ip_addr: {127, 0, 0, 1},
+      user_agent: create_user_agent(),
+      member_id: nil
+    })
+  end
+
+  def create_user_agent() do
     elixir_version = System.version()
     otp_version = :erlang.system_info(:otp_release)
 
-    user_agent = "[Localhost] (Elixir#{elixir_version} /OTP #{otp_version})"
-
-    struct!(AuditLog, %{
-      ip_addr: {127, 0, 0, 1},
-      user_agent: user_agent,
-      member_id: nil
-    })
+    "[Localhost] (Elixir#{elixir_version} /OTP #{otp_version})"
   end
 
   def create_audit_log(member = %Accounts.Member{}) do
