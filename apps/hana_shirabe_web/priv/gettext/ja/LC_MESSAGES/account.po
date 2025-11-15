@@ -11,12 +11,12 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:214
+#: lib/hana_shirabe_web/live/member_live/registration.ex:212
 #, elixir-autogen, elixir-format
 msgid "An email was sent to %{member_email}, please access it to confirm your account."
 msgstr "%{member_email} にメールを送信しました。アカウント確認のためご確認ください。"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:113
+#: lib/hana_shirabe_web/live/member_live/registration.ex:111
 #, elixir-autogen, elixir-format
 msgid "Create an account"
 msgstr "アカウント作成"
@@ -56,7 +56,7 @@ msgstr "アカウントの重要な操作を行うには再認証が必要です
 msgid "Invalid email or password"
 msgstr "メールアドレスまたはパスワードが正しくありません"
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:119
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:129
 #, elixir-autogen, elixir-format
 msgid "Logged out successfully."
 msgstr "ログアウトしました"
@@ -66,7 +66,7 @@ msgstr "ログアウトしました"
 msgid "Member confirmed successfully."
 msgstr "メンバー確認が完了しました"
 
-#: lib/hana_shirabe_web/controllers/member_session_controller.ex:108
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:102
 #, elixir-autogen, elixir-format
 msgid "Password updated successfully."
 msgstr "パスワードを更新しました"
@@ -86,7 +86,7 @@ msgstr "おかえりなさい！"
 msgid "A link to confirm your email change has been sent to the new address."
 msgstr "メールアドレス変更確認のリンクを新しいアドレスに送信しました"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:94
+#: lib/hana_shirabe_web/live/member_live/profile.ex:126
 #: lib/hana_shirabe_web/live/member_live/sensitive_settings.ex:15
 #, elixir-autogen, elixir-format
 msgid "Account Sensitive Settings"
@@ -154,7 +154,7 @@ msgstr "この端末でログイン状態を維持する"
 #: lib/hana_shirabe_web/components/layouts.ex:235
 #: lib/hana_shirabe_web/live/member_live/confirmation.ex:67
 #: lib/hana_shirabe_web/live/member_live/login.ex:33
-#: lib/hana_shirabe_web/live/member_live/registration.ex:131
+#: lib/hana_shirabe_web/live/member_live/registration.ex:129
 #, elixir-autogen, elixir-format
 msgid "Log in"
 msgstr "ログイン"
@@ -202,7 +202,7 @@ msgstr "ヒント：パスワードをご希望の場合は、メンバー設定
 msgid "Welcome %{member_nickname}"
 msgstr "ようこそ %{member_nickname} さん"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:110
+#: lib/hana_shirabe_web/live/member_live/registration.ex:108
 #, elixir-autogen, elixir-format
 msgid "Creating account..."
 msgstr "アカウント作成中..."
@@ -252,18 +252,18 @@ msgstr "送信されたメールを確認するには、%{email_page} にアク�
 msgid "or"
 msgstr "または"
 
-#: lib/hana_shirabe_web/request_context/member_auth.ex:228
-#: lib/hana_shirabe_web/request_context/member_auth.ex:300
+#: lib/hana_shirabe_web/request_context/member_auth.ex:265
+#: lib/hana_shirabe_web/request_context/member_auth.ex:320
 #, elixir-autogen, elixir-format
 msgid "You must log in to access this page."
 msgstr "このページにアクセスするにはログインが必要です"
 
-#: lib/hana_shirabe_web/request_context/member_auth.ex:246
+#: lib/hana_shirabe_web/request_context/member_auth.ex:283
 #, elixir-autogen, elixir-format
 msgid "You must re-authenticate to access this page."
 msgstr "このページにアクセスするには再認証が必要です"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:43
+#: lib/hana_shirabe_web/live/member_live/profile.ex:50
 #: lib/hana_shirabe_web/live/member_live/registration.ex:91
 #, elixir-autogen, elixir-format
 msgid "Nickname"
@@ -274,42 +274,43 @@ msgstr "ニックネーム"
 msgid "Tell us how we should address you."
 msgstr "あなたの呼び名を教えてください"
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:105
+#: lib/hana_shirabe_web/live/member_live/registration.ex:104
 #, elixir-autogen, elixir-format
 msgid "Please enter your email so we can contact you."
 msgstr "連絡のためメールアドレスを入力してください"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:35
+#: lib/hana_shirabe_web/live/member_live/profile.ex:42
+#: lib/hana_shirabe_web/live/member_live/profile.ex:99
 #, elixir-autogen, elixir-format
 msgid "Account Profile"
 msgstr "アカウントプロフィール"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:36
+#: lib/hana_shirabe_web/live/member_live/profile.ex:43
 #, elixir-autogen, elixir-format
 msgid "Manage your your basic information."
 msgstr "基本情報を管理"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:72
+#: lib/hana_shirabe_web/live/member_live/profile.ex:86
 #, elixir-autogen, elixir-format
 msgid "Danger Zone"
 msgstr "危険ゾーン"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:75
+#: lib/hana_shirabe_web/live/member_live/profile.ex:89
 #, elixir-autogen, elixir-format
 msgid "If you want to update your email address or password, please enter %{sensitive_settings}."
 msgstr "メールアドレスやパスワードを更新する場合は、%{sensitive_settings} に入ってください"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:60
+#: lib/hana_shirabe_web/live/member_live/profile.ex:67
 #, elixir-autogen, elixir-format
 msgid "Introduction"
 msgstr "自己紹介"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:68
+#: lib/hana_shirabe_web/live/member_live/profile.ex:75
 #, elixir-autogen, elixir-format
 msgid "Update Profile"
 msgstr "プロフィール更新"
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:66
+#: lib/hana_shirabe_web/live/member_live/profile.ex:73
 #, elixir-autogen, elixir-format
 msgid "Updating..."
 msgstr "更新中..."
@@ -338,3 +339,28 @@ msgstr "マジックリンクを使用してアカウント確認とログイン
 #, elixir-autogen, elixir-format
 msgid "the mailbox page."
 msgstr "メールボックスページ"
+
+#: lib/hana_shirabe_web/live/member_live/profile.ex:110
+#, elixir-autogen, elixir-format
+msgid "Edit Profile"
+msgstr ""
+
+#: lib/hana_shirabe_web/controllers/member_session_controller.ex:108
+#, elixir-autogen, elixir-format
+msgid "Email updated successfully."
+msgstr "メールアドレスを変更しました"
+
+#: lib/hana_shirabe_web/components/hana/member_profile.ex:44
+#, elixir-autogen, elixir-format
+msgid "Member Since"
+msgstr ""
+
+#: lib/hana_shirabe_web/components/hana/member_profile.ex:32
+#, elixir-autogen, elixir-format
+msgid "This member has not yet left an introduction."
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/profile.ex:100
+#, elixir-autogen, elixir-format
+msgid "Your personal profile page."
+msgstr ""

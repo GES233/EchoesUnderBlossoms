@@ -11,12 +11,12 @@
 msgid ""
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member_notifier.ex:112
+#: lib/hana_shirabe/accounts/member_notifier.ex:107
 #, elixir-autogen, elixir-format
 msgid "Confirmation instructions"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member_notifier.ex:78
+#: lib/hana_shirabe/accounts/member_notifier.ex:73
 #, elixir-autogen, elixir-format
 msgid "Log in instructions"
 msgstr ""
@@ -26,66 +26,17 @@ msgstr ""
 msgid "Update email instructions"
 msgstr ""
 
+#: lib/hana_shirabe/accounts/member_notifier.ex:74
+#, elixir-autogen, elixir-format
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nWelcome to Echoes Under Blossoms.\r\n\r\nPlease use the following code to complete your log in:\r\n\r\n%{code}\r\n\r\nAlternatively, you can sign in by visiting the link below:\r\n\r\n%{url}\r\n\r\nThis request is valid for 15 minutes. If you did not request this, please ignore this email.\r\n\r\n==============================\r\n"
+msgstr ""
+
 #: lib/hana_shirabe/accounts/member_notifier.ex:37
 #, elixir-autogen, elixir-format
-msgid ""
-"==============================\n"
-"\n"
-"Hi %{member_email},\n"
-"\n"
-"Welcome to Echoes Under Blossoms.\n"
-"\n"
-"Please use the following code to change your email:\n"
-"\n"
-"%{code}\n"
-"\n"
-"Alternatively, you can sign in by visiting the link below:\n"
-"\n"
-"%{url}\n"
-"\n"
-"This request is valid for 15 minutes. If you did not request this, please ignore this email.\n"
-"==============================\n"
-""
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nWelcome to Echoes Under Blossoms.\r\n\r\nPlease visit the link below to change your email:\r\n\r\n%{url}\r\n\r\nThis request is valid for 15 minutes. If you did not request this, please ignore this email.\r\n==============================\r\n"
 msgstr ""
 
-#: lib/hana_shirabe/accounts/member_notifier.ex:79
+#: lib/hana_shirabe/accounts/member_notifier.ex:108
 #, elixir-autogen, elixir-format
-msgid ""
-"==============================\n"
-"\n"
-"Hi %{member_email},\n"
-"\n"
-"Welcome to Echoes Under Blossoms.\n"
-"\n"
-"Please use the following code to complete your log in:\n"
-"\n"
-"%{code}\n"
-"\n"
-"Alternatively, you can sign in by visiting the link below:\n"
-"\n"
-"%{url}\n"
-"\n"
-"This request is valid for 15 minutes. If you did not request this, please ignore this email.\n"
-"\n"
-"==============================\n"
-""
-msgstr ""
-
-#: lib/hana_shirabe/accounts/member_notifier.ex:113
-#, elixir-autogen, elixir-format
-msgid ""
-"==============================\n"
-"\n"
-"Hi %{member_email},\n"
-"\n"
-"Welcome to Echoes Under Blossoms.\n"
-"\n"
-"Please visit the link below:\n"
-"\n"
-"%{url}\n"
-"\n"
-"This request is valid for 15 minutes. If you did not request this, please ignore this email.\n"
-"\n"
-"==============================\n"
-""
+msgid "\r\n==============================\r\n\r\nHi %{member_email},\r\n\r\nWelcome to Echoes Under Blossoms.\r\n\r\nPlease visit the link below to confirm your account:\r\n\r\n%{url}\r\n\r\nThis request is valid for 15 minutes. If you did not request this, please ignore this email.\r\n\r\n==============================\r\n"
 msgstr ""

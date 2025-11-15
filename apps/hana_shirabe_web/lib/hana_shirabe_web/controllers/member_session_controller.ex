@@ -18,7 +18,7 @@ defmodule HanaShirabeWeb.MemberSessionController do
 
   # 经由链接的登录
   defp create(conn, %{"member" => %{"token" => token} = member_params}, info) do
-    case Accounts.log_in_by_magic_link_and_log(conn.assigns[:audit_log], token) do
+    case Accounts.log_in_by_magic_link_and_log(conn.assigns.current_scope.audit_context, token) do
       {:ok, {member, tokens_to_disconnect}} ->
         # 业务逻辑（包括日志）已在 Accounts 中完成
         MemberAuth.disconnect_sessions(tokens_to_disconnect)
@@ -39,19 +39,19 @@ defmodule HanaShirabeWeb.MemberSessionController do
 
   # 经由邮件与密码的登录
   defp create(conn, %{"member" => member_params}, info) do
-    audit_context = conn.assigns[:audit_log]
+    audit_context = conn.assigns.current_scope.audit_context
 
     do_check_and_log(conn, audit_context, member_params, info)
   end
 
   defp create(conn, %{"password_login_form" => member_params}, info) do
-    audit_context = conn.assigns[:audit_log]
+    audit_context = conn.assigns.current_scope.audit_context
 
     do_check_and_log(conn, audit_context, member_params, info)
   end
 
   defp create(conn, %{"email_login_form" => member_params}, info) do
-    audit_context = conn.assigns[:audit_log]
+    audit_context = conn.assigns.current_scope.audit_context
 
     do_check_and_log(conn, audit_context, member_params, info)
   end
@@ -98,21 +98,31 @@ defmodule HanaShirabeWeb.MemberSessionController do
     |> redirect(to: ~p"/login")
   end
 
-  def update_password(conn, %{"member" => member_params} = params) do
+  def update_password(conn, params) do
+    update_pswd_msg = dgettext("account", "Password updated successfully.")
+
+    update_sensitive(conn, params, update_pswd_msg)
+  end
+
+  def update_email(conn, params) do
+    update_pswd_msg = dgettext("account", "Email updated successfully.")
+
+    update_sensitive(conn, params, update_pswd_msg)
+  end
+
+  defp update_sensitive(conn, %{"member" => member_params} = params, msg) do
     member = conn.assigns.current_scope.member
     true = Accounts.sudo_mode?(member)
 
     {:ok, {_member, expired_tokens}} =
-      Accounts.update_member_password_with_log(conn.assigns[:audit_log], member, member_params)
-
-    update_pswd_msg = dgettext("account", "Password updated successfully.")
+      Accounts.update_member_password_with_log(conn.assigns.current_scope.audit_context, member, member_params)
 
     # 断开所有使用旧会话的现有 LiveViews
     MemberAuth.disconnect_sessions(expired_tokens)
 
     conn
     |> put_session(:member_return_to, ~p"/me/sensitive-settings")
-    |> create(params, update_pswd_msg)
+    |> create(params, msg)
   end
 
   def delete(conn, _params) do

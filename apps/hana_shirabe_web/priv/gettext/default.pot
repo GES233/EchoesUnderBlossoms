@@ -54,7 +54,7 @@ msgstr ""
 msgid "Echoes Under Blossoms :: %{role}"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:50
+#: lib/hana_shirabe_web/live/member_live/profile.ex:57
 #: lib/hana_shirabe_web/live/member_live/registration.ex:57
 #, elixir-autogen, elixir-format
 msgid "Locale Preference"
@@ -75,12 +75,12 @@ msgstr ""
 msgid "The copyright of user-generated content on this site belongs to the individual user."
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/registration.ex:178
+#: lib/hana_shirabe_web/live/member_live/registration.ex:176
 #, elixir-autogen, elixir-format
 msgid "Locale updated!"
 msgstr ""
 
-#: lib/hana_shirabe_web/live/member_live/profile.ex:135
+#: lib/hana_shirabe_web/live/member_live/profile.ex:185
 #, elixir-autogen, elixir-format
 msgid "Profile updated!"
 msgstr ""
@@ -93,4 +93,15 @@ msgstr ""
 #: lib/hana_shirabe_web/controllers/page_html/page.html.heex:23
 #, elixir-autogen, elixir-format
 msgid "This content has been automatically translated and may contain errors. Please refer to the original version for accuracy."
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/profile.ex:84
+#, elixir-autogen, elixir-format
+msgid "Cancel"
+msgstr ""
+
+#: lib/hana_shirabe_web/live/member_live/profile.ex:81
+#: lib/hana_shirabe_web/live/member_live/profile.ex:107
+#, elixir-autogen, elixir-format
+msgid "Loading..."
 msgstr ""

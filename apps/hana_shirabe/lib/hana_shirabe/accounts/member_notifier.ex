@@ -30,7 +30,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
   @doc """
   使成员更新邮件的指示。
   """
-  def deliver_update_email_instructions(member, code, url) do
+  def deliver_update_email_instructions(member, _code, url) do
     deliver(
       member.email,
       dgettext("deliver", "Update email instructions"),
@@ -44,11 +44,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
 
         Welcome to Echoes Under Blossoms.
 
-        Please use the following code to change your email:
-
-        %{code}
-
-        Alternatively, you can sign in by visiting the link below:
+        Please visit the link below to change your email:
 
         %{url}
 
@@ -56,7 +52,6 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
         ==============================
         """,
         member_email: member.email,
-        code: code,
         url: url
       )
     )
@@ -120,7 +115,7 @@ defmodule HanaShirabe.Accounts.MemberNotifier do
 
         Welcome to Echoes Under Blossoms.
 
-        Please visit the link below:
+        Please visit the link below to confirm your account:
 
         %{url}
 

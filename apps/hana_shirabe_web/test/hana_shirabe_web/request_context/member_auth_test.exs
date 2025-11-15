@@ -6,7 +6,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
   alias Phoenix.LiveView
   alias HanaShirabe.Accounts
   alias HanaShirabe.Accounts.Scope
-  alias HanaShirabeWeb.{MemberAuth, AuditLogInjector}
+  alias HanaShirabeWeb.MemberAuth
 
   import HanaShirabe.AccountsFixtures
 
@@ -36,7 +36,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
       refute get_session(conn, :to_be_removed)
     end
 
-    test "keeps session when re-authenticating", %{conn: conn, member: member} do
+    test "当再次验证时保持会话", %{conn: conn, member: member} do
       conn =
         conn
         |> assign(:current_scope, Scope.for_member(member))
@@ -126,8 +126,11 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         |> put_session(:member_token, member_token)
         |> put_req_cookie(@remember_me_cookie, member_token)
         |> fetch_cookies()
-        |> assign(:current_scope, HanaShirabe.Accounts.Scope.for_member(member))
-        |> AuditLogInjector.put_audit_context()
+        |> assign(
+          :current_scope,
+          HanaShirabe.Accounts.Scope.for_audit_log(MemberAuth.fetch_audit_log(conn, member))
+        )
+        # |> AuditLogInjector.put_audit_context()
         |> MemberAuth.log_out_member()
 
       refute get_session(conn, :member_token)

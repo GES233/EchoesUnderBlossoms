@@ -2,7 +2,6 @@ defmodule HanaShirabeWeb.Router do
   use HanaShirabeWeb, :router
 
   import HanaShirabeWeb.MemberAuth
-  import HanaShirabeWeb.AuditLogInjector, only: [put_audit_context: 2]
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -12,7 +11,6 @@ defmodule HanaShirabeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_member
-    plug :put_audit_context
     plug HanaShirabeWeb.SetLocale
   end
 
@@ -44,20 +42,17 @@ defmodule HanaShirabeWeb.Router do
     {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :require_authenticated},
     {HanaShirabeWeb.SetLocale, :assign_locale},
-    {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]
 
   @with_audit [
     {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :mount_current_scope},
     {HanaShirabeWeb.SetLocale, :assign_locale},
-    {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   ]
 
   # @guest_with_audit [
   #   {HanaShirabeWeb.MemberAuth, :required_guests},
   #   {HanaShirabeWeb.SetLocale, :assign_locale},
-  #   {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}
   # ]
 
   scope "/", HanaShirabeWeb do

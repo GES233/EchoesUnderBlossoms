@@ -45,13 +45,13 @@ defmodule HanaShirabeWeb.MemberAuth do
   def log_out_member(conn) do
     member_token = get_session(conn, :member_token)
 
-    case conn.assigns[:audit_log] do
+    case current_scope = conn.assigns[:current_scope] do
       nil ->
         member_token && Accounts.delete_member_session_token(member_token)
 
-      %HanaShirabe.AuditLog{} ->
+      %Scope{} ->
         member_token &&
-          Accounts.logout_member_in_purpose_with_log(conn.assigns[:audit_log], member_token)
+          Accounts.logout_member_in_purpose_with_log(current_scope.audit_context, member_token)
     end
 
     if live_socket_id = get_session(conn, :live_socket_id) do
@@ -80,7 +80,7 @@ defmodule HanaShirabeWeb.MemberAuth do
     end
   end
 
-  defp fetch_audit_log(%Plug.Conn{} = conn, member) do
+  def fetch_audit_log(%Plug.Conn{} = conn, member) do
     ip = conn.remote_ip
 
     user_agent =
@@ -100,7 +100,7 @@ defmodule HanaShirabeWeb.MemberAuth do
     )
   end
 
-  defp fetch_audit_log(%Phoenix.LiveView.Socket{} = socket, member) do
+  def fetch_audit_log(%Phoenix.LiveView.Socket{} = socket, member) do
     # %{address: ip} = Phoenix.LiveView.get_connect_info(socket, :peer_data)
     # Phoenix.LiveView.get_connect_info(socket, :user_agent)
     ip = socket.assigns[:ip_addr]

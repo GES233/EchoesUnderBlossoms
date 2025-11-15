@@ -178,7 +178,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
   end
 
   def handle_event("save", %{"registration_form" => member_params}, socket) do
-    audit_log = socket.assigns[:audit_log]
+    audit_log = socket.assigns.current_scope.audit_context
 
     # 如果需要邀请码，这里要在加一组
     do_register(audit_log, member_params, socket)

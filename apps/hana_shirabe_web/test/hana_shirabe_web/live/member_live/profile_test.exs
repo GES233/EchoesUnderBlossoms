@@ -140,7 +140,7 @@ defmodule HanaShirabeWeb.MemberLive.ProfileTest do
       # 点击取消
       result =
         lv
-        |> element("button", dgettext("ui", "Cancel"))
+        |> element("button", gettext("Cancel"))
         |> render_click()
 
       # 确认回到展示模式

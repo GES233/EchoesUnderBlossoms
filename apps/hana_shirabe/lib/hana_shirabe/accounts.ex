@@ -507,7 +507,7 @@ defmodule HanaShirabe.Accounts do
 
     case {member_from_database, logged_in_member} do
       {member_from_re_authenticate, _member_from_audit} = {%Member{}, %Member{}} ->
-        AuditLog.audit!(audit_context, :account, "member.login.re_authenticate", %{
+        AuditLog.audit!(audit_context, :account, "member.re_authenticate", %{
           "account_id" => member_from_re_authenticate.id
         })
 
