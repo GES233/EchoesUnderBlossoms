@@ -27,58 +27,51 @@
     curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui-theme.js 
     您可以访问 https://daisyui.com/theme-generator/ 构建自己的主题。
 
+  其他可以使用的网站：
+
+  * https://www.jyshare.com/front-end/6214/
+  * https://oklch.com/
+
   目前有两个颜色主题：
 
   * 奶油玉米（来源于奶油玉米浓汤，选择此方案是因为其和某位故人
     （〇〇）很爱吃的某食物（〇〇〇〇）的配色相近）
   * 夜光云（将个人此前推进但目前放弃的项目 < https://github.com/GES233/Noctilucent >
     的配色方案照搬，交给 Gemini 进行简单处理得到）
- */
+
+  TODO 再加上几类：
+
+  * 再来个什么旮旯给木的配色（要最典型最经典一眼XX的感觉）
+  * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
+**/
 @plugin "../vendor/daisyui-theme" {
   name: "noctilucent";
   default: false;
   prefersdark: true;
   color-scheme: "dark";
 
-  /* 天空 - The Night Sky */
-  --color-base-100: oklch(23.04% 0.069 271.65); /* ncl_bg */
-  --color-base-200: oklch(19% 0.032 291.65); /* ncl_bg_dark */
-  --color-base-300: oklch(
-    17.79% 0.027 290.48
-  ); /* A slightly darker variant of ncl_bg_dark */
+  --color-base-100: oklch(23.04% 0.069 271.65);
+  --color-base-200: oklch(21.0% 0.051 272.4);
+  --color-base-300: oklch(19.8% 0.047 290.5);
+  --color-base-content: oklch(94.81% 0.028 102.48);
+  --color-primary: oklch(82.97% 0.0783 311.29);
+  --color-primary-content: oklch(25.1% 0.032 310.8);
+  --color-secondary: oklch(85.7% 0.047 64.5);
+  --color-secondary-content: oklch(25.8% 0.111 67.7);
+  --color-accent: oklch(87.18% 0.0327 242.4);
+  --color-accent-content: oklch(0.4724 0.048 268.52);
+  --color-neutral: oklch(30.06% 0.0849 260.32);
+  --color-neutral-content: oklch(92% 0.004 286.32);
 
-  /* 云辉 - The Glowing Cloud (Content) */
-  --color-base-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
-
-  /* 彩云 - The Iridescent Cloud (Primary Actions) */
-  --color-primary: oklch(78.14% 0.081 305.29); /* ncl_cl_pr */
-  --color-primary-content: oklch(
-    19% 0.032 291.65
-  ); /* ncl_bg_dark for contrast */
-
-  /* 云体 - The Cloud Body (Secondary Actions) */
-  --color-secondary: oklch(63.44% 0.044 268.26); /* ncl_cl */
-  --color-secondary-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
-
-  /* 暮光 - The Twilight Glow (Accent) */
-  --color-accent: oklch(84.16% 0.109 79.34); /* ncl_twi */
-  --color-accent-content: oklch(19% 0.032 291.65); /* ncl_bg_dark */
-
-  /* 云霭 - The Haze (Neutral Elements) */
-  --color-neutral: oklch(63.44% 0.044 268.26); /* ncl_cl */
-  --color-neutral-content: oklch(94.81% 0.028 102.48); /* ncl_twi_cl */
-
-  /* Status colors - Adjusted on https://daisyui.com/theme-generator */
   --color-info: oklch(88% 0.059 254.128);
   --color-info-content: oklch(35% 0.144 278.697);
-  --color-success: oklch(93% 0.127 124.321);
-  --color-success-content: oklch(37% 0.077 168.94);
-  --color-warning: oklch(85% 0.199 91.936);
-  --color-warning-content: oklch(41% 0.112 45.904);
+  --color-success: oklch(89.31% 0.0729 107.79);
+  --color-success-content: oklch(52.65% 0.0529 91.32);
+  --color-warning: oklch(89.2% 0.100 91.9);
+  --color-warning-content: oklch(41% 0.151 53.4);
   --color-error: oklch(88.8% 0.151 53.4);
   --color-error-content: oklch(27% 0.105 12.094);
 
-  /* You can keep the radius and other settings from your default dark theme */
   --radius-selector: 0.5rem;
   --radius-field: 0.5rem;
   --radius-box: 1rem;
@@ -98,14 +91,14 @@
   --color-base-200: oklch(97% 0.071 103.193);
   --color-base-300: oklch(94% 0.129 101.54);
   --color-base-content: oklch(42% 0.095 57.708);
-  --color-primary: oklch(84.16% 0.109 79.34);
-  --color-primary-content: oklch(22.3% 0.12 51);
-  --color-secondary: oklch(94.5% 0.15 93.6);
-  --color-secondary-content: oklch(43.1% 0.126 102.1);
-  --color-accent: oklch(55% 0.135 66.442);
-  --color-accent-content: oklch(89% 0.038 81.8);
-  --color-neutral: oklch(83.8% 0.089 97.4);
-  --color-neutral-content: oklch(40.9% 0.037 26.9);
+  --color-primary: oklch(0.4348 0.0997 118.56);
+  --color-primary-content: oklch(0.8312 0.0589 130.21);
+  --color-secondary: oklch(0.9659 0.1068 112.54);
+  --color-secondary-content: oklch(52.3% 0.095 131.4);
+  --color-accent: oklch(0.7422 0.1464 77.65);
+  --color-accent-content: oklch(47.9% 0.065 81.8);
+  --color-neutral: oklch(0.8833 0.1439 84);
+  --color-neutral-content: oklch(0.4244 0.1143 56.47);
   --color-info: oklch(71% 0.203 305.504);
   --color-info-content: oklch(40.1% 0.088 301.3);
   --color-success: oklch(78.4% 0.076 124.3);
@@ -123,13 +116,6 @@
   --depth: 0;
   --noise: 1;
 }
-
-/**
- * TODO 再加上几类：
- *
- * * 再来个什么旮旯给木的配色（要最典型最经典一眼XX的感觉）
- * * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
-**/
 
 /**
  * 将字体与 Tailwind 建立联系。
