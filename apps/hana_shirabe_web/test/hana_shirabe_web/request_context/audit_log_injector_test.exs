@@ -14,11 +14,11 @@ defmodule HanaShirabeWeb.AuditLogInjectorTest do
   end
 
   describe "put_audit_context/2" do
-    test "会话中的成员将会被装载"
+    # test "会话中的成员将会被装载"
 
-    test "会话无成员依旧存在事务记录"
+    # test "会话无成员依旧存在事务记录"
 
-    test "会话无成员不会被装载"
+    # test "会话无成员不会被装载"
   end
 
   describe "on_mount :mount_audit_log" do

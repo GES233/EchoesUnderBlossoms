@@ -67,17 +67,52 @@ defmodule HanaShirabeWeb.MemberAuth do
   @doc """
   通过 session 和「记住我」令牌进行成员认证。
 
-  将在令牌超过配置的年龄后重新发放会话令牌。
+  将在令牌超过配置的寿命后重新发放会话令牌。
   """
   def fetch_current_scope_for_member(conn, _opts) do
     with {token, conn} <- ensure_member_token(conn),
          {member, token_inserted_at} <- Accounts.get_member_by_session_token(token) do
       conn
-      |> assign(:current_scope, Scope.for_member(member))
+      |> assign(:current_scope, Scope.for_audit_log(fetch_audit_log(conn, member)))
       |> maybe_reissue_member_session_token(member, token_inserted_at)
     else
-      nil -> assign(conn, :current_scope, Scope.for_member(nil))
+      nil -> assign(conn, :current_scope, Scope.for_audit_log(nil))
     end
+  end
+
+  defp fetch_audit_log(%Plug.Conn{} = conn, member) do
+    ip = conn.remote_ip
+
+    user_agent =
+      case List.keyfind(conn.req_headers, "user-agent", 0) do
+        {_, value} -> value
+        _ -> nil
+      end
+
+    struct!(
+      HanaShirabe.AuditLog,
+      %{
+        # 要确定到底挂的是 member_id 还是 member 结构体
+        member: if(is_struct(member, HanaShirabe.Accounts.Member), do: member, else: nil),
+        ip_addr: ip,
+        user_agent: user_agent
+      }
+    )
+  end
+
+  defp fetch_audit_log(%Phoenix.LiveView.Socket{} = socket, member) do
+    %{address: ip} = Phoenix.LiveView.get_connect_info(socket, :peer_data)
+    user_agent = Phoenix.LiveView.get_connect_info(socket, :user_agent)
+
+    struct!(
+      HanaShirabe.AuditLog,
+      %{
+        # 要确定到底挂的是 member_id 还是 member 结构体
+        member: if(is_struct(member, HanaShirabe.Accounts.Member), do: member, else: nil),
+        ip_addr: ip,
+        user_agent: user_agent
+      }
+    )
   end
 
   defp ensure_member_token(conn) do
@@ -278,7 +313,7 @@ defmodule HanaShirabeWeb.MemberAuth do
           Accounts.get_member_by_session_token(member_token)
         end || {nil, nil}
 
-      Scope.for_member(member)
+      Scope.for_audit_log(fetch_audit_log(socket, member))
     end)
   end
 

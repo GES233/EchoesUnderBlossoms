@@ -43,8 +43,8 @@ defmodule HanaShirabeWeb.SetLocale do
 
   defp fetch_locale_from_sources(conn) do
     locale_from_user =
-      if !is_nil(conn.assigns.current_scope),
-        do: conn.assigns.current_scope.member.prefer_locale,
+      if is_struct(conn.assigns.current_scope),
+        do: conn.assigns.current_scope.prefer_locale,
         else: nil
 
     [
