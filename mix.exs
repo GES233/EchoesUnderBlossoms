@@ -1,8 +1,9 @@
 # 为了解决在 Windows 下需要调用 elixir_make 来进行编译的库报错的情况
 # 可以参考 https://github.com/elixir-sqlite/exqlite/blob/main/guides/windows.md
 # （没错那个 PR 是我提交的）
-# 另外关于 `mix.lock` 不规范的报错…
-# ~~我再想想办法~~ 等到 ElixirLS 重新运行一遍就可以忽略了
+# 另外关于 `mix.lock` 不规范的报错，等到 ElixirLS 重新运行一遍就可以忽略了
+# 此外关于 ElixirLS 显示缺乏依赖项的报错，需要把 `.elixir_ls/` 删掉一遍再让其重新运行
+# 【但是】需要配置好 ElixirLS 使其的终端也可按照预期正常编译依赖项以及项目本体
 defmodule HanaShirabe.Umbrella.MixProject do
   use Mix.Project
 
