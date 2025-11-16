@@ -68,7 +68,7 @@ defmodule HanaShirabeWeb.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
 
       ## 内容服务
-      {:mdex, "~> 0.8"},
+      {:mdex, "~> 0.10"},
       {:hs_content, in_umbrella: true}
     ]
   end

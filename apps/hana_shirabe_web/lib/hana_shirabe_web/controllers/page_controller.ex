@@ -14,57 +14,55 @@ defmodule HanaShirabeWeb.PageController do
   end
 
   def show(conn, _params) do
-    content =
-      """
-      # 2333
+    """
+    # 2333
 
-      ## Lorem ipsum
+    ## Lorem ipsum
 
-      > Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati
-      > temporibus delectus et eaque non enim, consequatur illum velit sapiente
-      > molestiae soluta voluptatibus omnis quasi dolores maxime officiis at vero!
+    > Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati
+    > temporibus delectus et eaque non enim, consequatur illum velit sapiente
+    > molestiae soluta voluptatibus omnis quasi dolores maxime officiis at vero!
 
-      **Lorem ipsum**, dolor sit amet consectetur adipisicing elit. _Aut dignissimos
-      quasi pariatur nobis ipsa ullam!_ Commodi modi, saepe eveniet soluta numquam
-      quasi ducimus, corrupti architecto distinctio dignissimos alias nesciunt
-      doloribus?
+    **Lorem ipsum**, dolor sit amet consectetur adipisicing elit. _Aut dignissimos
+    quasi pariatur nobis ipsa ullam!_ Commodi modi, saepe eveniet soluta numquam
+    quasi ducimus, corrupti architecto distinctio dignissimos alias nesciunt
+    doloribus?
 
-      ## 中文版本
+    ## 中文版本
 
-      你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
+    你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
 
-      全民制作人们大家好，我是个人练习两年半的个人练习生…
+    全民制作人们大家好，我是个人练习两年半的个人练习生…
 
-      - 🐔
-        - `2.5`
-        - *Ctrl*
+    - 🐔
+      - `2.5`
+      - *Ctrl*
 
-      ## 代码
+    ## 代码
 
-      Powered by [MDEx](https://github.com/leandrocp/mdex).
+    Powered by [MDEx](https://github.com/leandrocp/mdex).
 
-      ```c
-      #include <stdio.h>
+    ```c
+    #include <stdio.h>
 
-      int main () {
-          printf("Hello World!");
+    int main () {
+        printf("Hello World!");
 
-          return 0;
-      }
-      ```
+        return 0;
+    }
+    ```
 
-      ```elixir
-      receive do
-        {:sended, msg} -> IO.puts msg
-      end
-      ```
+    ```elixir
+    receive do
+      {:sended, msg} -> IO.puts msg
+    end
+    ```
 
-      """
-      |> HSContent.from_domain()
-      |> HSContent.to_html()
-      |> Phoenix.HTML.raw()
-
-    render(conn, :show, page_title: {:role, "页面展示"}, content: content)
+    """
+    |> HSContent.from_domain()
+    |> HSContent.to_html()
+    |> Phoenix.HTML.raw()
+    |> then(&render(conn, :show, page_title: {:role, "页面展示"}, content: &1))
   end
 
   def license(conn, _params) do

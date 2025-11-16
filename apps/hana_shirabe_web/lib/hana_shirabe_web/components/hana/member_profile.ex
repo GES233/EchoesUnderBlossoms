@@ -8,6 +8,12 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
 
   # alias Phoenix.LiveView.JS
 
+
+  @doc """
+  展示用户信息。
+
+  这个是 Gemini 还是谁搓出来的，需要修改。
+  """
   attr :member, HanaShirabe.Accounts.Member, required: true
   slot :inner_block, required: true
 
@@ -15,14 +21,12 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
     ~H"""
     <div class="card bg-base-200">
       <div class="card-body items-center text-center">
-        <div class="avatar placeholder mb-4">
+        <!-- <div class="avatar placeholder mb-4">
           <div class="bg-neutral-focus text-neutral-content rounded-full w-24">
             <span class="text-3xl">{String.at(@member.nickname, 0)}</span>
           </div>
-        </div>
-
+        </div> -->
         <h2 class="card-title text-2xl">{@member.nickname}</h2>
-
         <div class="prose mt-4 text-left">
           <blockquote>
             <%= cond do %>

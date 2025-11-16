@@ -23,7 +23,7 @@ defmodule HSContent.MixProject do
 
   defp deps do
     [
-      {:mdex, "~> 0.8"}
+      {:mdex, "~> 0.10"}
       # 为啥不用 Earmark ？因为那个库和 HTML 耦合太高了。
       # 最好还是一个 agnostic-AST ，可以渲染成 Markdown 以及 HTML 的。
     ]

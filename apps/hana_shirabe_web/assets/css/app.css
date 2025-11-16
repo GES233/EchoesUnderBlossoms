@@ -18,7 +18,7 @@
 
 /* daisyUI Tailwind 插件。您可以通过以下方式获取最新版本来更新此文件：
     curl -sLO https://github.com/saadeghi/daisyui/releases/latest/download/daisyui.js 
-   请务必查看 daisyUI 更新日志：https://daisyui.com/docs/changelog/ */
+ * 请务必查看 daisyUI 更新日志：https://daisyui.com/docs/changelog/ */
 @plugin "../vendor/daisyui" {
   themes: false;
 }
@@ -30,7 +30,9 @@
   其他可以使用的网站：
 
   * https://www.jyshare.com/front-end/6214/
+    * 从图片中提取颜色
   * https://oklch.com/
+    * 「喂，伙计！这玩意儿可比 RBG Hex 带派多了！」
 
   目前有两个颜色主题：
 
@@ -126,7 +128,7 @@
 } */
 
 /* Phoenix 使用的是 TailwindCSS-Standalone，
-  那几十兆中就正好包括了一些常见的插件，引入即可。
+  那几十兆（现在是一百多兆了）中就正好包括了一些常见的插件，引入即可。
  */
 @plugin "@tailwindcss/typography";
 

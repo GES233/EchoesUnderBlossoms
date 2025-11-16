@@ -4,6 +4,7 @@ defmodule HanaShirabeWeb.Timeline do
   """
   use Phoenix.Component
   use Gettext, backend: HanaShirabeWeb.Gettext
+  # import HanaShirabeWeb.CoreComponents
 
   # alias Phoenix.LiveView.JS
 
