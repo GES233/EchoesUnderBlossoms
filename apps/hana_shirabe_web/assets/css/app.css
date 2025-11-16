@@ -83,7 +83,7 @@
 }
 
 @plugin "../vendor/daisyui-theme" {
-  name: "core-cream-soup";
+  name: "corn-cream-soup";
   default: false;
   prefersdark: false;
   color-scheme: "light";
