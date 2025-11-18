@@ -1,5 +1,11 @@
 defmodule HanaShirabe.AuditLog.Context do
-  # 专门存储上下文
+  @moduledoc """
+  专门用户存取上下文。
+
+  ## 账户域
+  ## 成员域
+  ## 提案域
+  """
 
   @scope [:account, :member, :member_content, :proposal, :site_content]
 
@@ -38,10 +44,17 @@ defmodule HanaShirabe.AuditLog.Context do
       "member.update_attempt" => ~w(update_map reason)
     },
     member: %{
+      ## 基本的用户信息
       "info.update.self" => ~w(item current_value),
-      "info.update.others" => ~w(target item current_value reason)
+      "info.update.others" => ~w(target item current_value reason),
+      ## 社交动作
+      "follow" => ~w(),
+      "unfollow" => ~w(),
     },
-    proposal: %{},
+    proposal: %{
+      ## 创建
+      ## 最开始的审批
+    },
     member_content: %{},
     site_content: %{}
   }

@@ -2,8 +2,7 @@ defmodule HanaShirabe.Accounts.Member do
   use Ecto.Schema
   import Ecto.Changeset
 
-  # 因为这里的信息可能会传导到网页（通过 Phoenix Conreoller 或 LiveView）
-  # 所以也一并翻译上吧。
+  # 需要确保用户的 locale 设置在应用实现的语言中
   use Gettext, backend: HanaShirabe.Gettext
 
   schema "members" do
