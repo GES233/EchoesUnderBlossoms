@@ -37,6 +37,7 @@ defmodule HanaShirabeWeb.PageController do
     - 🐔
       - `2.5`
       - *Ctrl*
+    - 只因
 
     ## 代码
 
@@ -57,7 +58,6 @@ defmodule HanaShirabeWeb.PageController do
       {:sended, msg} -> IO.puts msg
     end
     ```
-
     """
     |> HSContent.from_domain()
     |> HSContent.to_html()
