@@ -1,8 +1,8 @@
-/**
+/***
  * 用户生成内容的 HTML 样式设计。
  *
- * （计划借鉴 heti 的样式以及此前的个人博客）
-**/
+ * （计划借鉴 `heti` 的样式以及此前的个人博客（采用 `hexo-theme-yuzu`））
+***/
 
 /* Phoenix 使用的是 TailwindCSS-Standalone，
   那几十兆（现在是一百多兆了）中就正好包括了一些常见的插件，引入即可。
@@ -12,7 +12,7 @@
 /**
  * 关于字体：
 
-  由来是 LessWrong 等一系列博客。
+  由来是 LessWrong 等一系列论坛。
   其英文字体为 Alegreya, Merriweather, Palatino, Garamond,
   Baskerville, Libre Baskerville, Georgia 等人文主义字体的衬线体。
 
@@ -50,8 +50,7 @@
   blockquote {
     /* Remove extra quotes */
     p {
-      &:first-of-type::before,
-      &:last-of-type::after {
+      &:first-of-type::before, &:last-of-type::after {
         display: none;
       }
     }
