@@ -1,14 +1,6 @@
 defmodule HanaShirabeWeb.PageController do
   use HanaShirabeWeb, :controller
 
-  # 如果这些页面太多可以在这里列到一起去
-  @page_dir "apps/hana_shirabe_web/priv/pages/"
-  @static_page_and_meta %{
-    about:
-      {@page_dir <> "about",
-       %{"en" => :mannual_checked, "ja" => :not_implemented, "zh_Hans" => :mannual_checked}}
-  }
-
   def home(conn, _params) do
     render(conn, :home)
   end
@@ -65,9 +57,15 @@ defmodule HanaShirabeWeb.PageController do
     |> then(&render(conn, :show, page_title: {:role, "页面展示"}, content: &1))
   end
 
-  def license(conn, _params) do
-    render(conn, :license)
-  end
+  # ==== STATIC PAGE ==== #
+
+  # 如果这些页面太多可以在这里列到一起去
+  @page_dir "apps/hana_shirabe_web/priv/pages/"
+  @static_page_and_meta %{
+    about:
+      {@page_dir <> "about",
+       %{"en" => :mannual_checked, "ja" => :not_implemented, "zh_Hans" => :mannual_checked}}
+  }
 
   def render_static_page(conn, {path, locales}) do
     locale = Gettext.get_locale()
@@ -90,6 +88,8 @@ defmodule HanaShirabeWeb.PageController do
         _ -> false
       end
 
+    chosen_locale? = locale == chosen_locale
+
     markdown =
       path
       |> Path.join("#{chosen_locale}.md")
@@ -100,7 +100,8 @@ defmodule HanaShirabeWeb.PageController do
     render(conn, :page,
       markdown: markdown,
       page_title: {:role, "About"},
-      machine_translate: !machine_translate?
+      machine_translate: !machine_translate?,
+      chosen_locale: !chosen_locale?
     )
   end
 
