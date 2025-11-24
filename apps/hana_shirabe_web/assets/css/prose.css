@@ -1,23 +1,9 @@
-/***
- * 用户生成内容的 HTML 样式设计。
- *
- * （计划借鉴 `heti` 的样式以及此前的个人博客（采用 `hexo-theme-yuzu`））
-***/
+/* 用户生成内容的 HTML 样式设计。*/
 
 /* Phoenix 使用的是 TailwindCSS-Standalone，
   那几十兆（现在是一百多兆了）中就正好包括了一些常见的插件，引入即可。
 **/
 @plugin "@tailwindcss/typography";
-
-/**
- * 关于字体：
-
-  由来是 LessWrong 等一系列论坛。
-  其英文字体为 Alegreya, Merriweather, Palatino, Garamond,
-  Baskerville, Libre Baskerville, Georgia 等人文主义字体的衬线体。
-
-  中文无脑思源黑体。
-***/
 
 /**
  * 将字体与 Tailwind 建立联系。
@@ -44,7 +30,6 @@
     &::after {
       display: none;
     }
-    /* text-wrap: nowrap; */
   }
 
   blockquote {
@@ -58,10 +43,9 @@
   }
 
   p {
-    @apply my-2; /* my-3 约等于 0.75rem，比默认值小得多 */
+    @apply my-2;
   }
 
-  /* 标题的间距也需要调整，使其更紧凑 */
   h2 {
     @apply mt-8 mb-2;
   }
@@ -69,8 +53,28 @@
     @apply mt-6 mb-2;
   }
 
-  /* 列表项之间也不需要那么大的空隙 */
   li, ul {
     @apply my-1;
   }
 }
+
+/**
+  以下部分将对各个主题进行设计。
+
+  目前考虑三类：
+
+   * non-UGC
+      主要用于系统生成内容，如帮助文档、系统公告、技术博客等。
+      字体（标题）选择 ChillDIN 等无衬线体字体系列；
+      TBD.
+   * "archaiologia"（UGC - 人文主义）
+      * 名字由来：希腊语的"考古学"（ἀρχαιολογία），意为"对古代事物的研究"。
+      * 字体选择 LessWrong 等论坛的风格，主要是 Alegreya, Merriweather, Palatino, Garamond,
+        Baskerville, Libre Baskerville, Georgia 字体系列，以及思源宋体的衬线体（后期会进行调整）。
+      * 一般用于长篇文章，后期甚至会适配学术写作的部分功能。
+      * 计划借鉴 `heti` 的样式以及此前的个人博客（采用 `hexo-theme-yuzu`）
+   * "minimalism"（UGC - 简洁主义）
+      * 一般用于随笔、讨论等社交交流属性大于内容属性的场景。
+
+  此外还有导出等场景，但目前不在讨论范围内。
+**/

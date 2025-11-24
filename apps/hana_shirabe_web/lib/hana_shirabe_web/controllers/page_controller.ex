@@ -1,6 +1,8 @@
 defmodule HanaShirabeWeb.PageController do
   use HanaShirabeWeb, :controller
 
+  import HanaShirabeWeb.Helpers.Render
+
   def home(conn, _params) do
     render(conn, :home)
   end
@@ -64,65 +66,12 @@ defmodule HanaShirabeWeb.PageController do
   @static_page_and_meta %{
     about:
       {@page_dir <> "about",
-       %{"en" => :mannual_checked, "ja" => :not_implemented, "zh_Hans" => :mannual_checked}}
+       %{"en" => :mannual_checked, "ja" => :unavailable, "zh_Hans" => :mannual_checked}}
   }
 
   def render_static_page(conn, {path, locales}) do
-    locale = Gettext.get_locale()
-
-    chosen_locale =
-      cond do
-        Map.get(locales, locale) in [:mannual_checked, :machine_translated] ->
-          locale
-
-        true ->
-          locales
-          |> Enum.find_value(fn {loc, status} ->
-            if status == :mannual_checked, do: loc, else: nil
-          end) || Application.fetch_env!(:gettext, :default_locale)
-      end
-
-    machine_translate? =
-      case Map.get(locales, chosen_locale) do
-        :machine_translated -> true
-        _ -> false
-      end
-
-    chosen_locale? = locale == chosen_locale
-
-    markdown =
-      path
-      |> Path.join("#{chosen_locale}.md")
-      |> File.read!()
-      |> HSContent.from_domain()
-      |> HSContent.to_html()
-
-    render(conn, :page,
-      markdown: markdown,
-      page_title: {:role, "About"},
-      machine_translate: !machine_translate?,
-      chosen_locale: !chosen_locale?
-    )
+    render(conn, :page, render_static_assigns(path, locales))
   end
 
   def about(conn, _params), do: render_static_page(conn, @static_page_and_meta[:about])
-
-  # TODO: implement a `for` macro to automatically mount these functions.
-  # defmacro def_page(site_and_data) do
-  #   Enum.map(site_and_data, fn {site, data} ->
-  #     quote bind_quoted: [site: site, data: data] do
-  #       def unquote(site)(conn, _params) do
-  #         render_static_page(conn, unquote(status))
-  #       end
-  #     end
-  #   end)
-  # end
-
-  # defmacro def_page_route(site_and_data) do
-  #   Enum.map(site_and_data, fn {site, data} ->
-  #     quote do
-  #       get("/" <> unquote(site |> Atom.to_string()))
-  #     end
-  #   end)
-  # end
 end
