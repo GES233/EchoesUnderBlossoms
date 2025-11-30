@@ -17,13 +17,13 @@
 
 
 /*
-  这里原来是 @utility prose { ... }
-  但因为之前排错时 Grok 建议用 @layer components 来包裹
-  所以就改成了这样。
+  这里原来是 @utility prose { ... } ...
+  但因为之前排错时 Grok 建议用 @layer components { .prose { ... } ... }
+  所以就改成了这样（所以严格来讲不知道是不是这里的问题）。
 
-  如果闲得的话可以试着该回去。，如果照样可以 work 那就用原来的。
+  如果闲得的话可以试着改回去，如果照样可以 work 那就用原来的。
 
-  毕竟多一个花括弧多一个缩进不大好看（参见 Julia 最外层 module 不缩进的规范）。
+  毕竟多一个花括弧多一层缩进不大好看（参见 Julia 最外层 module 不缩进的规范）。
 */
 @layer components {
   /* 
