@@ -31,7 +31,7 @@ defmodule HanaShirabeWeb.Helpers.Render do
 
     chosen_locale? = locale == chosen_locale
 
-    markdown =
+    html =
       path
       |> Path.join("#{chosen_locale}.md")
       |> File.read!()
@@ -39,9 +39,9 @@ defmodule HanaShirabeWeb.Helpers.Render do
       |> HSContent.to_html()
 
     [
-      markdown: markdown,
+      html: html,
       page_title: {:role, "About"},
-      machine_translate: !machine_translate?,
+      machine_translate: machine_translate?,
       chosen_locale: !chosen_locale?
     ]
   end

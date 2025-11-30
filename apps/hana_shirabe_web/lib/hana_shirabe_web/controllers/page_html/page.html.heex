@@ -47,9 +47,11 @@
           </div>
         </div>
       <% end %>
-      <article class="prose sm:prose-xl">
-        {@markdown |> raw()}
-      </article>
+      <div data-theme="archaiologia">
+        <article class="prose sm:prose-xl">
+          <%= @html |> raw() %>
+        </article>
+      </div>
     </div>
   </main>
 </Layouts.app_without_member>
