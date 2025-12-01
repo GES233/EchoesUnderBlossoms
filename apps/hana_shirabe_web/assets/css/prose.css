@@ -16,21 +16,36 @@
 }
 
 
+/* Type-scale */
+@theme {
+  /* Modular scale based on 1.25 (Major Third) */
+  --ts-0: 1.0625rem;
+  --ts-1: 1.25rem;
+  --ts-2: 1.563rem;
+  --ts-3: 1.953rem;
+  --ts-4: 2.441rem;
+  --ts-5: 3.052rem;
+
+
+  /* Line-height tuned for CJK */
+  --lh-tight: 1.28;
+  --lh-normal: 1.7;
+  --lh-relaxed: 1.8;
+}
+
+
 /*
   这里原来是 @utility prose { ... } ...
   但因为之前排错时 Grok 建议用 @layer components { .prose { ... } ... }
   所以就改成了这样（所以严格来讲不知道是不是这里的问题）。
 
-  如果闲得的话可以试着改回去，如果照样可以 work 那就用原来的。
+  ChatGPT 也认同这种写法，因为typography 是 component-level 的存在，如此操作更好。
 
-  毕竟多一个花括弧多一层缩进不大好看（参见 Julia 最外层 module 不缩进的规范）。
+  另外关于响应式，GPT 的方案是做容器级响应式，形如：
+
+  `<div class="prose max-w-none lg:max-w-3xl xl:max-w-4xl ..."> ... </div>`
 */
 @layer components {
-  /* 
-    * 针对 @tailwindcss/typography 的配置：
-    * 参见
-    https://github.com/tailwindlabs/tailwindcss-typography/issues/372#issuecomment-2616848354
-*/
   .prose {
     --tw-prose-body: var(--color-primary);
     --tw-prose-headings: var(--color-primary);
@@ -38,7 +53,7 @@
     --tw-prose-quote-borders: var(--color-slate-300);
     --tw-prose-quotes: var(--color-muted-foreground);
 
-    /* 代码前后的引号不需要 */
+    /* 不需要代码前后的引号 */
     code {
       &::before,
       &::after {
@@ -46,7 +61,7 @@
       }
     }
 
-    /* 引用（避免多余的“引号”） */
+    /* 不需要引用前后的引号 */
     blockquote p {
       &:first-of-type::before,
       &:last-of-type::after {
@@ -65,16 +80,20 @@
     }
 
     h1 {
-      @apply mt-10 mb-4 text-3xl leading-snug;
+      font-size: var(--ts-4); /* text-3xl */
+      @apply mt-10 mb-4 leading-snug;
     }
     h2 {
-      @apply mt-8 mb-3 text-2xl leading-snug;
+      font-size: var(--ts-3); /* text-2xl */
+      @apply mt-8 mb-3 leading-snug;
     }
     h3 {
-      @apply mt-6 mb-2 text-xl leading-snug;
+      font-size: var(--ts-2); /* text-xl */
+      @apply mt-6 mb-2 leading-snug;
     }
     h4 {
-      @apply mt-4 mb-2 text-lg leading-snug;
+      font-size: var(--ts-1); /* text-lg */
+      @apply mt-4 mb-2 leading-snug;
     }
 
     ul,
@@ -84,6 +103,11 @@
 
     li {
       @apply my-1;
+    }
+
+    p, li {
+      font-size: var(--ts-0);
+      line-height: var(--lh-normal);
     }
 
     /* 图片、图注 */
@@ -145,7 +169,7 @@
   **/
 
   /* ======================================================================== */
-  /*  non-UGC（系统内容、公告、帮助文档）                           */
+  /*  non-UGC（系统内容、公告、帮助文档）                                     */
   /* ======================================================================== */
 
   [data-theme="non-ugc"] .prose {
@@ -165,7 +189,7 @@
   }
 
   /* ======================================================================== */
-  /*  archaiologia（人文学长文、考古、类似 LessWrong + Heti）       */
+  /*  archaiologia（人文色彩长文，类似 LessWrong + Heti）                     */
   /* ======================================================================== */
 
   [data-theme="archaiologia"] .prose {
@@ -210,7 +234,7 @@
   }
 
   /* ======================================================================== */
-  /*  minimalism（随笔、讨论、轻量 UGC）                           */
+  /*  minimalism（随笔、讨论、轻量 UGC）                                      */
   /* ======================================================================== */
 
   [data-theme="minimalism"] .prose {
