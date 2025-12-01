@@ -8,57 +8,134 @@ defmodule HanaShirabeWeb.PageController do
   end
 
   def show(conn, _params) do
-    """
-    # 2333
+    content_with_style =
+      """
+      ## Lorem ipsum
 
-    ## Lorem ipsum
+      > Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati
+      > temporibus delectus et eaque non enim, consequatur illum velit sapiente
+      > molestiae soluta voluptatibus omnis quasi dolores maxime officiis at vero!
 
-    > Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit obcaecati
-    > temporibus delectus et eaque non enim, consequatur illum velit sapiente
-    > molestiae soluta voluptatibus omnis quasi dolores maxime officiis at vero!
+      **Lorem ipsum**, dolor sit amet consectetur adipisicing elit. _Aut dignissimos
+      quasi pariatur nobis ipsa ullam!_ Commodi modi, saepe eveniet soluta numquam
+      quasi ducimus, corrupti architecto distinctio dignissimos alias nesciunt
+      doloribus?
 
-    **Lorem ipsum**, dolor sit amet consectetur adipisicing elit. _Aut dignissimos
-    quasi pariatur nobis ipsa ullam!_ Commodi modi, saepe eveniet soluta numquam
-    quasi ducimus, corrupti architecto distinctio dignissimos alias nesciunt
-    doloribus?
+      ### 小黑子又露出了鸡脚。
 
-    ## 中文版本
+      > 「_你们食不食人呐！盗窃会不会！_ 你们黑他黑的那么爽，骂他骂的那么爽，等到**真相大白**那天没有任何人给他道歉！」
 
-    > 来一段中文的引文。
+      全民制作人们大家好，我是个人练习两年半的个人练习生…
 
-    你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
+      - 🐔
+        - `2.5`
+        - *Ctrl*
+      - 只因
+        - 🐣
+        - 食不食油饼（你最好是）
 
-    全民制作人们大家好，我是个人练习两年半的个人练习生…
+      你有这么告诉运转的机械进入中国记住我给出的原理小的时候。就是研发人……
+      """
+      |> HSContent.from_domain()
+      |> HSContent.to_html()
+      |> Phoenix.HTML.raw()
 
-    - 🐔
-      - `2.5`
-      - *Ctrl*
-    - 只因
-
-    ## 代码
-
-    Powered by [MDEx](https://github.com/leandrocp/mdex).
-
-    ```c
-    #include <stdio.h>
-
-    int main () {
-        printf("Hello World!");
-
-        return 0;
-    }
-    ```
+    content_code = """
+    已支持的语言可以参见 <https://github.com/leandrocp/autumnus> 。
 
     ```elixir
     receive do
-      {:sended, msg} -> IO.puts msg
+      {:ok, data} ->
+        IO.puts("Received data: \#{data}")
+      after 5000 ->
+        IO.puts("No data received within 5 seconds")
     end
+    ```
+
+    ```haskell
+    -- https://www.msully.net/blog/2015/02/26/microkanren-μkanren-in-haskell/
+    import Control.Monad
+
+    type Var = Integer
+    type Subst = [(Var, Term)]
+    type State = (Subst, Integer)
+    type Program = State -> KList State
+
+    data Term = Atom String | Pair Term Term | Var Var deriving Show
+
+    -- Apply a substitution to the top level of a term
+    walk (Var v) s = case lookup v s of Nothing -> Var v
+                                        Just us -> walk us s
+    walk u s = u
+
+    extS x v s = (x, v) : s
+
+    -- Try to unify two terms under a substitution;
+    -- return an extended subst if it succeeds
+    unify :: Term -> Term -> Subst -> Maybe Subst
+    unify u v s = un (walk u s) (walk v s)
+      where un (Var x1) (Var x2) | x1 == x2 = return s
+            un (Var x1) v = return $ extS x1 v s
+            un u (Var x2) = return $ extS x2 u s
+            un (Pair u1 u2) (Pair v1 v2) =
+              do s' <- unify u1 v1 s
+                unify u2 v2 s'
+            un (Atom a1) (Atom a2) | a1 == a2 = return s
+            un _ _  = mzero
+
+    -- MicroKanren program formers
+    zzz :: Program -> Program
+    zzz g = \sc -> delay (g sc)
+
+    equiv :: Term -> Term -> Program
+    equiv u v = \(s, c) -> case unify u v s of
+      Nothing -> mzero
+      Just s' -> return (s', c)
+
+    callFresh :: (Term -> Program) -> Program
+    callFresh f = \(s, c) -> f (Var c) (s, c+1)
+
+    disj :: Program -> Program -> Program
+    disj g1 g2 = \sc -> mplus (g1 sc) (g2 sc)
+
+    conj :: Program -> Program -> Program
+    conj g1 g2 = \sc -> g1 sc >>= g2
+
+    -- I had originally thought that since Haskell was lazy, we didn't
+    -- need to worry about any of the inverse-eta-delay stuff that the
+    -- Scheme version does, but that isn't right. We still need some way
+    -- to force switching when we recur.
+    -- It is not very burdensome for us, though; we don't actually need
+    -- to eta-expand, just need to add some sort of marker.
+    data KList a = Nil | Cons a (KList a) | Delay (KList a) deriving Show
+    delay = Delay
+
+    -- Hm. Is there any reason to preserve the delays?
+    instance Monad KList where
+      return x = Cons x Nil
+      Nil >>= f = mzero
+      x `Cons` xs >>= f = f x `mplus` (xs >>= f)
+      Delay xs >>= f = Delay (xs >>= f)
+    instance MonadPlus KList where
+      mzero = Nil
+      Nil `mplus` xs = xs
+      (x `Cons` xs) `mplus` ys = x `Cons` (ys `mplus` xs) -- swapped per sect. 6
+      Delay xs `mplus` ys = Delay (ys `mplus` xs)
+
+    klistToList Nil = []
+    klistToList (x `Cons` xs) = x : klistToList xs
+    klistToList (Delay xs) = klistToList xs
     ```
     """
     |> HSContent.from_domain()
     |> HSContent.to_html()
     |> Phoenix.HTML.raw()
-    |> then(&render(conn, :show, page_title: {:role, "页面展示"}, content: &1))
+
+    render(conn, :show,
+      page_title: {:role, "页面展示"},
+      content_with_style: content_with_style,
+      content_code: content_code
+    )
   end
 
   # ==== STATIC PAGE ==== #

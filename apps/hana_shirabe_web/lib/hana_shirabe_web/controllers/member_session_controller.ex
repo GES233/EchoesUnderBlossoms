@@ -115,7 +115,11 @@ defmodule HanaShirabeWeb.MemberSessionController do
     true = Accounts.sudo_mode?(member)
 
     {:ok, {_member, expired_tokens}} =
-      Accounts.update_member_password_with_log(conn.assigns.current_scope.audit_context, member, member_params)
+      Accounts.update_member_password_with_log(
+        conn.assigns.current_scope.audit_context,
+        member,
+        member_params
+      )
 
     # 断开所有使用旧会话的现有 LiveViews
     MemberAuth.disconnect_sessions(expired_tokens)

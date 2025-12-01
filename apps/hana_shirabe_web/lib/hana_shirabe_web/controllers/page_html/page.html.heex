@@ -19,6 +19,7 @@
           </svg>
           <div>
             <h3 class="font-bold">{gettext("Content translated by machine")}</h3>
+            
             <div class="text-xs">
               {gettext(
                 "This content has been automatically translated and may contain errors. Please refer to the original version for accuracy."
@@ -27,6 +28,7 @@
           </div>
         </div>
       <% end %>
+      
       <%= if @chosen_locale do # TODO: Add declaration. %>
         <div class="alert alert-info my-8 alert-outline">
           <svg
@@ -43,14 +45,12 @@
             >
             </path>
           </svg>
-          <div>
-          </div>
+          <div></div>
         </div>
       <% end %>
+      
       <div data-theme="archaiologia">
-        <article class="prose sm:prose-xl">
-          <%= @html |> raw() %>
-        </article>
+        <article class="prose sm:prose-xl">{@html |> raw()}</article>
       </div>
     </div>
   </main>

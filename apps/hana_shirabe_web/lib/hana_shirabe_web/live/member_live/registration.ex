@@ -40,7 +40,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
             </.header>
           <% end %>
         </div>
-
+        
         <%= if !@member_email do %>
           <.form
             :let={f}
@@ -84,7 +84,7 @@ defmodule HanaShirabeWeb.MemberLive.Registration do
                 }
               </script>
             </div>
-
+            
             <.input
               field={f[:nickname]}
               type="text"

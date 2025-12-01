@@ -8,7 +8,6 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
 
   # alias Phoenix.LiveView.JS
 
-
   @doc """
   展示用户信息。
 
@@ -27,6 +26,7 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
           </div>
         </div> -->
         <h2 class="card-title text-2xl">{@member.nickname}</h2>
+        
         <div class="prose mt-4 text-left">
           <blockquote>
             <%= cond do %>
@@ -40,19 +40,19 @@ defmodule HanaShirabeWeb.Hana.MemberProfile do
             <% end %>
           </blockquote>
         </div>
-
+        
         <div class="divider"></div>
-
+        
         <div class="stats stats-vertical lg:stats-horizontal bg-transparent">
           <div class="stat">
             <div class="stat-title">{dgettext("account", "Joined since")}</div>
-
+            
             <div class="stat-value text-base">
               {Calendar.strftime(@member.inserted_at, "%Y-%m-%d")}
             </div>
           </div>
         </div>
-
+        
         <div :if={@inner_block != []} class="card-actions justify-end w-full mt-4">
           {render_slot(@inner_block)}
         </div>

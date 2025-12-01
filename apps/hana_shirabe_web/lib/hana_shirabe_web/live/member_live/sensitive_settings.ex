@@ -18,7 +18,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettings do
             </:subtitle>
           </.header>
         </div>
-
+        
         <.form for={@email_form} id="email_form" phx-submit="update_email" phx-change="validate_email">
           <.input
             field={@email_form[:email]}
@@ -31,7 +31,7 @@ defmodule HanaShirabeWeb.MemberLive.SensitiveSettings do
             {dgettext("account", "Change Email")}
           </.button>
         </.form>
-        <div class="divider" />
+         <div class="divider" />
         <.form
           for={@password_form}
           id="password_form"

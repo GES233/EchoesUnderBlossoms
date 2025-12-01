@@ -288,7 +288,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         endpoint: HanaShirabeWeb.Endpoint,
         assigns: %{
           __changed__: %{},
-          flash: %{},
+          flash: %{}
           # ip_addr: {127, 0, 0, 1},
           # user_agent: AccountsFixtures.create_user_agent()
         }
@@ -305,7 +305,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         endpoint: HanaShirabeWeb.Endpoint,
         assigns: %{
           __changed__: %{},
-          flash: %{},
+          flash: %{}
           # ip_addr: {127, 0, 0, 1},
           # user_agent: AccountsFixtures.create_user_agent()
         }
@@ -328,7 +328,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         endpoint: HanaShirabeWeb.Endpoint,
         assigns: %{
           __changed__: %{},
-          flash: %{},
+          flash: %{}
           # ip_addr: {127, 0, 0, 1},
           # user_agent: AccountsFixtures.create_user_agent()
         }
@@ -350,7 +350,7 @@ defmodule HanaShirabeWeb.MemberAuthTest do
         endpoint: HanaShirabeWeb.Endpoint,
         assigns: %{
           __changed__: %{},
-          flash: %{},
+          flash: %{}
           # ip_addr: {127, 0, 0, 1},
           # user_agent: AccountsFixtures.create_user_agent()
         }

@@ -41,13 +41,13 @@ defmodule HanaShirabeWeb.Router do
   @member_with_audit [
     {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :require_authenticated},
-    {HanaShirabeWeb.SetLocale, :assign_locale},
+    {HanaShirabeWeb.SetLocale, :assign_locale}
   ]
 
   @with_audit [
     {HanaShirabeWeb.MountConnectInfo, :mount},
     {HanaShirabeWeb.MemberAuth, :mount_current_scope},
-    {HanaShirabeWeb.SetLocale, :assign_locale},
+    {HanaShirabeWeb.SetLocale, :assign_locale}
   ]
 
   # @guest_with_audit [

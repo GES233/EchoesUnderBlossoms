@@ -2,6 +2,7 @@ defmodule HanaShirabeWeb.Helpers.Render do
   @moduledoc """
   用于 Markdown 渲染。
   """
+
   # 因为该功能的复用性从 PageController 中剥离出来。
 
   @type locale_status :: :mannual_checked | :machine_translated | :unavailable

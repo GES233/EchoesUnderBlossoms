@@ -4,21 +4,41 @@
       <div class="card">
         <div class="card-body">
           <div class="divider">
-            <p class="text-lg card-title"><code>&lt;prose&gt;</code> with Markdown Demostration</p>
+            <p class="text-lg card-title"><code>&lt;prose&gt;</code> with styles Demostration</p>
           </div>
-          <div data-theme="archaiologia">
-          <article class="prose sm:prose-xl">
-            <%= @content %>
-          </article>
+
+          <div class="tabs tabs-border">
+            <%= for theme <- ~w(non-ugc archaiologia minimalism) do %>
+              <label class="tab tab-bordered" for="my_tabs_2" aria-label={theme}>
+                <input type="radio" name="my_tabs_2" /> <code>{theme}</code>
+              </label>
+              <div class="tab-content" data-theme={theme}>
+                <article class="prose">
+                  <h4>Theme: <code>{theme}</code></h4>
+                   {@content_with_style}
+                </article>
+              </div>
+            <% end %>
           </div>
         </div>
       </div>
+
       <div class="divider">
-            <p class="text-lg card-title"><code>DaisyUI</code> Components Demostration</p>
-          </div>
+        <p class="text-lg card-title"><code>&lt;prose&gt;</code> X <code>&lt;code&gt;</code> Demostration</p>
+      </div>
+
+      <article class="prose">
+        <%= @content_code %>
+      </article>
+
+      <div class="divider">
+        <p class="text-lg card-title"><code>DaisyUI</code> Components Demostration</p>
+      </div>
+
       <div class="card">
         <div class="card-body">
           <h3 class="text-xl"><code>&lt;Timeline&gt;</code></h3>
+
           <p class="text-center">TBD</p>
         </div>
       </div>

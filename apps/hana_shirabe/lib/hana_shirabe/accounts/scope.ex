@@ -23,7 +23,7 @@ defmodule HanaShirabe.Accounts.Scope do
   alias HanaShirabe.Accounts.Member
   alias HanaShirabe.AuditLog
 
-  defstruct [member: nil, audit_context: nil, prefer_locale: nil]
+  defstruct member: nil, audit_context: nil, prefer_locale: nil
 
   @doc """
   从给定用户返回作用域。

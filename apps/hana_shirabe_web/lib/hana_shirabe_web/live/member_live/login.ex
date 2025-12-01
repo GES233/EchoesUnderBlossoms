@@ -31,7 +31,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
         <div class="text-center">
           <.header>
             <p>{dgettext("account", "Log in")}</p>
-
+            
             <:subtitle>
               <%= if @current_scope.member do %>
                 {dgettext(
@@ -47,12 +47,12 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             </:subtitle>
           </.header>
         </div>
-
+        
         <div :if={local_mail_adapter?()} class="alert alert-info">
           <.icon name="hero-information-circle" class="size-6 shrink-0" />
           <div>
             <p>{dgettext("account", "You are running the local mail adapter.")}</p>
-
+            
             <p>
               {dgettext("account", "To see sent emails, visit %{email_page}.",
                 email_page: translate_email_instructions(%{})
@@ -61,7 +61,7 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             </p>
           </div>
         </div>
-
+        
         <.form
           :let={f}
           for={@magic_form}
@@ -96,12 +96,12 @@ defmodule HanaShirabeWeb.MemberLive.Login do
             <% else %>
               {dgettext("account", "Log in with email")}
             <% end %>
-            <span aria-hidden="true">→</span>
+             <span aria-hidden="true">→</span>
           </.button>
         </.form>
-
+        
         <div class="divider">{dgettext("account", "or")}</div>
-
+        
         <.form
           :let={f}
           for={@password_form}

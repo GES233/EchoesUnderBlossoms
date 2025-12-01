@@ -33,16 +33,14 @@ defmodule HanaShirabeWeb.Layouts do
     ~H"""
     <header class="bg-base-100/80 backdrop-blur-sm sticky top-0 z-10">
       <nav class="navbar px-4 sm:px-6 lg:px-8">
-        <div class="navbar-start">
-          <.icon_in_navbar />
-        </div>
-
+        <div class="navbar-start"><.icon_in_navbar /></div>
+        
         <div class="navbar-end">
-          <.member_in_navbar current_scope={@current_scope} />
-          <.theme_toggle />
+          <.member_in_navbar current_scope={@current_scope} /> <.theme_toggle />
         </div>
       </nav>
     </header>
+
     <div class="sticky top-16 z-20 px-4 sm:px-6 lg:px-8"><.flash_group flash={@flash} /></div>
 
     <main class="relative isolate">{render_slot(@inner_block)}</main>
@@ -73,15 +71,12 @@ defmodule HanaShirabeWeb.Layouts do
     ~H"""
     <header class="bg-base-100/80 backdrop-blur-sm sticky top-0 z-10">
       <nav class="navbar px-4 sm:px-6 lg:px-8">
-        <div class="navbar-start">
-          <.icon_in_navbar />
-        </div>
-
-        <div class="navbar-end">
-          <.theme_toggle />
-        </div>
+        <div class="navbar-start"><.icon_in_navbar /></div>
+        
+        <div class="navbar-end"><.theme_toggle /></div>
       </nav>
     </header>
+
     <div class="sticky top-16 z-20 px-4 sm:px-6 lg:px-8"><.flash_group flash={@flash} /></div>
 
     <main class="relative isolate">{render_slot(@inner_block)}</main>
@@ -106,8 +101,7 @@ defmodule HanaShirabeWeb.Layouts do
   def flash_group(assigns) do
     ~H"""
     <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} />
-      <.flash kind={:error} flash={@flash} />
+      <.flash kind={:info} flash={@flash} /> <.flash kind={:error} flash={@flash} />
       <.flash
         id="client-error"
         kind={:error}
@@ -119,7 +113,7 @@ defmodule HanaShirabeWeb.Layouts do
         {gettext("Attempting to reconnect")}
         <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
       </.flash>
-
+      
       <.flash
         id="server-error"
         kind={:error}
@@ -191,6 +185,7 @@ defmodule HanaShirabeWeb.Layouts do
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
         <.icon name="hero-user-circle" class="size-10 hover:opacity-100" />
       </div>
+      
       <ul
         tabindex="-1"
         class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-32 p-2 shadow"
@@ -201,6 +196,7 @@ defmodule HanaShirabeWeb.Layouts do
               {@current_scope.member.nickname}
             </span>
           </li>
+          
           <li>
             <.link
               href={~p"/me/profile"}
@@ -209,6 +205,7 @@ defmodule HanaShirabeWeb.Layouts do
               {dgettext("account", "Profile")}
             </.link>
           </li>
+          
           <li>
             <.link
               href={~p"/logout"}
@@ -227,6 +224,7 @@ defmodule HanaShirabeWeb.Layouts do
               {dgettext("account", "Register")}
             </.link>
           </li>
+          
           <li>
             <.link
               href={~p"/login"}

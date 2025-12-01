@@ -49,12 +49,13 @@ defmodule HanaShirabe.AuditLog.Context do
       "info.update.others" => ~w(target item current_value reason),
       ## 社交动作
       "follow" => ~w(),
-      "unfollow" => ~w(),
+      "unfollow" => ~w()
     },
-    proposal: %{
-      ## 创建
-      ## 最开始的审批
-    },
+    proposal:
+      %{
+        ## 创建
+        ## 最开始的审批
+      },
     member_content: %{},
     site_content: %{}
   }

@@ -10,9 +10,7 @@ defmodule HanaShirabeWeb.Content do
 
   def render_inner(assigns) do
     ~H"""
-    <div class="prose">
-      <% @inner |> raw() %>
-    </div>
+    <div class="prose"><% @inner |> raw() %></div>
     """
   end
 end
