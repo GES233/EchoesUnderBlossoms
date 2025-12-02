@@ -19,12 +19,13 @@
 /* Type-scale */
 @theme {
   /* Modular scale based on 1.25 (Major Third) */
-  --ts-0: 1.0625rem;
+  --ts-0: 1.0625rem; /* Larger SLIGHTLY */
   --ts-1: 1.25rem;
   --ts-2: 1.563rem;
   --ts-3: 1.953rem;
   --ts-4: 2.441rem;
   --ts-5: 3.052rem;
+  --ts-6: 3.815rem;
 
 
   /* Line-height tuned for CJK */

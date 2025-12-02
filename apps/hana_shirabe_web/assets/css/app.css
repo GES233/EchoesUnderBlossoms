@@ -37,11 +37,10 @@
   * 奶油玉米（来源于奶油玉米浓汤，选择此方案是因为其和某位故人
     （〇〇）很爱吃的某食物（〇〇〇〇）的配色相近）
   * 夜光云（将个人此前推进但目前放弃的项目 < https://github.com/GES233/Noctilucent >
-    的配色方案照搬，交给 Gemini 进行简单处理得到）
+    的配色方案照搬，交给 Gemini 进行简单处理以及进一步修改得到）
 
   TODO 再加上几类：
 
-  * 再来个什么旮旯给木的配色（要最典型最经典一眼XX的感觉）
   * [Ulterior Motives](https://lostmediawiki.com/File:Pink_Boombox.webp) 主题配色
 **/
 @plugin "../vendor/daisyui-theme" {
@@ -83,7 +82,7 @@
   --size-field: 0.25rem;
   --border: 1.5px;
   --depth: 0;
-  --noise: 1;
+  --noise: 0;
 }
 
 @plugin "../vendor/daisyui-theme" {
@@ -123,22 +122,33 @@
   --size-field: 0.25rem;
   --border: 1.5px;
   --depth: 0;
-  --noise: 1;
+  --noise: 0;
 }
 
 /* 添加字体栈 */
 @layer base {
   :root {
-    --font-content-sans: "ChillDIN", sans-serif;
+    --font-content-sans:
+      /* Latin */
+      /* CJK */
+      "Noto Sans CJK SC",
+      /* Other */
+      sans-serif;
 
     --font-content-serif:
       /* Latin */
-      Merriweather, Palatino, Garamond,
-      Baskerville, "Libre Baskerville", Georgia,
+      Merriweather, /* 这是最好的 */
+      Palatino, Garamond,
+      Baskerville,
+      "Libre Baskerville", Georgia,
       /* CJK */
-      "Noto Serif CJK SC",
+      "Noto Serif CJK SC", /* 其实我想引入其他的字体，但条件限制 */
       /* Other */
       serif;
+
+    /* TODO: 考虑下苹果生态的一些字体 */
+    /* TODO: 添加 font-title 以及 font-mono */
+    /* TODO: 将引文（嵌套引文）的字体拿出来单独处理 */
   }
 }
 
