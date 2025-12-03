@@ -1,4 +1,4 @@
-defmodule HanaShirabeWeb.Timeline do
+defmodule HanaShirabeWeb.Hana.Timeline do
   @moduledoc """
   实现时间线模组。
   """

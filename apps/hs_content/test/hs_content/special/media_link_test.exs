@@ -1,25 +1,25 @@
 defmodule HSContent.Special.MediaLinkTest do
   use ExUnit.Case
 
-  defp to_html(markdown_string) do
-    HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
-    |> HSContent.to_html()
-  end
+  # defp to_html(markdown_string) do
+  #   HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
+  #   |> HSContent.to_html()
+  # end
 
-  defp to_export_markdown(markdown_string) do
-    HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
-    |> HSContent.to_export_markdown()
-  end
+  # defp to_export_markdown(markdown_string) do
+  #   HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
+  #   |> HSContent.to_export_markdown()
+  # end
 
-  defp to_domain_markdown(markdown_string) do
-    HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
-    |> HSContent.to_domain_markdown()
-  end
+  # defp to_domain_markdown(markdown_string) do
+  #   HSContent.from_domain(markdown_string, [HSContent.Special.MediaLink])
+  #   |> HSContent.to_domain_markdown()
+  # end
 
-  defp normalize_export(markdown_string) do
-    HSContent.from_export_markdown(markdown_string, [HSContent.Special.MediaLink])
-    |> HSContent.to_domain_markdown()
-  end
+  # defp normalize_export(markdown_string) do
+  #   HSContent.from_export_markdown(markdown_string, [HSContent.Special.MediaLink])
+  #   |> HSContent.to_domain_markdown()
+  # end
 
   describe "测试 schema" do
     setup do
