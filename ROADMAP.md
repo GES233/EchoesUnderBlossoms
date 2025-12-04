@@ -8,16 +8,8 @@
 
 再次基础上，通过修改 `phx mix.gen.auth` 自动生成的代码来处理（也可以魔改此前废弃项目的相关代码，其已经实现了 AuditLog 基于 bytepack）。
 
-- [x] 将 `mix phx.gen.auth` 的代码的注释/文档翻译成中文
-- [x] 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
-  - [x] 测试
+- 创建有关 AuditLog 相关的 mount_helpers ，使之可以通过 `on_mount {HanaShirabeWeb.AuditLogInjector, :mount_audit_log}` 被挂载
   - [ ] 编写测试代码（包括 Plug 以及 LiveView）
-- [x] 将注册的函数与 `%AuditLog{}` 合并
-- [x] 修改代码使测试跑通
-- [x] 添加 `AuditLog.Context` 将上下文归一并且执行验证函数
-- [x] 实现登录、验证、邮件修改的 AuditLog 操作
-- [x] 实现网页国际化的功能（主要是一堆 LiveView 里乱七八糟的）
-- [x] 优化「注册」、「修改信息」等流程
 
 #### 用户的属性
 
@@ -40,13 +32,11 @@
 
 - [ ] 实现个人主页
   - [ ] 添加 `~p/me/` 以及 `~p/m/:id` 路由
-  - [x] 添加昵称、用户名、个人简介
   - [ ] 个人主页包括基本信息
 - [ ] 实现头像
   - [ ] 自动生成
   - [ ] 站内保存
   - [ ] 外部链接
-- [x] 个人信息的修改
 
 ### 跑通现有的测试用例
 
@@ -66,10 +56,11 @@
 - 浏览器请求头的 Accept-Language
 - 应用默认
 
-- [x] 页面多语言
-- [x] 注册页面
-
 ### 页面的设计与实现
+
+#### 用户生成样式
+
+有大概的框架。
 
 ### 内容的创建、处理以及导出
 
@@ -90,38 +81,3 @@
 ### 消息机制、`@` 、邀请机制与社交关系
 
 ### 多设备管理
-
-## 样式
-
-完成了一半。
-
-### 字体
-
-依据 https://clickrweb.com/blog/502 中提到的 `font-family` ，应该先英文再中文。
-
-- 正文 / 平台内容：
-  - [x] [寒蝉德黑体](https://github.com/Warren2060/ChillDIN-ChillDINGothic)
-- 正式用户生产正文文本（e.g. 时间线、百科）：
-  - （引入日式色彩的明体字体）
-  - [x] [京华老宋体](https://zhuanlan.zhihu.com/p/637491623)
-    - *本字体字形不符合任何地区的现有文字规范，切勿将本字体用于教育或其他用字讲究的正规场合。*
-  - [x] [Alegreya](https://fonts.google.com/specimen/Alegreya)
-- 非正式用户生产正文文本（e.g. 讨论区）
-
-## 核心业务的梳理、设计与实现
-
-### 媒体资源
-
-#### 媒体资源的定义、分类与设计
-
-#### 站内媒体资源的生命周期
-
-简单来讲就是回答「哪里来」、「**怎么证明**」以及「关联者有何情况」的问题。
-
-### 作者/厂商
-
-TBD
-
-### 提案的生命周期的设计与实现
-
-这是最重要的。
